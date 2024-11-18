@@ -13,11 +13,13 @@ then
 fi
 
 # Installation des bibliothèques Python nécessaires
+
 sudo pip install gTTS pydub playsound
 sudo pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
-sudo pip install git+https://github.com/openai/whisper.git
+sudo pip install numpy==1.24.0 git+https://github.com/openai/whisper.git
 sudo apt install portaudio19-dev python3-pyaudio
 sudo pip install pyaudio
+pip install --upgrade pyaudio
 
 echo "Installation des dépendances terminée. Veuillez vérifier que tout s'est bien installé."
 
