@@ -91,10 +91,10 @@ def main():
 
                 # Threads pour les différentes actions
                 threads = [
+                    threading.Thread(target=execute_tts, args=(text_to_speech, answer_text)),
                     threading.Thread(target=execute_eyes_animation, args=(eye_left, eye_right, answer_eyes)),
                     threading.Thread(target=execute_mouth_animation, args=(mouth, answer_mouth)),
                     threading.Thread(target=execute_movement, args=(answer_move,)),
-                    threading.Thread(target=execute_tts, args=(text_to_speech, answer_text)),
                 ]
 
                 # Démarrer tous les threads

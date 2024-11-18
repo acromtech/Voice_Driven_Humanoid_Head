@@ -21,5 +21,9 @@ sudo apt install portaudio19-dev python3-pyaudio
 sudo pip install pyaudio
 pip install --upgrade pyaudio
 
+# Servomotors MyActuator
+sudo pip install python-can
+sudo pip install gs-usb
+
 echo "Installation des dépendances terminée. Veuillez vérifier que tout s'est bien installé."
 
