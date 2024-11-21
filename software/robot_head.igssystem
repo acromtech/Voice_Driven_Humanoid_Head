@@ -1,0 +1,997 @@
+{
+    "extensions": {
+        "eventsTimeline": {
+            "events": [
+            ],
+            "patterns": [
+            ],
+            "timelines": [
+                {
+                    "eventInstances": [
+                    ],
+                    "name": "Timeline_1",
+                    "order": 0,
+                    "patternInstances": [
+                    ]
+                }
+            ]
+        },
+        "recordAndReplay": {
+            "filters": {
+            }
+        }
+    },
+    "library": {
+        "classes": [
+            {
+                "className": "Whiteboard",
+                "color": 0,
+                "definition": {
+                    "inputs": [
+                        {
+                            "name": "title",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "backgroundColor",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "labelsVisible",
+                            "type": "BOOL"
+                        },
+                        {
+                            "name": "chatMessage",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "clear",
+                            "type": "IMPULSION"
+                        },
+                        {
+                            "name": "ui_command",
+                            "type": "STRING"
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "name": "lastChatMessage",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "lastAction",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "ui_error",
+                            "type": "STRING"
+                        }
+                    ],
+                    "services": [
+                        {
+                            "arguments": [
+                                {
+                                    "name": "message",
+                                    "type": "STRING"
+                                }
+                            ],
+                            "name": "chat"
+                        },
+                        {
+                            "name": "snapshot",
+                            "replies": [
+                                {
+                                    "arguments": [
+                                        {
+                                            "name": "base64Png",
+                                            "type": "DATA"
+                                        }
+                                    ],
+                                    "name": "snapshotResult"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "clear"
+                        },
+                        {
+                            "name": "showLabels"
+                        },
+                        {
+                            "name": "hideLabels"
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "type",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "x",
+                                    "type": "DOUBLE"
+                                },
+                                {
+                                    "name": "y",
+                                    "type": "DOUBLE"
+                                },
+                                {
+                                    "name": "width",
+                                    "type": "DOUBLE"
+                                },
+                                {
+                                    "name": "height",
+                                    "type": "DOUBLE"
+                                },
+                                {
+                                    "name": "fill",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "stroke",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "strokeWidth",
+                                    "type": "DOUBLE"
+                                }
+                            ],
+                            "name": "addShape",
+                            "replies": [
+                                {
+                                    "arguments": [
+                                        {
+                                            "name": "elementId",
+                                            "type": "INTEGER"
+                                        }
+                                    ],
+                                    "name": "elementCreated"
+                                }
+                            ]
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "text",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "x",
+                                    "type": "DOUBLE"
+                                },
+                                {
+                                    "name": "y",
+                                    "type": "DOUBLE"
+                                },
+                                {
+                                    "name": "color",
+                                    "type": "STRING"
+                                }
+                            ],
+                            "name": "addText",
+                            "replies": [
+                                {
+                                    "arguments": [
+                                        {
+                                            "name": "elementId",
+                                            "type": "INTEGER"
+                                        }
+                                    ],
+                                    "name": "elementCreated"
+                                }
+                            ]
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "base64",
+                                    "type": "DATA"
+                                },
+                                {
+                                    "name": "x",
+                                    "type": "DOUBLE"
+                                },
+                                {
+                                    "name": "y",
+                                    "type": "DOUBLE"
+                                },
+                                {
+                                    "name": "width",
+                                    "type": "DOUBLE"
+                                },
+                                {
+                                    "name": "height",
+                                    "type": "DOUBLE"
+                                }
+                            ],
+                            "name": "addImage",
+                            "replies": [
+                                {
+                                    "arguments": [
+                                        {
+                                            "name": "elementId",
+                                            "type": "INTEGER"
+                                        }
+                                    ],
+                                    "name": "elementCreated"
+                                }
+                            ]
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "url",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "x",
+                                    "type": "DOUBLE"
+                                },
+                                {
+                                    "name": "y",
+                                    "type": "DOUBLE"
+                                }
+                            ],
+                            "name": "addImageFromUrl",
+                            "replies": [
+                                {
+                                    "arguments": [
+                                        {
+                                            "name": "elementId",
+                                            "type": "INTEGER"
+                                        }
+                                    ],
+                                    "name": "elementCreated"
+                                }
+                            ]
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "elementId",
+                                    "type": "INTEGER"
+                                }
+                            ],
+                            "name": "remove",
+                            "replies": [
+                                {
+                                    "arguments": [
+                                        {
+                                            "name": "succeeded",
+                                            "type": "BOOL"
+                                        }
+                                    ],
+                                    "name": "actionResult"
+                                }
+                            ]
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "elementId",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "dx",
+                                    "type": "DOUBLE"
+                                },
+                                {
+                                    "name": "dy",
+                                    "type": "DOUBLE"
+                                }
+                            ],
+                            "name": "translate",
+                            "replies": [
+                                {
+                                    "arguments": [
+                                        {
+                                            "name": "succeeded",
+                                            "type": "BOOL"
+                                        }
+                                    ],
+                                    "name": "actionResult"
+                                }
+                            ]
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "elementId",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "x",
+                                    "type": "DOUBLE"
+                                },
+                                {
+                                    "name": "y",
+                                    "type": "DOUBLE"
+                                }
+                            ],
+                            "name": "moveTo",
+                            "replies": [
+                                {
+                                    "arguments": [
+                                        {
+                                            "name": "succeeded",
+                                            "type": "BOOL"
+                                        }
+                                    ],
+                                    "name": "actionResult"
+                                }
+                            ]
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "elementId",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "property",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "value",
+                                    "type": "STRING"
+                                }
+                            ],
+                            "name": "setStringProperty",
+                            "replies": [
+                                {
+                                    "arguments": [
+                                        {
+                                            "name": "succeeded",
+                                            "type": "BOOL"
+                                        }
+                                    ],
+                                    "name": "actionResult"
+                                }
+                            ]
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "elementId",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "property",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "value",
+                                    "type": "DOUBLE"
+                                }
+                            ],
+                            "name": "setDoubleProperty",
+                            "replies": [
+                                {
+                                    "arguments": [
+                                        {
+                                            "name": "succeeded",
+                                            "type": "BOOL"
+                                        }
+                                    ],
+                                    "name": "actionResult"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "getElementIds",
+                            "replies": [
+                                {
+                                    "arguments": [
+                                        {
+                                            "name": "jsonArray",
+                                            "type": "STRING"
+                                        }
+                                    ],
+                                    "name": "elementIds"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "getElements",
+                            "replies": [
+                                {
+                                    "arguments": [
+                                        {
+                                            "name": "jsonArray",
+                                            "type": "STRING"
+                                        }
+                                    ],
+                                    "name": "elements"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "description": "",
+                "icon": -1,
+                "package": "",
+                "plugin": "ingescape_class",
+                "uuid": "03226620-ed94-43e1-a4c6-da3b60d826af",
+                "version": ""
+            },
+            {
+                "className": "Robot",
+                "color": 0,
+                "definition": {
+                    "inputs": [
+                        {
+                            "name": "new_input",
+                            "type": "STRING"
+                        }
+                    ]
+                },
+                "description": "",
+                "icon": -1,
+                "package": "",
+                "plugin": "ingescape_class",
+                "uuid": "93ce05f7-55f3-41d2-b26f-2303379e932d",
+                "version": ""
+            },
+            {
+                "className": "KinematicModel",
+                "color": 0,
+                "definition": {
+                    "inputs": [
+                        {
+                            "name": "traj_position",
+                            "type": "INTEGER"
+                        },
+                        {
+                            "name": "traj_speed",
+                            "type": "INTEGER"
+                        },
+                        {
+                            "name": "traj_acceleration",
+                            "type": "INTEGER"
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "name": "motor_position",
+                            "type": "INTEGER"
+                        },
+                        {
+                            "name": "motor_speed",
+                            "type": "INTEGER"
+                        },
+                        {
+                            "name": "motor_acceleration",
+                            "type": "INTEGER"
+                        }
+                    ]
+                },
+                "description": "",
+                "icon": -1,
+                "package": "",
+                "plugin": "ingescape_class",
+                "uuid": "97eda0d6-2b86-42a4-8e0f-23a1c60f49ad",
+                "version": ""
+            },
+            {
+                "className": "Eyes",
+                "color": 0,
+                "definition": {
+                    "inputs": [
+                        {
+                            "name": "answer_eyes",
+                            "type": "STRING"
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "name": "cry",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "happy",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "love",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "monkey",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "angry",
+                            "type": "STRING"
+                        }
+                    ]
+                },
+                "description": "",
+                "icon": -1,
+                "package": "",
+                "plugin": "ingescape_class",
+                "uuid": "085d5985-ed7b-4ef8-a0b0-7c1adf84fe31",
+                "version": ""
+            },
+            {
+                "className": "SpeechSynthesis",
+                "color": 0,
+                "definition": {
+                    "inputs": [
+                        {
+                            "name": "answer_text",
+                            "type": "STRING"
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "name": "answer_audio",
+                            "type": "DATA"
+                        }
+                    ]
+                },
+                "description": "",
+                "icon": -1,
+                "package": "",
+                "plugin": "ingescape_class",
+                "uuid": "2cab46c8-10c5-4a45-9dab-6d77923a8051",
+                "version": ""
+            },
+            {
+                "className": "Motors",
+                "color": 0,
+                "definition": {
+                },
+                "description": "",
+                "icon": -1,
+                "package": "",
+                "plugin": "ingescape_class",
+                "uuid": "b4ba045f-af3b-4228-babe-1f0b7c690b92",
+                "version": ""
+            },
+            {
+                "className": "Transcription",
+                "color": 0,
+                "definition": {
+                    "inputs": [
+                        {
+                            "name": "message_audio",
+                            "type": "DATA"
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "name": "message_text",
+                            "type": "STRING"
+                        }
+                    ]
+                },
+                "description": "",
+                "icon": -1,
+                "package": "",
+                "plugin": "ingescape_class",
+                "uuid": "2d0824fb-0853-4daf-a3b2-b9ba604027e5",
+                "version": ""
+            },
+            {
+                "className": "Decision",
+                "color": 0,
+                "definition": {
+                    "inputs": [
+                        {
+                            "name": "message_text",
+                            "type": "STRING"
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "name": "answer_text",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "answer_move",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "answer_eyes",
+                            "type": "STRING"
+                        }
+                    ]
+                },
+                "description": "",
+                "icon": -1,
+                "package": "",
+                "plugin": "ingescape_class",
+                "uuid": "e1a3493c-4577-484c-afce-ef4b2ac18698",
+                "version": ""
+            },
+            {
+                "className": "DecodeMove",
+                "color": 0,
+                "definition": {
+                    "inputs": [
+                        {
+                            "name": "answer_move",
+                            "type": "STRING"
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "name": "traj_position",
+                            "type": "INTEGER"
+                        },
+                        {
+                            "name": "traj_speed",
+                            "type": "INTEGER"
+                        },
+                        {
+                            "name": "traj_acceleration",
+                            "type": "INTEGER"
+                        }
+                    ]
+                },
+                "description": "",
+                "icon": -1,
+                "package": "",
+                "plugin": "ingescape_class",
+                "uuid": "1a946c16-8f6e-42a3-85a1-1a25cc9ff2e8",
+                "version": ""
+            },
+            {
+                "className": "AI",
+                "color": 0,
+                "definition": {
+                    "inputs": [
+                        {
+                            "name": "message_text",
+                            "type": "STRING"
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "name": "answer_text",
+                            "type": "STRING"
+                        }
+                    ]
+                },
+                "description": "",
+                "icon": -1,
+                "package": "",
+                "plugin": "ingescape_class",
+                "uuid": "17d6584e-bfa0-4396-b17f-386d6b88b190",
+                "version": ""
+            },
+            {
+                "className": "MyActuatorRMD",
+                "color": 0,
+                "definition": {
+                },
+                "description": "",
+                "icon": -1,
+                "package": "",
+                "plugin": "ingescape_class",
+                "uuid": "850a5b8c-889f-4f0b-a4fd-48ad36f39ec3",
+                "version": ""
+            }
+        ]
+    },
+    "systemViews": [
+        {
+            "children": [
+                {
+                    "data": {
+                    },
+                    "height": 80,
+                    "name": "",
+                    "tool": "com.ingescape.circle.tool.listen",
+                    "uuid": "3d0d3a7a-1416-49fa-a6fe-afc4992b2325",
+                    "width": 85,
+                    "x": 1006.2020814430207,
+                    "y": 323.07394500596314
+                },
+                {
+                    "class": "2d0824fb-0853-4daf-a3b2-b9ba604027e5",
+                    "comment": "",
+                    "height": 140.02628363235954,
+                    "name": "",
+                    "simulationTime": 5000,
+                    "uuid": "c49c2438-1165-4893-9229-81140f4ec1d7",
+                    "width": 315.1102321830748,
+                    "x": -342.21031900059256,
+                    "y": 288.5329464548667
+                },
+                {
+                    "class": "97eda0d6-2b86-42a4-8e0f-23a1c60f49ad",
+                    "comment": "",
+                    "height": 180,
+                    "name": "",
+                    "simulationTime": 5000,
+                    "uuid": "4a2bf6c0-2bf6-4735-9d67-6d5dc7d0f24e",
+                    "width": 250,
+                    "x": 403.523634346688,
+                    "y": 469.02155653008725
+                },
+                {
+                    "agent": {
+                        "instances": [
+                            {
+                                "commandLine": "/opt/Whiteboard/bin/Whiteboard",
+                                "hostname": "alexis-ZenBook-UX482EA-UX482EA",
+                                "ip": "192.168.1.91",
+                                "isAttachedToCircle": false,
+                                "mac": "B0:60:88:AD:65:C9",
+                                "uuid": "735c5b41-94dd-42c2-aced-f57bccab62b4"
+                            },
+                            {
+                                "commandLine": "/opt/Whiteboard/bin/Whiteboard",
+                                "hostname": "alexis-ZenBook-UX482EA-UX482EA",
+                                "ip": "192.168.1.91",
+                                "isAttachedToCircle": false,
+                                "mac": "B0:60:88:AD:65:C9",
+                                "uuid": "6e40ec64-f319-4887-b30f-946816e39ad1"
+                            }
+                        ]
+                    },
+                    "class": "03226620-ed94-43e1-a4c6-da3b60d826af",
+                    "comment": "",
+                    "height": 202,
+                    "name": "Whiteboard",
+                    "simulationTime": 5000,
+                    "uuid": "aea395a5-f35c-4862-b3d3-22f0e1afb9b0",
+                    "width": 250,
+                    "x": 720.4519200727875,
+                    "y": 29.055073072900626
+                },
+                {
+                    "data": {
+                    },
+                    "height": 105,
+                    "name": "",
+                    "tool": "com.ingescape.circle.tool.talk",
+                    "uuid": "ca98902b-2817-4cab-8d65-47754e1a9a65",
+                    "width": 90,
+                    "x": -504.04526810958225,
+                    "y": 322.09651420585817
+                },
+                {
+                    "class": "2cab46c8-10c5-4a45-9dab-6d77923a8051",
+                    "comment": "",
+                    "height": 117.61649311002981,
+                    "name": "",
+                    "simulationTime": 5000,
+                    "uuid": "7cc775f4-497b-4cc3-b9f6-1e86142738c5",
+                    "width": 250,
+                    "x": 714.8004645107446,
+                    "y": 285.8204533448369
+                },
+                {
+                    "children": [
+                        {
+                            "class": "b4ba045f-af3b-4228-babe-1f0b7c690b92",
+                            "comment": "",
+                            "height": 100,
+                            "name": "",
+                            "simulationTime": 5000,
+                            "uuid": "09649a9f-4fd9-446a-b4e9-4ffb004c6339",
+                            "width": 250,
+                            "x": 243.45600000000013,
+                            "y": 23.200000000000273
+                        }
+                    ],
+                    "childrenViewport": {
+                        "height": 123.20000000000027,
+                        "width": 493.45600000000013
+                    },
+                    "class": "850a5b8c-889f-4f0b-a4fd-48ad36f39ec3",
+                    "comment": "",
+                    "height": 126.60000000000014,
+                    "name": "",
+                    "simulationTime": 5000,
+                    "uuid": "79b912a7-74fa-4b13-b4eb-e00d044e2776",
+                    "width": 256.72800000000007,
+                    "x": 752.1636813405978,
+                    "y": 503.32457449282515
+                },
+                {
+                    "class": "1a946c16-8f6e-42a3-85a1-1a25cc9ff2e8",
+                    "comment": "",
+                    "height": 171.44928808455916,
+                    "name": "",
+                    "simulationTime": 5000,
+                    "uuid": "1fb16970-93f7-4f84-ba05-8651a162b266",
+                    "width": 250,
+                    "x": 83.3322428651363,
+                    "y": 464.4052064082664
+                },
+                {
+                    "agent": {
+                        "instances": [
+                            {
+                                "commandLine": "/usr/bin/python3.8",
+                                "hostname": "alexis-ZenBook-UX482EA-UX482EA",
+                                "ip": "192.168.1.91",
+                                "isAttachedToCircle": false,
+                                "mac": "B0:60:88:AD:65:C9",
+                                "uuid": "44ae08c6-0982-4568-a3bc-2bd92d15400d"
+                            }
+                        ]
+                    },
+                    "class": "e1a3493c-4577-484c-afce-ef4b2ac18698",
+                    "comment": "",
+                    "height": 151.31209314883768,
+                    "name": "Decision",
+                    "simulationTime": 5000,
+                    "uuid": "51a6a838-897a-40c0-bbdf-4cd945fcbeb1",
+                    "width": 250,
+                    "x": 38.530360478864964,
+                    "y": 288.0424013439879
+                },
+                {
+                    "class": "17d6584e-bfa0-4396-b17f-386d6b88b190",
+                    "comment": "",
+                    "height": 100,
+                    "name": "AI",
+                    "simulationTime": 5000,
+                    "uuid": "9535524b-eb9b-44d9-aa9e-94e3520db399",
+                    "width": 250,
+                    "x": 36.41370508376917,
+                    "y": 136.82477800605238
+                },
+                {
+                    "class": "085d5985-ed7b-4ef8-a0b0-7c1adf84fe31",
+                    "comment": "",
+                    "height": 202,
+                    "name": "Eyes",
+                    "simulationTime": 5000,
+                    "uuid": "ebfd1539-d761-495e-8bca-6f8ad66642a2",
+                    "width": 250,
+                    "x": 404.0269877578861,
+                    "y": 676.3941447461659
+                }
+            ],
+            "links": {
+                "mappings": [
+                    {
+                        "from": "Whiteboard",
+                        "fromInput": "chatMessage",
+                        "to": "Decision",
+                        "toOutput": "answer_text"
+                    }
+                ],
+                "others": [
+                    {
+                        "destination": "3d0d3a7a-1416-49fa-a6fe-afc4992b2325",
+                        "destinationIO": {
+                            "name": "audio",
+                            "type": "INPUT"
+                        },
+                        "source": "7cc775f4-497b-4cc3-b9f6-1e86142738c5",
+                        "sourceIO": {
+                            "name": "answer_audio",
+                            "type": "OUTPUT"
+                        }
+                    },
+                    {
+                        "destination": "7cc775f4-497b-4cc3-b9f6-1e86142738c5",
+                        "destinationIO": {
+                            "name": "answer_text",
+                            "type": "INPUT"
+                        },
+                        "source": "51a6a838-897a-40c0-bbdf-4cd945fcbeb1",
+                        "sourceIO": {
+                            "name": "answer_text",
+                            "type": "OUTPUT"
+                        }
+                    },
+                    {
+                        "destination": "51a6a838-897a-40c0-bbdf-4cd945fcbeb1",
+                        "destinationIO": {
+                            "name": "message_text",
+                            "type": "INPUT"
+                        },
+                        "source": "c49c2438-1165-4893-9229-81140f4ec1d7",
+                        "sourceIO": {
+                            "name": "message_text",
+                            "type": "OUTPUT"
+                        }
+                    },
+                    {
+                        "destination": "c49c2438-1165-4893-9229-81140f4ec1d7",
+                        "destinationIO": {
+                            "name": "message_audio",
+                            "type": "INPUT"
+                        },
+                        "source": "ca98902b-2817-4cab-8d65-47754e1a9a65",
+                        "sourceIO": {
+                            "name": "voice",
+                            "type": "OUTPUT"
+                        }
+                    },
+                    {
+                        "destination": "ebfd1539-d761-495e-8bca-6f8ad66642a2",
+                        "destinationIO": {
+                            "name": "answer_eyes",
+                            "type": "INPUT"
+                        },
+                        "source": "51a6a838-897a-40c0-bbdf-4cd945fcbeb1",
+                        "sourceIO": {
+                            "name": "answer_eyes",
+                            "type": "OUTPUT"
+                        }
+                    },
+                    {
+                        "destination": "4a2bf6c0-2bf6-4735-9d67-6d5dc7d0f24e",
+                        "destinationIO": {
+                            "name": "traj_position",
+                            "type": "INPUT"
+                        },
+                        "source": "1fb16970-93f7-4f84-ba05-8651a162b266",
+                        "sourceIO": {
+                            "name": "traj_position",
+                            "type": "OUTPUT"
+                        }
+                    },
+                    {
+                        "destination": "4a2bf6c0-2bf6-4735-9d67-6d5dc7d0f24e",
+                        "destinationIO": {
+                            "name": "traj_speed",
+                            "type": "INPUT"
+                        },
+                        "source": "1fb16970-93f7-4f84-ba05-8651a162b266",
+                        "sourceIO": {
+                            "name": "traj_speed",
+                            "type": "OUTPUT"
+                        }
+                    },
+                    {
+                        "destination": "4a2bf6c0-2bf6-4735-9d67-6d5dc7d0f24e",
+                        "destinationIO": {
+                            "name": "traj_acceleration",
+                            "type": "INPUT"
+                        },
+                        "source": "1fb16970-93f7-4f84-ba05-8651a162b266",
+                        "sourceIO": {
+                            "name": "traj_acceleration",
+                            "type": "OUTPUT"
+                        }
+                    },
+                    {
+                        "destination": "1fb16970-93f7-4f84-ba05-8651a162b266",
+                        "destinationIO": {
+                            "name": "answer_move",
+                            "type": "INPUT"
+                        },
+                        "source": "51a6a838-897a-40c0-bbdf-4cd945fcbeb1",
+                        "sourceIO": {
+                            "name": "answer_move",
+                            "type": "OUTPUT"
+                        }
+                    },
+                    {
+                        "destination": "9535524b-eb9b-44d9-aa9e-94e3520db399",
+                        "destinationIO": {
+                            "name": "message_text",
+                            "type": "INPUT"
+                        },
+                        "source": "c49c2438-1165-4893-9229-81140f4ec1d7",
+                        "sourceIO": {
+                            "name": "message_text",
+                            "type": "OUTPUT"
+                        }
+                    },
+                    {
+                        "destination": "aea395a5-f35c-4862-b3d3-22f0e1afb9b0",
+                        "destinationIO": {
+                            "name": "chatMessage",
+                            "type": "INPUT"
+                        },
+                        "source": "9535524b-eb9b-44d9-aa9e-94e3520db399",
+                        "sourceIO": {
+                            "name": "answer_text",
+                            "type": "OUTPUT"
+                        }
+                    }
+                ]
+            },
+            "name": "Main view"
+        }
+    ]
+}
