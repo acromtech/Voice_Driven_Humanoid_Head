@@ -12,6 +12,7 @@ Usage:
 """
 
 import os
+import time
 from gs_usb.gs_usb import GsUsb
 from gs_usb.gs_usb_frame import GsUsbFrame
 from gs_usb.constants import (
@@ -45,27 +46,45 @@ class CanBusGsUsb:
         else:
             print("Bitrate set to", self.bitrate)
 
-    def sendMessage(self, id, data, debug = None):
+    import time
+
+    def sendMessage(self, id, data, debug=None, timeout=2):
         """
-        Send a CAN message.
+        Send a CAN message with a timeout.
 
         Parameters:
             id: Message ID.
             data: Message data.
+            debug: Boolean flag to enable debug information. (default: None)
+            timeout: Timeout in seconds. (default: 2 seconds)
+
+        Returns:
+            iframe: Response message if received within timeout.
+
+        Raises:
+            TimeoutError: If no response is received within the timeout.
         """
         cpt = 0
         frame = GsUsbFrame(id, data)
         self.dev.send(frame)  # Send message
+
+        start_time = time.time()  # Record the start time
         while True:  # Read all the time
             iframe = GsUsbFrame()
             if self.dev.read(iframe, 1):
                 if frame.data[0] == iframe.data[0]:
-                    cpt = cpt + 1
+                    cpt += 1
                     if cpt == 1:
-                        if debug!=None: print("TX  {}".format(frame))
+                        if debug:
+                            print("TX  {}".format(frame))
                     else:
-                        if debug!=None: print("RX  {}".format(iframe))
+                        if debug:
+                            print("RX  {}".format(iframe))
                         return iframe
+
+            # Check if timeout has been exceeded
+            if time.time() - start_time > timeout:
+                raise TimeoutError("\033[1;31mNo response received within {} seconds. Ensure the power is connected.\033[0m".format(timeout))
 
     def setup(self):
         """

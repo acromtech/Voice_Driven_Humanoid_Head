@@ -51,15 +51,6 @@ class RobotNeck:
             pid_params[0], pid_params[1], pid_params[2],
             pid_params[3], pid_params[4], pid_params[5]
         )
-        if (kp1, ki1, kp2, ki2, kp3, ki3) == pid_params:
-            print(f"Motor {motor.id}: PID PARAMETERS OK")
-        else:
-            print(f"Motor {motor.id}: PID PARAMETERS NOK")
-
-        if motor.write_acceleration_to_RAM(acceleration) == acceleration:
-            print(f"Motor {motor.id}: ACCELERATION OK")
-        else:
-            print(f"Motor {motor.id}: ACCELERATION NOK")
         
         # Lecture de la position actuelle et mise à zéro de l'offset
         init_pos = motor.read_singleturn_encoder_position()
@@ -115,80 +106,6 @@ class RobotNeck:
         """Arrête le bus CAN proprement."""
         self.can_bus.shutdown()
         print("CAN bus shutdown.")
-        
-    def detect_oscillations(self, motor, position_history, threshold=2.0):
-        """
-        Détecte les oscillations basées sur la variation des positions du moteur.
-
-        Parameters:
-        - motor: Instance du moteur surveillé.
-        - position_history: Liste des positions enregistrées.
-        - threshold: Seuil d'amplitude pour considérer un comportement oscillatoire.
-
-        Returns:
-        - True si des oscillations sont détectées, False sinon.
-        """
-        if len(position_history) < 3:
-            return False  # Pas assez de données pour détecter les oscillations
-
-        # Calculer les différences successives entre les positions
-        diffs = np.diff(position_history)
-
-        # Analyser l'amplitude des variations
-        if max(np.abs(diffs)) > threshold:
-            print(f"Motor {motor.id}: Oscillations detected (Amplitude: {max(np.abs(diffs))})")
-            return True
-
-        return False
-
-    def auto_adjust_pid(self, motor, position_history, threshold=2.0):
-        """
-        Ajuste dynamiquement les paramètres PID pour prévenir les oscillations.
-
-        Parameters:
-        - motor: Instance du moteur surveillé.
-        - position_history: Liste des positions enregistrées.
-        - threshold: Seuil d'amplitude pour considérer un comportement oscillatoire.
-        """
-        if self.detect_oscillations(motor, position_history, threshold):
-            # Lire les PID actuels
-            current_pid = motor.read_pid_parameters()
-            kp1, ki1, kp2, ki2, kp3, ki3 = current_pid
-
-            # Réduire le gain P et augmenter le gain D
-            kp1 = max(0, kp1 - 5)
-            kp3 = min(100, kp3 + 5)
-
-            # Appliquer les nouveaux PID
-            motor.write_pid_parameter_to_RAM(kp1, ki1, kp2, ki2, kp3, ki3)
-            print(f"Motor {motor.id}: PID adjusted to ({kp1}, {ki1}, {kp2}, {ki2}, {kp3}, {ki3})")
-
-    def monitor_and_adjust(self, motor, duration=5, threshold=2.0):
-        """
-        Surveille les positions du moteur et ajuste le PID dynamiquement si nécessaire.
-
-        Parameters:
-        - motor: Instance du moteur surveillé.
-        - duration: Durée de la surveillance (en secondes).
-        - threshold: Seuil d'amplitude pour considérer un comportement oscillatoire.
-        """
-        position_history = []
-
-        start_time = time.time()
-        while time.time() - start_time < duration:
-            # Lire la position actuelle
-            current_pos = motor.read_singleturn_encoder_position()
-            position_history.append(current_pos)
-
-            # Garder seulement les 20 dernières positions pour l'analyse
-            if len(position_history) > 20:
-                position_history.pop(0)
-
-            # Ajuster les PID si nécessaire
-            self.auto_adjust_pid(motor, position_history, threshold)
-
-            # Pause pour éviter de surcharger le système
-            time.sleep(0.1)
 
 # Exemple d'utilisation
 if __name__ == "__main__":

@@ -19,7 +19,6 @@ import os
 import string
 import time
 import can
-import os
 
 class CanBusSocket:
 
