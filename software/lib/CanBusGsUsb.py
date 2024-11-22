@@ -68,7 +68,7 @@ class CanBusGsUsb:
         frame = GsUsbFrame(id, data)
         self.dev.send(frame)  # Send message
 
-        start_time = time.time()  # Record the start time
+        # start_time = time.time()  # Record the start time
         while True:  # Read all the time
             iframe = GsUsbFrame()
             if self.dev.read(iframe, 1):
@@ -83,8 +83,8 @@ class CanBusGsUsb:
                         return iframe
 
             # Check if timeout has been exceeded
-            if time.time() - start_time > timeout:
-                raise TimeoutError("\033[1;31mNo response received within {} seconds. Ensure the power is connected.\033[0m".format(timeout))
+            # if time.time() - start_time > timeout:
+            #     raise TimeoutError("\033[1;31mNo response received within {} seconds. Ensure the power is connected.\033[0m".format(timeout))
 
     def setup(self):
         """
