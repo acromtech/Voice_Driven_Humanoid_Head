@@ -68,3 +68,15 @@ class PIDTuner:
             self.simulate_pid, initial_guess, method="L-BFGS-B", bounds=bounds
         )
         return result.x
+
+# Exemple d'utilisation avec le moteur 3
+pid_tuner = PIDTuner(neck.motor_3, setpoint=0)  # Ajuster le setpoint si nécessaire
+best_pid_params = pid_tuner.tune()
+
+print("Meilleurs paramètres PID trouvés :")
+print(f"Position Kp: {best_pid_params[0]}, Ki: {best_pid_params[1]}")
+print(f"Speed Kp: {best_pid_params[2]}, Ki: {best_pid_params[3]}")
+print(f"Torque Kp: {best_pid_params[4]}, Ki: {best_pid_params[5]}")
+
+# Appliquer les nouveaux paramètres
+neck.initialize_motor(neck.motor_3, tuple(best_pid_params), acceleration=100)
