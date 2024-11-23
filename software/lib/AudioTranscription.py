@@ -6,7 +6,7 @@ import time
 import wave
 
 class AudioTranscription:
-    def __init__(self, recording_device_name, playback_device_name, target_sample_rate=16000, mic_sample_rate=44100, silence_threshold=0.08, silence_duration=2, audio_file="test_audio.wav"):
+    def __init__(self, recording_device_name, playback_device_name, target_sample_rate=16000, mic_sample_rate=44100, silence_threshold=0.2, silence_duration=2, audio_file="test_audio.wav"):
         self.RECORDING_DEVICE_NAME = recording_device_name
         self.PLAYBACK_DEVICE_NAME = playback_device_name
         self.TARGET_SAMPLE_RATE = target_sample_rate
