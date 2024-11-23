@@ -1,9 +1,11 @@
 import random
 import time
 import re
+from Whiteboard import Whiteboard
 
 class Decision:
     def __init__(self):
+        self.agent = Whiteboard(agent_name="Whiteboard", device="Wi-Fi", port=5670)
         self.responses = {
             "bonjour": {
                 "answer_text": "Bonjour, comment puis-je vous aider ?",
@@ -44,8 +46,20 @@ class Decision:
             "singe": {
                 "answer_text": "Ooo Ooo Ah Ah !",
                 "answer_move": "head_bob",
-                "answer_eyes": "blink_fast",
+                "answer_eyes": "singe",
                 "answer_mouth": "smile"
+            },
+            "joyeux": {
+                "answer_text": "Je suis tellement heureux, regarde-moi !",
+                "answer_move": "head_nod",
+                "answer_eyes": "coeur",
+                "answer_mouth": "big_smile"
+            },
+            "émerveillé": {
+                "answer_text": "Wow, c'est incroyable !",
+                "answer_move": "head_tilt_back",
+                "answer_eyes": "etoile",
+                "answer_mouth": "open_wide"
             }
         }
         self.default_response = {
@@ -54,9 +68,10 @@ class Decision:
             "answer_eyes": "neutral",
             "answer_mouth": "smile"
         }
-
+    
     def get_response(self, message_text):
         """Retourne la réponse correspondante au message de transcription."""
+        self.agent.chat(message_text)
         normalized_text = message_text.lower()
 
         # Check for time-based greetings
@@ -77,6 +92,9 @@ class Decision:
         # Search for other specific responses using keywords
         for keyword, response in self.responses.items():
             if re.search(r'\b' + re.escape(keyword) + r'\b', normalized_text):  # Ensure word boundaries
+                self.agent.clear()
+                self.agent.gif_choice(response["answer_eyes"])
+                self.agent.chat(response["answer_text"])                
                 return response["answer_text"], response["answer_move"], response["answer_eyes"], response["answer_mouth"]
 
         # If no response is found, provide the default response
@@ -121,22 +139,29 @@ if __name__ == "__main__":
         "Bonjour, c'est une belle matinée.",
         "Bonsoir, robot !",
         "Help me please.",
-        "Quel est votre nom ?"
+        "Quel est votre nom ?",
+        "joyeux",
+        "singe",
+        "émerveillé",
+        "joyeux",
+        "singe"
+
     ]
 
     # Test des messages
     for message in test_messages:
         print(f"Message: {message}")
-        text, move, eyes = decision.get_response(message)
+        text, move, eyes, mouth = decision.get_response(message)
         print("Réponse texte:", text)
         print("Mouvement:", move)
         print("Yeux:", eyes)
         print("-------------")
-
+        input("appuyez sur entrer")
+"""
     # Ajouter une nouvelle réponse et tester
     decision.add_response("salut", "Salut, comment ça va ?", "head_nod", "blink_slow")
     print("Ajout d'une nouvelle réponse 'salut'.")
-    text, move, eyes = decision.get_response("Salut, robot !")
+    text, move, eyes, mouth = decision.get_response("Salut, robot !")
     print("Réponse texte après ajout:", text)
     print("Mouvement après ajout:", move)
     print("Yeux après ajout:", eyes)
@@ -145,7 +170,7 @@ if __name__ == "__main__":
     # Modifier une réponse existante et tester
     decision.update_response("salut", answer_text="Salut, comment ça va aujourd'hui ?", answer_move="head_tilt_right")
     print("Modification de la réponse 'salut'.")
-    text, move, eyes = decision.get_response("Salut, robot !")
+    text, move, eyes, mouth = decision.get_response("Salut, robot !")
     print("Réponse texte après modification:", text)
     print("Mouvement après modification:", move)
     print("Yeux après modification:", eyes)
@@ -154,8 +179,8 @@ if __name__ == "__main__":
     # Supprimer une réponse et tester
     decision.remove_response("salut")
     print("Suppression de la réponse 'salut'.")
-    text, move, eyes = decision.get_response("Salut, robot !")
+    text, move, eyes, mouth = decision.get_response("Salut, robot !")
     print("Réponse texte après suppression:", text)
     print("Mouvement après suppression:", move)
     print("Yeux après suppression:", eyes)
-
+"""

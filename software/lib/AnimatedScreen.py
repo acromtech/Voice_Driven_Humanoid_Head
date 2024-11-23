@@ -25,6 +25,11 @@ class AnimatedScreen:
         self.display = LCD_1inch28.LCD_1inch28(spi=self.spi, rst=rst, dc=dc, bl=bl)
         self.display.Init()
         self.display.clear()
+        self.gif_urls = [
+            "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExc2hmc3czZnNpcG1rZTlzdW84MGJlejBhd3Y4eTN6MzBmMDl1N3JsbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/qXJMjb6HfXG7AFyBTR/giphy.gif",
+            "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjUwdWcxb2Y4b2EyMGF4Nmc4bXFwaWkyaGh0NmVsejF6cm1xZXV5ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/4UTrdaK7vh0ySB7EUm/giphy.gif",
+            "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZm94dzh1MWo2emV0dDN6MTF6enNxcDF1ZWhwNXkzZDJsaGpwY2Q5NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YmN6he2EO2JHfOPiZ1/giphy.gif",
+        ]
         
     def display_img(self, pathImage, delay=0.1):
         """Affiche une image statique."""
@@ -49,6 +54,18 @@ class AnimatedScreen:
                 time.sleep(frame_duration * speed_multiplier)
         except Exception as e:
             logging.error(f"Erreur lors de l'affichage du GIF : {e}")
+     
+    def gif_choice(self, answer, stop_event, speed_multiplier=1.0):
+    	if answer_eyes == "coeur":
+            gif_url = self.gif_urls[0]
+        elif answer_eyes == "etoile":
+            gif_url = self.gif_urls[1]
+        elif answer_eyes == "singe":
+            gif_url = self.gif_urls[2]
+        else:
+            print("Choix invalide")
+            selected_gifs = []
+        self.display_gif(gif_url, 5)
 
     def clear(self):
         """Nettoie l'écran."""
