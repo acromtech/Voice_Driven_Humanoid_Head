@@ -60,15 +60,16 @@ class RobotNeck:
         # Sauvegarde de la position initiale
         if motor == self.motor_1:
             self.init_pos_1 = init_pos
+            self.move_motor(self.motor_1,200,-2)
         elif motor == self.motor_2:
             self.init_pos_2 = init_pos
+            self.move_motor(self.motor_2,200,-50)
         elif motor == self.motor_3:
             self.init_pos_3 = init_pos
-
-        # Activation du moteur à la position initiale
-        self.move_motor(motor, 50, 10)
-        self.move_motor(motor, 50, 0)
-
+            self.move_motor(self.motor_3,200,-2)
+        
+        #self.motor.running()
+        
     def move_motor(self, motor, speed, position):
         """
         Effectue un mouvement pour un moteur donné.
@@ -105,6 +106,9 @@ class RobotNeck:
     def shutdown(self):
         """Arrête le bus CAN proprement."""
         self.can_bus.shutdown()
+        self.motor_1.stop()
+        self.motor_2.stop()
+        self.motor_3.stop()
         print("CAN bus shutdown.")
 
 # Exemple d'utilisation
@@ -114,9 +118,9 @@ if __name__ == "__main__":
         neck = RobotNeck()
 
         # Configuration des moteurs
-        neck.initialize_motor(neck.motor_1, (100, 100, 40, 14, 70, 70), 100)
-        neck.initialize_motor(neck.motor_2, (100, 100, 40, 14, 60, 60), 100)
-        neck.initialize_motor(neck.motor_3, (50, 50, 40, 14, 30, 30), 100)
+        neck.initialize_motor(neck.motor_1, (100, 100, 40, 14, 70, 70), 30)
+        neck.initialize_motor(neck.motor_2, (50, 50, 30, 14, 40, 40), 50)
+        neck.initialize_motor(neck.motor_3, (50, 50, 30, 14, 30, 30), 50)
 
         # Contrôle manuel des moteurs
         active_motor = neck.motor_1
@@ -125,9 +129,9 @@ if __name__ == "__main__":
             command = input("Enter command (w: +10°, s: -10°, enter: next motor, q: quit): ").strip().lower()
 
             if command == "w":
-                neck.move_motor(active_motor, speed=360, position=10)
+                neck.move_motor(active_motor, speed=200, position=10)
             elif command == "s":
-                neck.move_motor(active_motor, speed=360, position=-10)
+                neck.move_motor(active_motor, speed=200, position=-10)
             elif command == "":
                 if active_motor == neck.motor_1:
                     active_motor = neck.motor_2
@@ -139,7 +143,6 @@ if __name__ == "__main__":
                 break
             else:
                 print("Invalid command.")
-            neck.monitor_and_adjust(active_motor, duration=5, threshold=1.5)
     finally:
         neck.shutdown()
 

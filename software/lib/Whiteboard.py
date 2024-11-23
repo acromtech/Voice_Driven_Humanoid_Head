@@ -1,5 +1,7 @@
 import ingescape as igs
 import time
+import signal
+import sys
 
 
 class Whiteboard:
@@ -35,6 +37,10 @@ class Whiteboard:
         """Efface le contenu du tableau blanc."""
         igs.service_call("Whiteboard", "clear", None, "")
 
+    def stop(self):
+        """Arrête proprement le service."""
+        igs.stop()
+
 
 def Message_Text_input_callback(io_type, name, value_type, value, my_data):
     """Callback pour la réception de messages."""
@@ -46,8 +52,16 @@ def Message_Text_input_callback(io_type, name, value_type, value, my_data):
         print(f"Erreur dans Message_Text_input_callback : {e}")
 
 
+def signal_handler(sig, frame):
+    """Gestionnaire pour les interruptions (CTRL+C)."""
+    global is_interrupted
+    is_interrupted = True
+    print("Interruption reçue, arrêt du programme...")
+
+
 if __name__ == "__main__":
     # Initialisation de l'agent
+<<<<<<< HEAD
     agent = Whiteboard(agent_name="Whiteboard", device="wlo1", port=5670)
  
     # Ajout d'une image et d'une forme au tableau blanc
@@ -61,3 +75,35 @@ if __name__ == "__main__":
     # Boucle principale pour envoyer des messages
     agent.chat("Bonjour, j'aurais besoin d'aide.")
     agent.chat("Merci !")
+=======
+    agent = Whiteboard(agent_name="Whiteboard", device="Wi-Fi", port=5670)
+    is_interrupted = False
+
+    # Enregistrement du gestionnaire de signal
+    signal.signal(signal.SIGINT, signal_handler)
+
+    try:
+        # Ajout d'une image et d'une forme au tableau blanc
+        agent.add_image(
+            "https://raw.githubusercontent.com/acromtech/Voice_Driven_Humanoid_Head/main/software/pic/anim1.png",
+            75.0,
+            105.0,
+        )
+        agent.add_shape("ellipse", 177.0, 15.0, 50.0, 50.0, "red", 0.0, 0.0)
+
+        # Boucle principale pour envoyer des messages
+        cpt = 1
+        while (not is_interrupted) and igs.is_started():  # Vérification si le service est actif
+            if cpt == 1:
+                agent.chat("Bonjour, j'aurais besoin d'aide.")
+                cpt = 2
+            elif cpt == 2:
+                agent.chat("Merci !")
+                cpt = 1
+
+            time.sleep(5)  # Pause pour simuler un délai
+    finally:
+        # Arrêt propre du service
+        agent.stop()
+        print("Agent arrêté proprement.")
+>>>>>>> 13096a5f4940b8f4cb7e53596ad107e40eaf3de6

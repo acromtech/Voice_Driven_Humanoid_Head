@@ -1,64 +1,82 @@
-import keyboard
-import time
-from RobotNeck import RobotNeck
+import numpy as np
+from scipy.optimize import minimize
 
-class RobotNeckInteractive(RobotNeck):
+class PIDTuner:
     """
-    Extension de la classe RobotNeck pour un contrôle interactif via le clavier.
+    Classe pour ajuster automatiquement les paramètres PID du moteur.
     """
-
-    def interactive_control(self):
+    def __init__(self, motor, setpoint):
         """
-        Permet de contrôler les moteurs avec les touches du clavier :
-        - Flèche haut : +10° sur la position actuelle.
-        - Flèche bas : -10° sur la position actuelle.
-        - Entrée : Passer au moteur suivant.
+        Initialise le tuner PID.
+
+        Parameters:
+        - motor: Instance du moteur à régler.
+        - setpoint: Position cible (en degrés).
         """
-        motor_index = 0
-        while motor_index < len(self.motors):
-            motor = self.motors[motor_index]
-            print(f"Controlling Motor {motor.id} (Index {motor_index + 1}/{len(self.motors)})")
-            
-            current_position = motor.read_singleturn_encoder_position()
-            print(f"Current position: {current_position}°")
-            print(f"Offset: {motor.write_encoder_offset(int(current_position))}")
+        self.motor = motor
+        self.setpoint = setpoint
+        self.last_error = 0
+        self.integral = 0
 
-            while True:
-                if keyboard.is_pressed("up"):
-                    current_position += 10
-                    motor.position_closed_loop_control_4(360, 0, current_position)
-                    print(f"Motor {motor.id}: moved to {current_position}°")
-                    time.sleep(0.3)  # Pour éviter les répétitions rapides
+    def simulate_pid(self, params):
+        """
+        Simule le système PID avec les paramètres donnés.
 
-                elif keyboard.is_pressed("down"):
-                    current_position -= 10
-                    motor.position_closed_loop_control_4(360, 1, current_position)
-                    print(f"Motor {motor.id}: moved to {current_position}°")
-                    time.sleep(0.3)
+        Parameters:
+        - params: Liste des paramètres [Kp_position, Ki_position, Kp_speed, Ki_speed, Kp_torque, Ki_torque].
 
-                elif keyboard.is_pressed("enter"):
-                    print(f"Finished controlling Motor {motor.id}")
-                    time.sleep(0.5)  # Petit délai pour éviter un double appui
-                    break
+        Returns:
+        - float: Erreur cumulée (fonction de coût).
+        """
+        position_loop_kp, position_loop_ki, speed_loop_kp, speed_loop_ki, current_loop_kp, current_loop_ki = params
 
-            motor_index += 1
+        # Initialiser la simulation
+        error_sum = 0
+        current_position = self.motor.read_singleturn_encoder_position()
 
-        print("All motors have been controlled. Exiting.")
+        for t in range(100):  # Simulation sur 100 itérations (ajuster selon le système réel)
+            error = self.setpoint - current_position
+            self.integral += error
+            derivative = error - self.last_error
 
-if __name__ == "__main__":
-    try:
-        # Création de l'instance du cou interactif
-        neck = RobotNeckInteractive()
+            # Calcul PID simplifié
+            output = (
+                position_loop_kp * error +
+                position_loop_ki * self.integral +
+                speed_loop_kp * derivative
+            )
+            # Commande du moteur (position simulée)
+            self.motor.position_closed_loop_control_4(
+                speed=abs(output), direction=0 if output > 0 else 1, position=current_position + output
+            )
+            current_position = self.motor.read_singleturn_encoder_position()
+            error_sum += abs(error)  # Accumuler l'erreur absolue
+            self.last_error = error
 
-        # Configuration des moteurs
-        pid_params = (100, 100, 40, 14, 30, 30)
-        acceleration = 200
-        neck.initialize_motors(pid_params, acceleration)
+        return error_sum
 
-        # Contrôle interactif
-        neck.interactive_control()
+    def tune(self):
+        """
+        Optimise les paramètres PID.
 
-    finally:
-        # Arrêter le bus CAN
-        neck.shutdown()
+        Returns:
+        - list: Meilleurs paramètres PID trouvés.
+        """
+        initial_guess = [50, 50, 50, 50, 50, 50]  # PID initial
+        bounds = [(0, 256), (0, 256), (0, 256), (0, 256), (0, 256), (0, 256)]  # Bornes PID
+        result = minimize(
+            self.simulate_pid, initial_guess, method="L-BFGS-B", bounds=bounds
+        )
+        return result.x
 
+# Exemple d'utilisation avec le moteur 3
+pid_tuner = PIDTuner(neck.motor_3, setpoint=0)  # Ajuster le setpoint si nécessaire
+best_pid_params = pid_tuner.tune()
+
+print("Meilleurs paramètres PID trouvés :")
+print(f"Position Kp: {best_pid_params[0]}, Ki: {best_pid_params[1]}")
+print(f"Speed Kp: {best_pid_params[2]}, Ki: {best_pid_params[3]}")
+print(f"Torque Kp: {best_pid_params[4]}, Ki: {best_pid_params[5]}")
+
+# Appliquer les nouveaux paramètres
+neck.initialize_motor(neck.motor_3, tuple(best_pid_params), acceleration=100)
