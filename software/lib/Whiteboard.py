@@ -48,10 +48,8 @@ def Message_Text_input_callback(io_type, name, value_type, value, my_data):
 
 if __name__ == "__main__":
     # Initialisation de l'agent
-    agent = Whiteboard(agent_name="Whiteboard", device="Wi-Fi", port=5670)
-    is_interrupted = False
+    agent = Whiteboard(agent_name="Whiteboard", device="wlo1", port=5670)
  
-
     # Ajout d'une image et d'une forme au tableau blanc
     agent.add_image(
         "https://raw.githubusercontent.com/acromtech/Voice_Driven_Humanoid_Head/main/software/pic/anim1.png",
@@ -61,13 +59,5 @@ if __name__ == "__main__":
     agent.add_shape("ellipse", 177.0, 15.0, 50.0, 50.0, "red", 0.0, 0.0)
 
     # Boucle principale pour envoyer des messages
-    cpt = 1
-    while (not is_interrupted) and igs.is_started():  # Utilisation d'une méthode pour vérifier si le service doit s'arrêter
-        if cpt == 1:
-            agent.chat("Bonjour, j'aurais besoin d'aide.")
-            cpt = 2
-        elif cpt == 2:
-            agent.chat("Merci !")
-            cpt = 1
-
-        time.sleep(5)  # Pause pour simuler un délai
+    agent.chat("Bonjour, j'aurais besoin d'aide.")
+    agent.chat("Merci !")
