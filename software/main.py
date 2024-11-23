@@ -1,20 +1,24 @@
-from lib.TextToSpeech import TextToSpeech
-from lib.Decision import Decision
-from lib.AudioTranscription import AudioTranscription
-from lib.Whiteboard import Whiteboard
-from lib.AnimatedScreen import AnimatedScreen
 import time
 import threading
+from lib.AudioTranscription import AudioTranscription
+from lib.Decision import Decision
+from lib.Whiteboard import Whiteboard
+
+simulation_mode = True
 
 def main():
     # Initialize modules
-    text_to_speech = TextToSpeech(playback_device_name="UACDemoV1.0", sample_rate=48000, speed_factor=1.15)
+    if simulation_mode == False
+        from lib.AnimatedScreen import AnimatedScreen
+        from lib.TextToSpeech import TextToSpeech
+        eye_left = AnimatedScreen(bus_eyes=0, device_eye_left=0, rst_eye_left=27, dc_eye_left=25, bl_eye_left=23)
+        eye_right = AnimatedScreen(bus_eyes=0, device_eye_right=1, rst_eye_right=22, dc_eye_right=24, bl_eye_right=26)
+        mouth = AnimatedScreen(bus_mouth=1, device_mouth=0, rst_mouth=5, dc_mouth=19, bl_mouth=6)
+        text_to_speech = TextToSpeech(playback_device_name="UACDemoV1.0", sample_rate=48000, speed_factor=1.15)
+    audio_transcription = AudioTranscription(recording_device_name="USB PnP Sound Device", playback_device_name="UACDemoV1.0", mic_sample_rate=44100, silence_threshold=0.08, silence_duration=0.5) 
     decision = Decision()
-    audio_transcription = AudioTranscription(recording_device_name="USB PnP Sound Device", playback_device_name="UACDemoV1.0", mic_sample_rate=44100, silence_threshold=0.08, silence_duration=0.5)
-    eye_left = AnimatedScreen(bus_eyes=0, device_eye_left=0, rst_eye_left=27, dc_eye_left=25, bl_eye_left=23)
-    eye_right = AnimatedScreen(bus_eyes=0, device_eye_right=1, rst_eye_right=22, dc_eye_right=24, bl_eye_right=26)
-    mouth = AnimatedScreen(bus_mouth=1, device_mouth=0, rst_mouth=5, dc_mouth=19, bl_mouth=6)
-
+    # whiteboard = Whiteboard(agent_name="Whiteboard", device="wlo1", port=5670)
+    
     try:
         print("Waiting for a voice command...")
         while True:
@@ -31,7 +35,7 @@ def main():
                 print(f"Mouth animation: {answer_mouth}")
 		        # METTRE ICI L'ENVOIS DU MESSAGE DE REPONSE VERS LE WHITEBOARD
 		        
-		        if simulation_mode == False
+                if simulation_mode == False
                     # Threads pour les différentes actions
                     threads = [
                         threading.Thread(target=text_to_speech.generate_audio, args=('fr', answer_text)),

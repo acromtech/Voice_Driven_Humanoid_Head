@@ -3,7 +3,6 @@ import time
 import signal
 import sys
 
-
 class Whiteboard:
     def __init__(self, agent_name="Whiteboard", device="Wi-Fi", port=5670):
         """Initialisation de l'agent et des configurations de base."""
@@ -61,7 +60,6 @@ def signal_handler(sig, frame):
 
 if __name__ == "__main__":
     # Initialisation de l'agent
-<<<<<<< HEAD
     agent = Whiteboard(agent_name="Whiteboard", device="wlo1", port=5670)
  
     # Ajout d'une image et d'une forme au tableau blanc
@@ -75,7 +73,6 @@ if __name__ == "__main__":
     # Boucle principale pour envoyer des messages
     agent.chat("Bonjour, j'aurais besoin d'aide.")
     agent.chat("Merci !")
-=======
     agent = Whiteboard(agent_name="Whiteboard", device="Wi-Fi", port=5670)
     is_interrupted = False
 
@@ -106,4 +103,3 @@ if __name__ == "__main__":
         # Arrêt propre du service
         agent.stop()
         print("Agent arrêté proprement.")
->>>>>>> 13096a5f4940b8f4cb7e53596ad107e40eaf3de6
