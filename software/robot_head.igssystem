@@ -780,6 +780,8 @@
                     "y": 110.47398997300044
                 },
                 {
+                    "agent": {
+                    },
                     "children": [
                         {
                             "children": [
@@ -888,18 +890,6 @@
                             "y": 224.20069448849472
                         },
                         {
-                            "agent": {
-                                "instances": [
-                                    {
-                                        "commandLine": "/usr/bin/python3.8",
-                                        "hostname": "alexis-ZenBook-UX482EA-UX482EA",
-                                        "ip": "192.168.1.91",
-                                        "isAttachedToCircle": false,
-                                        "mac": "B0:60:88:AD:65:C9",
-                                        "uuid": "44ae08c6-0982-4568-a3bc-2bd92d15400d"
-                                    }
-                                ]
-                            },
                             "class": "e1a3493c-4577-484c-afce-ef4b2ac18698",
                             "comment": "",
                             "height": 158,
@@ -1045,15 +1035,19 @@
                 }
             ],
             "links": {
-                "mappings": [
-                    {
-                        "from": "Whiteboard",
-                        "fromInput": "chatMessage",
-                        "to": "Decision",
-                        "toOutput": "answer_text"
-                    }
-                ],
                 "others": [
+                    {
+                        "destination": "aea395a5-f35c-4862-b3d3-22f0e1afb9b0",
+                        "destinationIO": {
+                            "name": "chatMessage",
+                            "type": "INPUT"
+                        },
+                        "source": "51a6a838-897a-40c0-bbdf-4cd945fcbeb1",
+                        "sourceIO": {
+                            "name": "answer_text",
+                            "type": "OUTPUT"
+                        }
+                    },
                     {
                         "destination": "c49c2438-1165-4893-9229-81140f4ec1d7",
                         "destinationIO": {
