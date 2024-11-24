@@ -58,25 +58,6 @@ class RobotHead:
         ]
         
         # Démarrage de l'agent
-        self.igs.definition_set_class("RobotHead")
-        self.igs.log_set_console(True)
-        self.igs.log_set_file(True, None)
-        self.igs.set_command_line(sys.executable + " " + " ".join(sys.argv))
-        self.igs.debug(f"Ingescape version: {igs.version()} (protocol v{igs.protocol()})")
-        self.igs.service_init("add_image", service_callback, None)
-        self.igs.service_arg_add("add_image", "image_path", igs.STRING_T)
-        self.igs.service_arg_add("add_image", "x", igs.INTEGER_T)
-        self.igs.service_arg_add("add_image", "y", igs.INTEGER_T)
-        self.igs.service_arg_add("add_image", "width", igs.INTEGER_T)
-        self.igs.service_arg_add("add_image", "height", igs.INTEGER_T)
-        self.igs.service_init("chat", service_callback, None)
-        self.igs.service_arg_add("chat", "message_text", igs.STRING_T)
-        self.igs.service_init("clear", service_callback, None)
-        self.igs.service_init("gif_choice", service_callback, None)
-        self.igs.service_arg_add("gif_choice", "answer_eyes", igs.STRING_T)
-        self.igs.service_init("stop", service_callback, None)
-        
-        # Démarrage de l'agent
         self.igs.start_with_device(self.device, self.port)
         time.sleep(2)  # Pause pour s'assurer que le service démarre correctement
 
@@ -142,8 +123,8 @@ def Message_Text_input_callback(io_type, name, value_type, value, my_data):
 if __name__ == "__main__":
     try:
         # Initialisation de l'agent
-        #agent = RobotHead_class(device="Wi-Fi", simulation_mode=True) # Simulation
-        agent = RobotHead_class(device="wlan0", simulation_mode=False) # With RaspberryPi (RobotHead)
+        #agent = RobotHead(device="Wi-Fi", simulation_mode=True) # Simulation
+        agent = RobotHead(device="wlan0", simulation_mode=False) # With RaspberryPi (RobotHead)
         while True:
         # Demander le choix de l'utilisateur
             answer_eyes = input("Entrez 'coeur'/'etoile'/'singe' ou 'quitter': ").strip().lower()
@@ -152,4 +133,4 @@ if __name__ == "__main__":
             if answer_eyes == 'quitter':
                 break
     finally:
-        agent.stop()
+        #agent.stop()
