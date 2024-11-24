@@ -2,8 +2,7 @@ import ctypes
 import os
 import time
 
-
-class Whiteboard:
+class RobotHead_class:
     def __init__(self, agent_name="RobotHead", device="Wi-Fi", port=5670, simulation_mode=True):
         """Initialisation de l'agent et des configurations de base."""
         if simulation_mode == False:
@@ -24,30 +23,38 @@ class Whiteboard:
         # Observation des inputs
         self.igs.observe_input("message_text", Message_Text_input_callback, self)
 
-        self.grid_columns = 2
-        self.total_width = 800  # Largeur totale disponible
-        self.total_height = 600  # Hauteur totale disponible
-        self.cell_width = self.total_width / self.grid_columns
-        self.cell_height = self.total_height / 3  # 3 lignes uniquement
-        self.gif_width = self.cell_width * 0.9  # Réduction pour espacement
-        self.gif_height = self.cell_height * 0.9
+        # Disposition du tableau (3 colonnes, 2 lignes)
+        self.grid_columns = 3
+        self.grid_rows = 2
+        self.total_width = 800
+        self.total_height = 600
 
+        # Hauteur de chaque ligne (ligne 1 plus petite)
+        self.cell_height_line1 = self.total_height * 0.33  # 33% de la hauteur totale
+        self.cell_height_line2 = self.total_height * 0.67  # 67% de la hauteur totale
+
+        # Largeur de chaque colonne
+        self.cell_width = self.total_width / self.grid_columns
+        self.gif_width = self.cell_width * 0.9
+        self.gif_height_line1 = self.cell_height_line1 * 0.9
+        self.gif_height_line2 = self.cell_height_line2 * 0.9
         # Chemin absolu basé sur le répertoire courant et le sous-dossier 'pic'
         base_path = os.getcwd()
         if __name__ == "__main__":
             pic_path = os.path.join(base_path, "pic")
-        else: 
+        else:
             pic_path = os.path.join(base_path, "lib/pic")
         pic_path = f"file:///{pic_path}"
 
         # Liste des chemins absolus des GIFs
         self.gif_paths = [
-            os.path.join(pic_path, "love.gif"),
-            os.path.join(pic_path, "love.gif"),
-            os.path.join(pic_path, "star.gif"),
-            os.path.join(pic_path, "star.gif"),
-            os.path.join(pic_path, "monkey.gif"),
-            os.path.join(pic_path, "monkey.gif"),
+            os.path.join(pic_path, "love.gif"),  # Coeur GIF 1
+            os.path.join(pic_path, "love.gif"),  # Coeur GIF 2
+            os.path.join(pic_path, "star.gif"),  # Etoile GIF 1
+            os.path.join(pic_path, "star.gif"),  # Etoile GIF 2
+            os.path.join(pic_path, "monkey.gif"),  # Singe GIF 1
+            os.path.join(pic_path, "monkey.gif"),  # Singe GIF 2
+            os.path.join(pic_path, "monkey.gif")  # Mouth GIF
         ]
 
         # Démarrage de l'agent
@@ -57,39 +64,49 @@ class Whiteboard:
     def add_image(self, image_path, x, y, width, height):
         """Ajoute une image sur le tableau blanc."""
         self.cpt = self.cpt + 2
-        self.igs.service_call("Whiteboard", "addImageFromUrl", (image_path, x, y, width, height), "")
+        igs.service_call("Whiteboard", "addImageFromUrl", (image_path, x, y, width, height), "")
 
     def chat(self, message_text):
         """Envoie un message sur le tableau blanc."""
-        self.igs.service_call("Whiteboard", "chat", message_text, "")
+        igs.service_call("Whiteboard", "chat", message_text, "")
 
     def clear(self):
         """Efface le contenu du tableau blanc."""
         for i in range(self.cpt):
-            self.igs.service_call("Whiteboard", "remove", i, "")
+            igs.service_call("Whiteboard", "remove", i, "")
 
     def gif_choice(self, answer_eyes):
-        """Affiche des GIFs en fonction de la sélection de l'utilisateur."""
+        """Affiche des GIFs en fonction de la sélection de l'utilisateur (yeux + bouche)."""
         if answer_eyes == "coeur":
-            selected_gifs = self.gif_paths[0:2]
+            selected_gifs_eyes = self.gif_paths[0:2]
         elif answer_eyes == "etoile":
-            selected_gifs = self.gif_paths[2:4]
+            selected_gifs_eyes = self.gif_paths[2:4]
         elif answer_eyes == "singe":
-            selected_gifs = self.gif_paths[4:6]
+            selected_gifs_eyes = self.gif_paths[4:6]
         else:
             print("Choix invalide")
-            selected_gifs = []
+            selected_gifs_eyes = []
 
-        # Calcul pour centrer les GIFs
-        if selected_gifs:
-            total_gifs_width = 2 * self.gif_width  # Largeur totale des deux GIFs côte à côte
-            start_x = (self.total_width - total_gifs_width) / 2  # Position x pour le premier GIF
-            center_y = (self.total_height - self.gif_height) / 2  # Position y pour centrer les GIFs verticalement
+        # Le GIF pour la bouche
+        mouth_gif = self.gif_paths[6]
 
-            # Ajout des deux GIFs
-            for i, gif_path in enumerate(selected_gifs):
-                x = start_x + i * self.gif_width  # Position horizontale du GIF
-                self.add_image(gif_path, x, center_y, self.gif_width, self.gif_height)
+        # Positions horizontales
+        start_x_eyes_left = self.cell_width * 0.1  # Colonne 1
+        start_x_eyes_right = self.cell_width * 1.9  # Colonne 3
+        start_x_mouth = self.cell_width  # Colonne 2
+
+        # Position verticale ajustée
+        start_y_eyes = self.cell_height_line1 * 0.1  # Les yeux restent en haut
+        start_y_mouth = self.cell_height_line1 + (self.cell_height_line2 * 0.2)  # BOUCHE PLUS HAUT
+
+        # Placer les GIFs des yeux
+        if selected_gifs_eyes:
+            self.add_image(selected_gifs_eyes[0], start_x_eyes_left, start_y_eyes, self.gif_width, self.gif_height_line1)
+            self.add_image(selected_gifs_eyes[1], start_x_eyes_right, start_y_eyes, self.gif_width, self.gif_height_line1)
+
+        # Placer le GIF de la bouche
+        self.add_image(mouth_gif, start_x_mouth, start_y_mouth, self.gif_width, self.gif_height_line2)
+    
     def stop(self):
         self.igs.stop()
 
