@@ -49,12 +49,19 @@ class AnimatedScreen:
             logging.error(f"Erreur lors de l'affichage du GIF : {e}")
 
     def gif_choice(self, answer, speed_multiplier=1.0):
+        if __name__ == "__main__":
+        	pic_path = os.path.join(base_path, "pic")
+        else: 
+            pic_path = os.path.join(base_path, "lib/pic")
         if answer == "coeur":
-            self.display_gif("./pic/love.gif")
+            gif_path = os.path.join(pic_path, "love.gif")
+            self.display_gif(gif_path, speed_multiplier)
         elif answer == "etoile":
-            self.display_gif("./pic/star.gif")
+            gif_path = os.path.join(pic_path, "star.gif")
+            self.display_gif(gif_path, speed_multiplier)
         elif answer == "singe":
-            self.display_gif("./pic/monkey.gif")
+            gif_path = os.path.join(pic_path, "monkey.gif")
+            self.display_gif(gif_path, speed_multiplier)
         else:
             print("No animation specified for this case")
 

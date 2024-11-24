@@ -5,16 +5,6 @@ from MyActuatorRMD import MyActuatorRMD
 from CanBusGsUsb import CanBusGsUsb
 
 class RobotNeck:
-    """
-    Classe pour contrôler les moteurs du cou d'un robot humanoïde.
-
-    Attributes:
-    - motor_1: Instance du moteur 1.
-    - motor_2: Instance du moteur 2.
-    - motor_3: Instance du moteur 3.
-    - can_bus: Instance du bus CAN.
-    - init_pos_1, init_pos_2, init_pos_3: Positions initiales des moteurs.
-    """
     def __init__(self, can_bus_channel=0, can_bus_baudrate=1000000):
         """
         Initialise le bus CAN et les moteurs du cou.
