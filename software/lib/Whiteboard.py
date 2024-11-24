@@ -2,15 +2,15 @@ import ctypes
 import os
 import time
 
-# Charger les bibliothèques nécessaires
-ctypes.CDLL("libsystemd.so", mode=ctypes.RTLD_GLOBAL)
-ctypes.CDLL("libuuid.so", mode=ctypes.RTLD_GLOBAL)
-
-import ingescape as igs
-
 class Whiteboard:
-    def __init__(self, agent_name="RobotHead", device="wlan0", port=5670):
+    def __init__(self, agent_name="RobotHead", device="wlan0", port=5670, simulation_mode=True):
         """Initialisation de l'agent et des configurations de base."""
+        if simulation_mode == False:
+            # Charger les bibliothèques nécessaires
+            ctypes.CDLL("libsystemd.so", mode=ctypes.RTLD_GLOBAL)
+            ctypes.CDLL("libuuid.so", mode=ctypes.RTLD_GLOBAL)
+	    import ingescape as igs
+
         self.agent_name = agent_name
         self.device = device
         self.port = port

@@ -7,8 +7,8 @@ else:
     from lib.Whiteboard import Whiteboard
 
 class Decision:
-    def __init__(self):
-        self.agent = Whiteboard()
+    def __init__(self, simulation_mode=True):
+        self.agent = Whiteboard(simulation_mode=simulation_mode)
         self.responses = {
             "bonjour": {
                 "answer_text": "Bonjour, comment puis-je vous aider ?",

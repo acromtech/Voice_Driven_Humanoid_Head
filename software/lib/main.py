@@ -54,7 +54,7 @@ def main():
         mouth = AnimatedScreen(bus_mouth=1, device_mouth=0, rst_mouth=5, dc_mouth=19, bl_mouth=6)
     text_to_speech = TextToSpeech(playback_device_name="UACDemoV1.0", sample_rate=48000, speed_factor=1.15)
     audio_transcription = AudioTranscription(recording_device_name="USB PnP Sound Device", playback_device_name="UACDemoV1.0", mic_sample_rate=44100, silence_threshold=0.02, silence_duration=0.5) 
-    decision = Decision()
+    decision = Decision(simulation_mode=simulation_mode)
     # whiteboard = Whiteboard(agent_name="Whiteboard", device="wlo1", port=5670)
     
     try:
