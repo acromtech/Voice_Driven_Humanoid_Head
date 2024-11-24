@@ -8,7 +8,7 @@ else:
 
 class Decision:
     def __init__(self, simulation_mode=True):
-        self.agent = Whiteboard(simulation_mode=simulation_mode)
+        self.agent = RobotHead(simulation_mode=simulation_mode)
         self.responses = {
             "bonjour": {
                 "answer_text": "Bonjour, comment puis-je vous aider ?",
@@ -52,13 +52,13 @@ class Decision:
                 "answer_eyes": "singe",
                 "answer_mouth": "smile"
             },
-            "joyeux": {
+            "amoureux": {
                 "answer_text": "Je suis tellement heureux, regarde-moi !",
                 "answer_move": "head_nod",
                 "answer_eyes": "coeur",
                 "answer_mouth": "big_smile"
             },
-            "émerveillé": {
+            "heureux": {
                 "answer_text": "Wow, c'est incroyable !",
                 "answer_move": "head_tilt_back",
                 "answer_eyes": "etoile",
@@ -145,10 +145,9 @@ if __name__ == "__main__":
         "Quel est votre nom ?",
         "joyeux",
         "singe",
-        "émerveillé",
-        "joyeux",
+        "amoureux",
+        "heureux",
         "singe"
-
     ]
 
     # Test des messages
