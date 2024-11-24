@@ -50,11 +50,11 @@ class AnimatedScreen:
 
     def gif_choice(self, answer, speed_multiplier=1.0):
         if answer == "coeur":
-            self.display_gif("./pic/yeux_coeur.gif")
+            self.display_gif("./pic/love.gif")
         elif answer == "etoile":
-            self.display_gif("./pic/yeux_etoile.gif")
+            self.display_gif("./pic/star.gif")
         elif answer == "singe":
-            self.display_gif("./pic/yeux_singe.gif")
+            self.display_gif("./pic/monkey.gif")
         else:
             print("No animation specified for this case")
 

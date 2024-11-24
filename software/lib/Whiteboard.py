@@ -103,5 +103,3 @@ if __name__ == "__main__":
         answer_eyes = (input("Entrez 1 pour la ligne 1, 2 pour la ligne 2, ou 3 pour la ligne 3 : "))
         agent.clear()
         agent.gif_choice(answer_eyes)
-        
-        
