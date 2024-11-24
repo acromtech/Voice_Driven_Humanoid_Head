@@ -1,9 +1,13 @@
+import ctypes
+ctypes.CDLL("libsystemd.so", mode=ctypes.RTLD_GLOBAL)
+ctypes.CDLL("libuuid.so", mode=ctypes.RTLD_GLOBAL)  # Charge libuuid
+
 import ingescape as igs
 import time
 
 
 class Whiteboard:
-    def __init__(self, agent_name="Whiteboard", device="Wi-Fi", port=5670):
+    def __init__(self, agent_name="Whiteboard", device="wlan0", port=5670):
         """Initialisation de l'agent et des configurations de base."""
         self.agent_name = agent_name
         self.device = device

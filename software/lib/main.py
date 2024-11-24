@@ -2,14 +2,22 @@ import time
 import threading
 from lib.AudioTranscription import AudioTranscription
 from lib.Decision import Decision
+from lib.Whiteboard import Whiteboard
 from lib.TextToSpeech import TextToSpeech
 
-simulation_mode = False
+simulation_mode = True
 
 def execute_eyes_animation(eye_left, eye_right, answer_eyes):
-    eye_left.gif_choice(answer_eyes, speed_multiplier=1.0)
-    eye_right.gif_choice(answer_eyes, speed_multiplier=1.0)
-    print("execute anim:", answer_eyes)
+    if answer_eyes == "blink_fast":
+        print("Blinking eyes...")
+        eye_left.openEye()
+        eye_right.openEye()
+    elif answer_eyes == "smile":
+        print("Closing eyes...")
+        eye_left.closeEye()
+        eye_right.closeEye()
+    else:
+        print("No eye animation specified.")
 
 def execute_mouth_animation(mouth, answer_mouth):
     if answer_mouth == "open":
@@ -30,19 +38,25 @@ def execute_movement(answer_move):
         print("No movement specified.")
 
 def execute_tts(text_to_speech, answer_text):
-    text_to_speech.generate_audio('fr', answer_text)
+    if answer_text:
+        print(f"Playing TTS response: {answer_text}")
+        text_to_speech.generate_audio('fr', answer_text)
+    else:
+        print("No text-to-speech response specified.")
+
 
 def main():
     # Initialize modules
-    if simulation_mode == False:
+    if simulation_mode == False
         from lib.AnimatedScreen import AnimatedScreen
-        eye_left = AnimatedScreen(bus=0, device=0, rst=27, dc=25, bl=23)
-        eye_right = AnimatedScreen(bus=0, device=1, rst=22, dc=24, bl=26)
-        mouth = AnimatedScreen(bus=1, device=0, rst=5, dc=19, bl=6)
+        eye_left = AnimatedScreen(bus_eyes=0, device_eye_left=0, rst_eye_left=27, dc_eye_left=25, bl_eye_left=23)
+        eye_right = AnimatedScreen(bus_eyes=0, device_eye_right=1, rst_eye_right=22, dc_eye_right=24, bl_eye_right=26)
+        mouth = AnimatedScreen(bus_mouth=1, device_mouth=0, rst_mouth=5, dc_mouth=19, bl_mouth=6)
     text_to_speech = TextToSpeech(playback_device_name="UACDemoV1.0", sample_rate=48000, speed_factor=1.15)
     audio_transcription = AudioTranscription(recording_device_name="USB PnP Sound Device", playback_device_name="UACDemoV1.0", mic_sample_rate=44100, silence_threshold=0.02, silence_duration=0.5) 
     decision = Decision()
-
+    # whiteboard = Whiteboard(agent_name="Whiteboard", device="wlo1", port=5670)
+    
     try:
         print("Waiting for a voice command...")
         while True:
@@ -51,12 +65,16 @@ def main():
 
             if message_text:
                 print(f"Received command: {message_text}")
+                # METTRE ICI L'ENVOIS DU MESSAGE TRANSCRIT VERS LE WHITEBOARD
                 answer_text, answer_move, answer_eyes, answer_mouth = decision.get_response(message_text)
                 print(f"Response: {answer_text}")
                 print(f"Planned movement: {answer_move}")
                 print(f"Eye animation: {answer_eyes}")
                 print(f"Mouth animation: {answer_mouth}")
-                if simulation_mode == False:
+		        # METTRE ICI L'ENVOIS DU MESSAGE DE REPONSE VERS LE WHITEBOARD
+		        text_to_speech.generate_audio('fr', answer_text)
+		        
+                if simulation_mode == False
                     # Threads pour les différentes actions
                     threads = [
                         threading.Thread(target=text_to_speech.generate_audio, args=('fr', answer_text)),
@@ -83,4 +101,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

@@ -1,11 +1,14 @@
 import random
 import time
 import re
-from Whiteboard import Whiteboard
+if __name__ == "__main__":
+    from Whiteboard import Whiteboard
+else:
+    from lib.Whiteboard import Whiteboard
 
 class Decision:
     def __init__(self):
-        self.agent = Whiteboard(agent_name="Whiteboard", device="Wi-Fi", port=5670)
+        self.agent = Whiteboard(agent_name="Whiteboard", device="wlo1", port=5670)
         self.responses = {
             "bonjour": {
                 "answer_text": "Bonjour, comment puis-je vous aider ?",

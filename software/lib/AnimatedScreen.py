@@ -25,18 +25,13 @@ class AnimatedScreen:
         self.display = LCD_1inch28.LCD_1inch28(spi=self.spi, rst=rst, dc=dc, bl=bl)
         self.display.Init()
         self.display.clear()
-        self.gif_urls = [
-            "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExc2hmc3czZnNpcG1rZTlzdW84MGJlejBhd3Y4eTN6MzBmMDl1N3JsbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/qXJMjb6HfXG7AFyBTR/giphy.gif",
-            "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjUwdWcxb2Y4b2EyMGF4Nmc4bXFwaWkyaGh0NmVsejF6cm1xZXV5ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/4UTrdaK7vh0ySB7EUm/giphy.gif",
-            "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZm94dzh1MWo2emV0dDN6MTF6enNxcDF1ZWhwNXkzZDJsaGpwY2Q5NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YmN6he2EO2JHfOPiZ1/giphy.gif",
-        ]
-        
+
     def display_img(self, pathImage, delay=0.1):
         """Affiche une image statique."""
         self.display.ShowImage(Image.open(pathImage))
         time.sleep(delay)
 
-    def display_gif(self, gif_path, stop_event, speed_multiplier=1.0):
+    def display_gif(self, gif_path, speed_multiplier=1.0):
         """
         Affiche un GIF animé sur cet écran. S'arrête si `stop_event` est déclenché.
         :param gif_path: Chemin vers le fichier GIF
@@ -46,26 +41,22 @@ class AnimatedScreen:
         try:
             gif = Image.open(gif_path)
             for frame in ImageSequence.Iterator(gif):
-                if stop_event.is_set():
-                    break
                 frame = frame.resize((240, 240))  # Adapter à la résolution de l'écran
                 self.display.ShowImage(frame)
                 frame_duration = gif.info.get('duration', 100) / 1000.0  # En secondes
                 time.sleep(frame_duration * speed_multiplier)
         except Exception as e:
             logging.error(f"Erreur lors de l'affichage du GIF : {e}")
-     
-    def gif_choice(self, answer, stop_event, speed_multiplier=1.0):
-    	if answer_eyes == "coeur":
-            gif_url = self.gif_urls[0]
-        elif answer_eyes == "etoile":
-            gif_url = self.gif_urls[1]
-        elif answer_eyes == "singe":
-            gif_url = self.gif_urls[2]
+
+    def gif_choice(self, answer, speed_multiplier=1.0):
+        if answer == "coeur":
+            self.display_gif("./pic/yeux_coeur.gif")
+        elif answer == "etoile":
+            self.display_gif("./pic/yeux_etoile.gif")
+        elif answer == "singe":
+            self.display_gif("./pic/yeux_singe.gif")
         else:
-            print("Choix invalide")
-            selected_gifs = []
-        self.display_gif(gif_url, 5)
+            print("No animation specified for this case")
 
     def clear(self):
         """Nettoie l'écran."""
@@ -111,16 +102,11 @@ if __name__ == "__main__":
     speed_eye_right = 0.01
     speed_mouth = 0.01
 
-    # Create stop events for each thread
-    stop_event_eye_left = threading.Event()
-    stop_event_eye_right = threading.Event()
-    stop_event_mouth = threading.Event()
-
     # Launch animations in separate threads
     try:
-        thread_eye_left = threading.Thread(target=animate_screen, args=(eye_left, gif_eye_left, stop_event_eye_left, speed_eye_left))
-        thread_eye_right = threading.Thread(target=animate_screen, args=(eye_right, gif_eye_right, stop_event_eye_right, speed_eye_right))
-        thread_mouth = threading.Thread(target=animate_screen, args=(mouth, gif_mouth, stop_event_mouth, speed_mouth))
+        thread_eye_left = threading.Thread(target=animate_screen, args=(eye_left, gif_eye_left, speed_eye_left))
+        thread_eye_right = threading.Thread(target=animate_screen, args=(eye_right, gif_eye_right, speed_eye_right))
+        thread_mouth = threading.Thread(target=animate_screen, args=(mouth, gif_mouth, speed_mouth))
 
         thread_eye_left.start()
         thread_eye_right.start()
