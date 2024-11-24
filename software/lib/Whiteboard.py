@@ -1,11 +1,12 @@
 import ctypes
 import os
-import ingescape as igs
 import time
 
 # Charger les bibliothèques nécessaires
 ctypes.CDLL("libsystemd.so", mode=ctypes.RTLD_GLOBAL)
 ctypes.CDLL("libuuid.so", mode=ctypes.RTLD_GLOBAL)
+
+import ingescape as igs
 
 class Whiteboard:
     def __init__(self, agent_name="RobotHead", device="wlan0", port=5670):
@@ -35,6 +36,7 @@ class Whiteboard:
             pic_path = os.path.join(base_path, "pic")
         else: 
             pic_path = os.path.join(base_path, "lib/pic")
+        pic_path = f"file:///{pic_path}"
 
         # Liste des chemins absolus des GIFs
         self.gif_paths = [
@@ -86,7 +88,8 @@ class Whiteboard:
             for i, gif_path in enumerate(selected_gifs):
                 x = start_x + i * self.gif_width  # Position horizontale du GIF
                 self.add_image(gif_path, x, center_y, self.gif_width, self.gif_height)
-
+    def stop(self):
+        igs.stop()
 
 def Message_Text_input_callback(io_type, name, value_type, value, my_data):
     """Callback pour la réception de messages."""
@@ -99,12 +102,16 @@ def Message_Text_input_callback(io_type, name, value_type, value, my_data):
 
 
 if __name__ == "__main__":
-    # Initialisation de l'agent
-    agent = Whiteboard()
+    try:
+        # Initialisation de l'agent
+        agent = Whiteboard()
 
-    while True:
+        while True:
         # Demander le choix de l'utilisateur
-        answer_eyes = input("Entrez 'coeur', 'etoile', ou 'singe' : ").strip().lower()
-        agent.clear()
-        agent.gif_choice(answer_eyes)
-
+            answer_eyes = input("Entrez 'coeur'/'etoile'/'singe' ou 'quitter': ").strip().lower()
+            agent.clear()
+            agent.gif_choice(answer_eyes)
+            if answer_eyes == 'quitter':
+                break
+    finally:
+        agent.stop()

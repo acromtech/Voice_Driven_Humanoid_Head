@@ -49,8 +49,9 @@ class AnimatedScreen:
             logging.error(f"Erreur lors de l'affichage du GIF : {e}")
 
     def gif_choice(self, answer, speed_multiplier=1.0):
+        base_path = os.getcwd()
         if __name__ == "__main__":
-        	pic_path = os.path.join(base_path, "pic")
+            pic_path = os.path.join(base_path, "pic")
         else: 
             pic_path = os.path.join(base_path, "lib/pic")
         if answer == "coeur":
