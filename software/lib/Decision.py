@@ -8,7 +8,7 @@ else:
 
 class Decision:
     def __init__(self):
-        self.agent = Whiteboard(agent_name="Whiteboard", device="wlo1", port=5670)
+        self.agent = Whiteboard()
         self.responses = {
             "bonjour": {
                 "answer_text": "Bonjour, comment puis-je vous aider ?",

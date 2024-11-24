@@ -7,7 +7,7 @@ import time
 
 
 class Whiteboard:
-    def __init__(self, agent_name="Whiteboard", device="wlan0", port=5670):
+    def __init__(self, agent_name="RobotHead", device="wlan0", port=5670):
         """Initialisation de l'agent et des configurations de base."""
         self.agent_name = agent_name
         self.device = device
@@ -96,7 +96,7 @@ def Message_Text_input_callback(io_type, name, value_type, value, my_data):
 
 if __name__ == "__main__":
     # Initialisation de l'agent
-    agent = Whiteboard(agent_name="Whiteboard", device="Wi-Fi", port=5670)
+    agent = Whiteboard()
     
     while True:
         # Demander le choix de l'utilisateur
