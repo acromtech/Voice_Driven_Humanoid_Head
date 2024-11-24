@@ -63,17 +63,17 @@ class RobotHead_class:
 
     def add_image(self, image_path, x, y, width, height):
         """Ajoute une image sur le tableau blanc."""
-        self.cpt = self.cpt + 2
-        igs.service_call("Whiteboard", "addImageFromUrl", (image_path, x, y, width, height), "")
+        self.cpt = self.cpt + 1
+        self.igs.service_call("Whiteboard", "addImageFromUrl", (image_path, x, y, width, height), "")
 
     def chat(self, message_text):
         """Envoie un message sur le tableau blanc."""
-        igs.service_call("Whiteboard", "chat", message_text, "")
+        self.igs.service_call("Whiteboard", "chat", message_text, "")
 
     def clear(self):
         """Efface le contenu du tableau blanc."""
         for i in range(self.cpt):
-            igs.service_call("Whiteboard", "remove", i, "")
+            self.igs.service_call("Whiteboard", "remove", i, "")
 
     def gif_choice(self, answer_eyes):
         """Affiche des GIFs en fonction de la sélection de l'utilisateur (yeux + bouche)."""
@@ -106,7 +106,7 @@ class RobotHead_class:
 
         # Placer le GIF de la bouche
         self.add_image(mouth_gif, start_x_mouth, start_y_mouth, self.gif_width, self.gif_height_line2)
-    
+
     def stop(self):
         self.igs.stop()
 
@@ -123,10 +123,9 @@ def Message_Text_input_callback(io_type, name, value_type, value, my_data):
 if __name__ == "__main__":
     try:
         # Initialisation de l'agent
-        agent = Whiteboard(device="Wi-Fi", simulation_mode=True) # Simulation
-        #agent = Whiteboard(device="wlan0", simulation_mode=False) # With RaspberryPi (RobotHead)
-        
-    while True:
+        #agent = RobotHead_class(device="Wi-Fi", simulation_mode=True) # Simulation
+        agent = RobotHead_class(device="wlan0", simulation_mode=False) # With RaspberryPi (RobotHead)
+        while True:
         # Demander le choix de l'utilisateur
             answer_eyes = input("Entrez 'coeur'/'etoile'/'singe' ou 'quitter': ").strip().lower()
             agent.clear()
@@ -134,4 +133,5 @@ if __name__ == "__main__":
             if answer_eyes == 'quitter':
                 break
     finally:
-        agent.stop()
+        #agent.stop()
+        pass

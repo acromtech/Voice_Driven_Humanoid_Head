@@ -4,7 +4,7 @@
 import ctypes
 import os
 import time
-import ingescape as igs
+# import ingescape as igs
 
 # Callback pour les inputs
 def Message_Text_input_callback(io_type, name, value_type, value, my_data):
@@ -17,9 +17,13 @@ def Message_Text_input_callback(io_type, name, value_type, value, my_data):
         print(f"Erreur dans Message_Text_input_callback : {e}")
 
 
-class RobotHead(igs.Agent):
+class RobotHead:
     def __init__(self, agent_name="RobotHead", device="Wi-Fi", port=5670, simulation_mode=True):
         super().__init__(agent_name, True)
+        if simulation_mode==False:
+            ctypes.CDLL("libsystemd.so", mode=ctypes.RTLD_GLOBAL)
+            ctypes.CDLL("libuuid.so", mode=ctypes.RTLD_GLOBAL)
+        import ingescape as igs
 
         # Initialisation des attributs personnalisés
         self.device = device
@@ -155,5 +159,5 @@ if __name__ == "__main__":
             if answer_eyes == 'quitter':
                 break
     finally:
-        agent.Stop(None, None)
+        pass
 
