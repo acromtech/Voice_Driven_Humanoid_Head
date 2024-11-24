@@ -2,7 +2,7 @@ import ctypes
 import os
 import time
 
-class RobotHead_class:
+class RobotHead:
     def __init__(self, agent_name="RobotHead", device="Wi-Fi", port=5670, simulation_mode=True):
         """Initialisation de l'agent et des configurations de base."""
         if simulation_mode == False:
@@ -56,7 +56,26 @@ class RobotHead_class:
             os.path.join(pic_path, "monkey.gif"),  # Singe GIF 2
             os.path.join(pic_path, "monkey.gif")  # Mouth GIF
         ]
-
+        
+        # Démarrage de l'agent
+        self.igs.definition_set_class("RobotHead")
+        self.igs.log_set_console(True)
+        self.igs.log_set_file(True, None)
+        self.igs.set_command_line(sys.executable + " " + " ".join(sys.argv))
+        self.igs.debug(f"Ingescape version: {igs.version()} (protocol v{igs.protocol()})")
+        self.igs.service_init("add_image", service_callback, None)
+        self.igs.service_arg_add("add_image", "image_path", igs.STRING_T)
+        self.igs.service_arg_add("add_image", "x", igs.INTEGER_T)
+        self.igs.service_arg_add("add_image", "y", igs.INTEGER_T)
+        self.igs.service_arg_add("add_image", "width", igs.INTEGER_T)
+        self.igs.service_arg_add("add_image", "height", igs.INTEGER_T)
+        self.igs.service_init("chat", service_callback, None)
+        self.igs.service_arg_add("chat", "message_text", igs.STRING_T)
+        self.igs.service_init("clear", service_callback, None)
+        self.igs.service_init("gif_choice", service_callback, None)
+        self.igs.service_arg_add("gif_choice", "answer_eyes", igs.STRING_T)
+        self.igs.service_init("stop", service_callback, None)
+        
         # Démarrage de l'agent
         self.igs.start_with_device(self.device, self.port)
         time.sleep(2)  # Pause pour s'assurer que le service démarre correctement
@@ -133,5 +152,4 @@ if __name__ == "__main__":
             if answer_eyes == 'quitter':
                 break
     finally:
-        #agent.stop()
-        pass
+        agent.stop()
