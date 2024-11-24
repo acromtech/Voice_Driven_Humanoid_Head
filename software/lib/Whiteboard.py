@@ -2,14 +2,16 @@ import ctypes
 import os
 import time
 
+
 class Whiteboard:
-    def __init__(self, agent_name="RobotHead", device="wlan0", port=5670, simulation_mode=True):
+    def __init__(self, agent_name="RobotHead", device="Wi-Fi", port=5670, simulation_mode=True):
         """Initialisation de l'agent et des configurations de base."""
         if simulation_mode == False:
             # Charger les bibliothèques nécessaires
             ctypes.CDLL("libsystemd.so", mode=ctypes.RTLD_GLOBAL)
             ctypes.CDLL("libuuid.so", mode=ctypes.RTLD_GLOBAL)
-	    import ingescape as igs
+        import ingescape as igs
+        self.igs = igs
 
         self.agent_name = agent_name
         self.device = device
@@ -17,10 +19,10 @@ class Whiteboard:
         self.cpt = 0
 
         # Configuration de l'agent
-        igs.agent_set_name(self.agent_name)
+        self.igs.agent_set_name(self.agent_name)
 
         # Observation des inputs
-        igs.observe_input("message_text", Message_Text_input_callback, self)
+        self.igs.observe_input("message_text", Message_Text_input_callback, self)
 
         self.grid_columns = 2
         self.total_width = 800  # Largeur totale disponible
@@ -49,22 +51,22 @@ class Whiteboard:
         ]
 
         # Démarrage de l'agent
-        igs.start_with_device(self.device, self.port)
+        self.igs.start_with_device(self.device, self.port)
         time.sleep(2)  # Pause pour s'assurer que le service démarre correctement
 
     def add_image(self, image_path, x, y, width, height):
         """Ajoute une image sur le tableau blanc."""
         self.cpt = self.cpt + 2
-        igs.service_call("Whiteboard", "addImageFromUrl", (image_path, x, y, width, height), "")
+        self.igs.service_call("Whiteboard", "addImageFromUrl", (image_path, x, y, width, height), "")
 
     def chat(self, message_text):
         """Envoie un message sur le tableau blanc."""
-        igs.service_call("Whiteboard", "chat", message_text, "")
+        self.igs.service_call("Whiteboard", "chat", message_text, "")
 
     def clear(self):
         """Efface le contenu du tableau blanc."""
         for i in range(self.cpt):
-            igs.service_call("Whiteboard", "remove", i, "")
+            self.igs.service_call("Whiteboard", "remove", i, "")
 
     def gif_choice(self, answer_eyes):
         """Affiche des GIFs en fonction de la sélection de l'utilisateur."""
@@ -89,7 +91,7 @@ class Whiteboard:
                 x = start_x + i * self.gif_width  # Position horizontale du GIF
                 self.add_image(gif_path, x, center_y, self.gif_width, self.gif_height)
     def stop(self):
-        igs.stop()
+        self.igs.stop()
 
 def Message_Text_input_callback(io_type, name, value_type, value, my_data):
     """Callback pour la réception de messages."""
@@ -104,9 +106,10 @@ def Message_Text_input_callback(io_type, name, value_type, value, my_data):
 if __name__ == "__main__":
     try:
         # Initialisation de l'agent
-        agent = Whiteboard()
-
-        while True:
+        agent = Whiteboard(device="Wi-Fi", simulation_mode=True) # Simulation
+        #agent = Whiteboard(device="wlan0", simulation_mode=False) # With RaspberryPi (RobotHead)
+        
+    while True:
         # Demander le choix de l'utilisateur
             answer_eyes = input("Entrez 'coeur'/'etoile'/'singe' ou 'quitter': ").strip().lower()
             agent.clear()
