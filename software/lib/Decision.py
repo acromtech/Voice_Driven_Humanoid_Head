@@ -55,13 +55,13 @@ class Decision:
             "amoureux": {
                 "answer_text": "Je suis tellement heureux, regarde-moi !",
                 "answer_move": "head_nod",
-                "answer_eyes": "coeur",
+                "answer_eyes": "amoureux",
                 "answer_mouth": "big_smile"
             },
             "heureux": {
                 "answer_text": "Wow, c'est incroyable !",
                 "answer_move": "head_tilt_back",
-                "answer_eyes": "etoile",
+                "answer_eyes": "heureux",
                 "answer_mouth": "open_wide"
             }
         }
@@ -129,6 +129,8 @@ class Decision:
             if answer_mouth:
                 self.responses[keyword]["answer_mouth"] = answer_mouth
 
+    def reset(self):
+        self.agent.clear_all()
 
 if __name__ == "__main__":
     # Création d'un objet Decision
@@ -158,6 +160,7 @@ if __name__ == "__main__":
         print("Yeux:", eyes)
         print("-------------")
         input("appuyez sur entrer")
+    decision.reset()
 """
     # Ajouter une nouvelle réponse et tester
     decision.add_response("salut", "Salut, comment ça va ?", "head_nod", "blink_slow")

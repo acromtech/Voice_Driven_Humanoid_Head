@@ -38,12 +38,16 @@ class RobotHead:
         self.gif_width = self.cell_width * 0.9
         self.gif_height_line1 = self.cell_height_line1 * 0.9
         self.gif_height_line2 = self.cell_height_line2 * 0.9
+
         # Chemin absolu basé sur le répertoire courant et le sous-dossier 'pic'
         base_path = os.getcwd()
-        if __name__ == "__main__":
-            pic_path = os.path.join(base_path, "pic")
-        else:
-            pic_path = os.path.join(base_path, "lib/pic")
+
+        # Vérifie si "/lib" est déjà dans le chemin
+        if "/lib" not in base_path:
+            base_path = os.path.join(base_path, "lib")
+
+        # Construction du chemin vers le dossier "pic"
+        pic_path = os.path.join(base_path, "pic")
         pic_path = f"file:///{pic_path}"
 
         # Liste des chemins absolus des GIFs
@@ -74,6 +78,10 @@ class RobotHead:
         """Efface le contenu du tableau blanc."""
         for i in range(self.cpt):
             self.igs.service_call("Whiteboard", "remove", i, "")
+
+    def clear_all(self):
+        """Efface le contenu du Whiteboard et du chat"""
+        self.igs.service_call("Whiteboard", "clear", None, "")
 
     def gif_choice(self, answer_eyes):
         """Affiche des GIFs en fonction de la sélection de l'utilisateur (yeux + bouche)."""
@@ -131,7 +139,7 @@ if __name__ == "__main__":
             agent.clear()
             agent.gif_choice(answer_eyes)
             if answer_eyes == 'quitter':
-                agent.clear()
+                agent.clear_all()
                 break
     finally:
         pass
