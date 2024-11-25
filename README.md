@@ -97,7 +97,7 @@ The robot head is controlled by a Python-based system that listens to user input
         
     - **Seamless Integration with Decisions**:
           - The `Decision` class matches the transcription to a predefined response and updates both the whiteboard and chat interfaces accordingly.
-            - Head movements are controlled by **MyActuator servos**, providing realistic motions such as head tilts and shake.
+            
 
 4. **Decision-Making Class**:
     - The **Decision** class, using pre-programmed responses (e.g., greetings, commands), decides how the robot should respond based on the input.
