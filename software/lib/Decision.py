@@ -50,7 +50,7 @@ class Decision:
                 "answer_text": "Ooo Ooo Ah Ah !",
                 "answer_move": "head_bob",
                 "answer_eyes": "animal",
-                "answer_mouth": "smile"
+                "answer_mouth": "big_smile"
             },
             "amoureux": {
                 "answer_text": "Je suis tellement heureux, regarde-moi !",
@@ -62,7 +62,7 @@ class Decision:
                 "answer_text": "Wow, c'est incroyable !",
                 "answer_move": "head_tilt_back",
                 "answer_eyes": "heureux",
-                "answer_mouth": "open_wide"
+                "answer_mouth": "big_smile"
             }
         }
         self.default_response = {

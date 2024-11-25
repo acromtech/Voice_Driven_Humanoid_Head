@@ -62,7 +62,7 @@ class RobotHead:
             os.path.join(pic_path, "mouth3.png"),  # Mouth IMAGE PNG
             os.path.join(pic_path, "neutre.gif")  # Mouth GIF
         ]
-        
+
         # Démarrage de l'agent
         self.igs.start_with_device(self.device, self.port)
         time.sleep(2)  # Pause pour s'assurer que le service démarre correctement
