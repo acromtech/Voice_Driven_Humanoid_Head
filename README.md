@@ -80,14 +80,14 @@ The robot head is controlled by a Python-based system that listens to user input
   2.2. **Chat Interface**: Voice Interaction and Transcription
         The **chat interface** provides real-time transcription of user speech and displays the robot's textual responses. It simulates a conversation log, making it easy for users to follow the interaction. Key components include:
         
-    - **Speech Recognition**: 
+   - **Speech Recognition**: 
           - The **Whisper** model transcribes user speech into text, which is displayed in the chat.
           - Example: If the user says, *"Bonjour, robot !"*, the chat log will show:
             ```
             User: Bonjour, robot !
             ```
         
-    - **Text-to-Speech Responses**: 
+  - **Text-to-Speech Responses**: 
           - The robot generates a voice response using **gTTS** and simultaneously displays the response text in the chat.
           - Example: If the robot responds, *"Bonjour, comment puis-je vous aider ?"*, the chat log will show:
             ```
@@ -95,7 +95,7 @@ The robot head is controlled by a Python-based system that listens to user input
             ```
         <img width="959" alt="image" src="https://github.com/user-attachments/assets/9446868b-976f-4ffa-b07d-e14e1ab28012">
         
-        - **Seamless Integration with Decisions**:
+    - **Seamless Integration with Decisions**:
           - The `Decision` class matches the transcription to a predefined response and updates both the whiteboard and chat interfaces accordingly.
             - Head movements are controlled by **MyActuator servos**, providing realistic motions such as head tilts and shake.
 
