@@ -417,6 +417,78 @@
                 "className": "RobotHead",
                 "color": 0,
                 "definition": {
+                    "inputs": [
+                        {
+                            "name": "agent_name",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "device",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "port",
+                            "type": "INTEGER"
+                        },
+                        {
+                            "name": "simulation_mode",
+                            "type": "BOOL"
+                        }
+                    ],
+                    "services": [
+                        {
+                            "arguments": [
+                                {
+                                    "name": "image_path",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "x",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "y",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "width",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "height",
+                                    "type": "INTEGER"
+                                }
+                            ],
+                            "name": "add_image"
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "message_text",
+                                    "type": "STRING"
+                                }
+                            ],
+                            "name": "chat"
+                        },
+                        {
+                            "name": "clear"
+                        },
+                        {
+                            "name": "clear_all"
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "answer_eyes",
+                                    "type": "STRING"
+                                }
+                            ],
+                            "name": "gif_choice"
+                        },
+                        {
+                            "name": "stop"
+                        }
+                    ]
                 },
                 "description": "",
                 "icon": -1,
