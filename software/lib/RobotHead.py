@@ -136,8 +136,8 @@ def Message_Text_input_callback(io_type, name, value_type, value, my_data):
 if __name__ == "__main__":
     try:
         # Initialisation de l'agent
-        agent = RobotHead(device="Wi-Fi", simulation_mode=True) # Simulation
-        #agent = RobotHead(device="wlo1", simulation_mode=True) # Simulation
+        #agent = RobotHead(device="Wi-Fi", simulation_mode=True) # Simulation
+        agent = RobotHead(device="wlo1", simulation_mode=True) # Simulation
         #agent = RobotHead(device="wlan0", simulation_mode=False) # With RaspberryPi (RobotHead)
         while True:
         # Demander le choix de l'utilisateur
