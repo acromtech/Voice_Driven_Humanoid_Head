@@ -32,7 +32,7 @@ This project, part of a distributed interaction course at UPSSITECH, aims to int
 ---
 
 ## Software Setup
-To ensure seamless installation and configuration, use the provided `setup.sh` script. This script handles all necessary installations, including Python 3.11, Ingescape, and other dependencies.
+To ensure seamless installation and configuration, use the provided [setup_software.sh](./software/setup_software.sh) script. This script handles all necessary installations, including Python 3.11, Ingescape, and other dependencies.
 
 ### Key Software
 - **Operating System**: [Ubuntu 24.04 LTS Server](https://ubuntu.com/download/server)
@@ -118,4 +118,4 @@ The main goals of this project are:
 
 
 
-For installation and setup, please refer to the [setup.sh](./software/setup.sh) script. Follow its execution steps to prepare your environment.
+For installation and setup, please refer to the [setup_software.sh](./software/setup_software.sh) script. Follow its execution steps to prepare your environment.
