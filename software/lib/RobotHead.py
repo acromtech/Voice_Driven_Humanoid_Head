@@ -2,6 +2,10 @@ import ctypes
 import os
 import time
 
+def service_callback(sender_agent_name, sender_agent_uuid, service_name, arguments, token, my_data):
+    pass
+    # add code here if needed
+    
 class RobotHead:
     def __init__(self, agent_name="RobotHead", device="Wi-Fi", port=5670, simulation_mode=True):
         """Initialisation de l'agent et des configurations de base."""
@@ -19,10 +23,24 @@ class RobotHead:
 
         # Configuration de l'agent
         self.igs.agent_set_name(self.agent_name)
-
-        # Observation des inputs
-        self.igs.observe_input("message_text", Message_Text_input_callback, self)
-
+        """
+        self.igs.definition_set_class("RobotHead")
+        self.igs.log_set_console(True)
+        self.igs.log_set_file(True, None)
+        self.igs.service_init("add_image", service_callback, None)
+        self.igs.service_arg_add("add_image", "image_path", igs.STRING_T)
+        self.igs.service_arg_add("add_image", "x", igs.INTEGER_T)
+        self.igs.service_arg_add("add_image", "y", igs.INTEGER_T)
+        self.igs.service_arg_add("add_image", "width", igs.INTEGER_T)
+        self.igs.service_arg_add("add_image", "height", igs.INTEGER_T)
+        self.igs.service_init("chat", service_callback, None)
+        self.igs.service_arg_add("chat", "message_text", igs.STRING_T)
+        self.igs.service_init("clear", service_callback, None)
+        self.igs.service_init("clear_all", service_callback, None)
+        self.igs.service_init("gif_choice", service_callback, None)
+        self.igs.service_arg_add("gif_choice", "answer_eyes", igs.STRING_T)
+        self.igs.service_init("stop", service_callback, None)
+	"""
         # Disposition du tableau (3 colonnes, 2 lignes)
         self.grid_columns = 3
         self.grid_rows = 2
@@ -123,27 +141,18 @@ class RobotHead:
     def stop(self):
         self.igs.stop()
 
-def Message_Text_input_callback(io_type, name, value_type, value, my_data):
-    """Callback pour la réception de messages."""
-    try:
-        agent_object = my_data
-        assert isinstance(agent_object, RobotHead)
-        agent_object.chat("hello")
-    except Exception as e:
-        print(f"Erreur dans Message_Text_input_callback : {e}")
-
-
 if __name__ == "__main__":
     try:
         # Initialisation de l'agent
         #agent = RobotHead(device="Wi-Fi", simulation_mode=True) # Simulation
-        #agent = RobotHead(device="wlo1", simulation_mode=True) # Simulation
-        agent = RobotHead(device="wlan0", simulation_mode=False) # With RaspberryPi (RobotHead)
+        agent = RobotHead(device="wlo1", simulation_mode=True) # Simulation
+        #agent = RobotHead(device="wlan0", simulation_mode=False) # With RaspberryPi (RobotHead)
         while True:
         # Demander le choix de l'utilisateur
             answer_eyes = input("Entrez 'amoureux'/'heureux'/'animal' ou 'quitter': ").strip().lower()
+            answer_mouth = input("Entrez 'big_smile'/'smile' ou 'quitter': ").strip().lower()
             agent.clear()
-            agent.gif_choice(answer_eyes)
+            agent.gif_choice(answer_eyes, answer_mouth)
             if answer_eyes == 'quitter':
                 agent.clear_all()
                 break

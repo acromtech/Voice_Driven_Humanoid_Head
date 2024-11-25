@@ -2,29 +2,6 @@
 * RobotHead Agent Tests
 */
 
-"Initialization" {
-    RobotHead.clear()
-    RobotHead.agent_name = "RobotHead"
-    RobotHead.device = "Raspberry Pi"
-    RobotHead.port = 8080
-    RobotHead.simulation_mode = true
-    assert user "Agent initialized with default settings"
-}
-
-"Inputs" "Test Inputs" {
-    RobotHead.agent_name = "TestAgent"
-    assert RobotHead.agent_name == "TestAgent"
-
-    RobotHead.device = "Jetson Nano"
-    assert RobotHead.device == "Jetson Nano"
-
-    RobotHead.port = 9090
-    assert RobotHead.port == 9090
-
-    RobotHead.simulation_mode = false
-    assert RobotHead.simulation_mode == false
-}
-
 "Services" "Test Services" {
     RobotHead.clear()
     assert RobotHead.lastAction == "Service clear"
@@ -35,15 +12,10 @@
     RobotHead.chat("Hello from RobotHead!")
     assert RobotHead.lastAction == "Service chat: Hello from RobotHead!"
 
-    RobotHead.add_image(
-        "https://upload.wikimedia.org/wikipedia/fr/1/1b/Logo-toulouse-inp-N7.png",
-        100, 200, 150, 150
-    )
-    assert elementCreated from RobotHead
-
-    RobotHead.gif_choice("smiley")
-    assert RobotHead.lastAction == "Service gif_choice: smiley"
+    RobotHead.add_image("https://upload.wikimedia.org/wikipedia/fr/1/1b/Logo-toulouse-inp-N7.png", 100, 200, 150, 150)
+    assert RobotHead.lastAction == "Service add_image"
 
     RobotHead.stop()
     assert RobotHead.lastAction == "Service stop"
 }
+

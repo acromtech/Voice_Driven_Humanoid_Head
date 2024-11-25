@@ -853,6 +853,16 @@
                 },
                 {
                     "agent": {
+                        "instances": [
+                            {
+                                "commandLine": "/usr/bin/python3 main.py RobotHead wlo1 5670",
+                                "hostname": "alexis-ZenBook-UX482EA-UX482EA",
+                                "ip": "192.168.1.91",
+                                "isAttachedToCircle": false,
+                                "mac": "B0:60:88:AD:65:C9",
+                                "uuid": "213e6f39-fed1-4708-9140-53a4231bc68b"
+                            }
+                        ]
                     },
                     "children": [
                         {
