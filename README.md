@@ -32,7 +32,7 @@ This project, part of a distributed interaction course at UPSSITECH, aims to int
 ---
 
 ## Software Setup
-To ensure seamless installation and configuration, use the provided `setup.sh` script. This script handles all necessary installations, including Python 3.11, Ingescape, and other dependencies.
+To ensure seamless installation and configuration, use the provided [setup_software.sh](./software/setup_software.sh) script. This script handles all necessary installations, including Python 3.11, Ingescape, and other dependencies.
 
 ### Key Software
 - **Operating System**: [Ubuntu 24.04 LTS Server](https://ubuntu.com/download/server)
@@ -43,11 +43,82 @@ To ensure seamless installation and configuration, use the provided `setup.sh` s
   - [Python 3.11](https://www.python.org/downloads/release/python-3110/)
 
 ---
+## How It Works
+
+The robot head is controlled by a Python-based system that listens to user input (voice commands) and responds with dynamic actions. The core functionalities are:
+
+1. **Voice Interaction**:
+    - **Whisper** is used to transcribe speech in real-time.
+    - **gTTS** is used to generate speech responses from text.
+
+2. **Dynamic Eye and Mouth & Head Movements**:
+    - Eye and mouth animations are shown using **Waveshare LCD displays** and on the **Whiteboard** simultaneously.
+       
+
+    2.1. **Whiteboard Interface**: Animated Visual Feedback
+        The **whiteboard** is a visual interface where animated graphics (GIFs) are displayed to represent the robot's "expressions." This interface leverages the LCD screens for a more engaging interaction experience. Key aspects include:
+        
+        - **Dynamic Eye Movements**: 
+          - Depending on the robot's emotional state or context, the eyes can blink, look left or right, and even display special animations (e.g., "amoureux" for love or "animal" for playful expressions).
+          - The animations are displayed on **Waveshare 1.28inch Round LCD modules**, with GIFs or specific visuals representing the state.
+        
+        - **Mouth Animations**: 
+          - Along with eye movements, mouth visuals change to reflect emotions (e.g., smile, wide open).
+          - These animations provide non-verbal feedback that complements voice responses.
+        
+        - **Integration with Decisions**: 
+          - The `Decision` class drives the updates on the whiteboard interface by selecting appropriate GIFs or animations based on user input and predefined responses.
+        
+        **Example Workflow**:
+        - If the user says, "heureux," the robot's eyes will display the "star" GIF, and the mouth will show a "moving mouth."
+          <img width="959" alt="image" src="https://github.com/user-attachments/assets/b47c1adb-7715-4e2c-89aa-2d8919faf96f">
+
+
+        
+   
+    2.2. **Chat Interface**: Voice Interaction and Transcription
+        The **chat interface** provides real-time transcription of user speech and displays the robot's textual responses. It simulates a conversation log, making it easy for users to follow the interaction. Key components include:
+        
+        - **Speech Recognition**: 
+          - The **Whisper** model transcribes user speech into text, which is displayed in the chat.
+          - Example: If the user says, *"Bonjour, robot !"*, the chat log will show:
+            ```
+            User: Bonjour, robot !
+            ```
+        
+        - **Text-to-Speech Responses**: 
+          - The robot generates a voice response using **gTTS** and simultaneously displays the response text in the chat.
+          - Example: If the robot responds, *"Bonjour, comment puis-je vous aider ?"*, the chat log will show:
+            ```
+            Robot: Bonjour, comment puis-je vous aider ?
+            ```
+        <img width="959" alt="image" src="https://github.com/user-attachments/assets/9446868b-976f-4ffa-b07d-e14e1ab28012">
+        
+        - **Seamless Integration with Decisions**:
+          - The `Decision` class matches the transcription to a predefined response and updates both the whiteboard and chat interfaces accordingly.
+            - Head movements are controlled by **MyActuator servos**, providing realistic motions such as head tilts and shake.
+
+3. **Decision-Making Class**:
+    - The **Decision** class, using pre-programmed responses (e.g., greetings, commands), decides how the robot should respond based on the input.
+    - The `get_response` function processes the message, checks for greetings and keywords, and updates the robot’s movements and facial expressions accordingly.
+
+
+4. **Future Enhancements**:
+    - Facial and gesture recognition using **OpenCV** and **MediaPipe**.
+    - Integration of the **Raspberry Pi Camera** for improved interaction.
+
+---
 
 ## Project Goals
-The primary objective is to create an interactive platform combining:
-1. **Visual Feedback**: Eye animations through dynamic displays.
-2. **Voice Interaction**: Real-time transcription and response.
-3. **Future Enhancements**: Facial and gesture recognition to deepen human-robot interaction.
 
-For installation and setup, please refer to the [setup.sh](./setup.sh) script. Follow its execution steps to prepare your environment.
+The main goals of this project are:
+
+- **Real-time voice interaction**: Provide a smooth, conversational interaction with the robot using voice commands.
+- **Dynamic feedback**: Display visual feedback through dynamic eye movements and animated facial expressions.
+- **Extendable platform**: Build a foundation for further features like facial recognition, gesture tracking, and more complex interactions.
+
+---
+
+
+
+For installation and setup, please refer to the [setup_software.sh](./software/setup_software.sh) script. Follow its execution steps to prepare your environment.
