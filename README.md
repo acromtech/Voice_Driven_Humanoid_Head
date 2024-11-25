@@ -10,8 +10,6 @@ This project, part of a distributed interaction course at UPSSITECH, aims to int
 - **Real-Time Transcription with Whisper**: Integration of [OpenAI's Whisper](https://github.com/openai/whisper) for seamless audio transcription.
 - **Future Development**: Facial and gesture recognition via OpenCV and MediaPipe, leveraging a [Raspberry Pi Camera Module v2 8MP](https://www.kubii.com/fr/cameras-capteurs/1653-module-camera-v2-8mp-kubii-652508442112.html).
 
----
-
 ## Hardware Setup
 - **Core Components**:
   - 1x [Raspberry Pi 4 Model B - 8GB](https://www.kubii.com/fr/cartes-nano-ordinateurs/2955-raspberry-pi-4-modele-b-8gb-5056561800356.html?gad_source=1&gclid=Cj0KCQjwmt24BhDPARIsAJFYKk0vGSifNh3i6yDBs-2KhJvjr_JfaW2df-r5NaNHU3-WDXiL-hcrOdkaAghiEALw_wcB) (running [Ubuntu 24.04 LTS Server](https://ubuntu.com/download/server))
@@ -41,6 +39,41 @@ To ensure seamless installation and configuration, use the provided [setup_softw
   - [OpenAI's Whisper](https://github.com/openai/whisper)
 - **Python Version**:
   - [Python 3.11](https://www.python.org/downloads/release/python-3110/)
+
+ ## System Architecture
+<img width="878" alt="image" src="https://github.com/user-attachments/assets/179a303a-4917-4b71-b2dd-fb0eb7199d7a">
+
+## Installation
+Please use the following command to install the dependencies :
+```
+sudo bash setup_laptop.sh
+```
+You can also modify all the parameters of the devices into the main.py file
+```python
+# CONFIG RASPBERRY PI
+"""
+simulation_mode = False
+device = "wlan0"
+playback_device_name = "UACDemoV1.0"
+sample_rate = 48000
+speed_factor_tts = 1.15
+recording_device_name = "USB PnP Sound Device"
+mic_sample_rate = 44100
+silence_threshold = 0.02
+silence_duration = 0.5
+"""
+
+# YOUR LAPTOP CONFIG
+simulation_mode = True
+device = "wlo1"
+playback_device_name = "UACDemoV1.0"
+sample_rate = 48000
+speed_factor_tts = 1.15
+recording_device_name = "USB PnP Sound Device"
+mic_sample_rate = 44100
+silence_threshold = 0.02
+silence_duration = 0.5
+```
 
 ---
 ## How It Works
@@ -128,20 +161,10 @@ For unit testing:
 - Adjust the device configuration in the agent initialization at the start of each script. Replace `"Wi-Fi"` with your specific device (e.g., `"wlan0"`) as follows:
   ```python
   agent = RobotHead(device="Wi-Fi", simulation_mode=True)
-
-    
-
+  ```
 ### 3. Agent Testing
 To evaluate the agent's performance:
 - Execute the [test_robothead.igsscript](./software/test_robothead.igsscript) script: This script contains predefined scenarios to test the agent’s behavior.
-
-
-
----
-
-## System Architecture
-<img width="878" alt="image" src="https://github.com/user-attachments/assets/179a303a-4917-4b71-b2dd-fb0eb7199d7a">
-
 
 ---
 
