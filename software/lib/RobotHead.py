@@ -1,7 +1,7 @@
 import ctypes
 import os
 import time
-
+    
 class RobotHead:
     def __init__(self, agent_name="RobotHead", device="Wi-Fi", port=5670, simulation_mode=True):
         """Initialisation de l'agent et des configurations de base."""
@@ -19,7 +19,7 @@ class RobotHead:
 
         # Configuration de l'agent
         self.igs.agent_set_name(self.agent_name)
-
+        
         # Observation des inputs
         self.igs.observe_input("message_text", Message_Text_input_callback, self)
 
@@ -30,8 +30,8 @@ class RobotHead:
         self.total_height = 600
 
         # Hauteur de chaque ligne (ligne 1 plus petite)
-        self.cell_height_line1 = self.total_height * 0.33  # 33% de la hauteur totale
-        self.cell_height_line2 = self.total_height * 0.67  # 67% de la hauteur totale
+        self.cell_height_line1 = self.total_height * 0.4  # 33% de la hauteur totale
+        self.cell_height_line2 = self.total_height * 0.6  # 67% de la hauteur totale
 
         # Largeur de chaque colonne
         self.cell_width = self.total_width / self.grid_columns
@@ -58,7 +58,7 @@ class RobotHead:
             os.path.join(pic_path, "star.gif"),  # Etoile GIF 2
             os.path.join(pic_path, "monkey.gif"),  # Singe GIF 1
             os.path.join(pic_path, "monkey.gif"),  # Singe GIF 2
-            os.path.join(pic_path, "monkey.gif")  # Mouth GIF
+            os.path.join(pic_path, "mouth2.gif")  # Mouth GIF
         ]
         
         # Démarrage de l'agent
@@ -122,17 +122,18 @@ def Message_Text_input_callback(io_type, name, value_type, value, my_data):
     """Callback pour la réception de messages."""
     try:
         agent_object = my_data
-        assert isinstance(agent_object, Whiteboard)
+        assert isinstance(agent_object, RobotHead)
         agent_object.chat("hello")
     except Exception as e:
         print(f"Erreur dans Message_Text_input_callback : {e}")
 
 
 if __name__ == "__main__":
+    # Initialisation de l'agent
+    #agent = RobotHead(device="Wi-Fi", simulation_mode=True) # Simulation
+    #agent = RobotHead(device="wlo1", simulation_mode=True) # Simulation
+    agent = RobotHead(device="wlan0", simulation_mode=False) # With RaspberryPi (RobotHead)
     try:
-        # Initialisation de l'agent
-        #agent = RobotHead(device="Wi-Fi", simulation_mode=True) # Simulation
-        agent = RobotHead(device="wlan0", simulation_mode=False) # With RaspberryPi (RobotHead)
         while True:
         # Demander le choix de l'utilisateur
             answer_eyes = input("Entrez 'amoureux'/'heureux'/'animal' ou 'quitter': ").strip().lower()
@@ -142,4 +143,5 @@ if __name__ == "__main__":
                 agent.clear_all()
                 break
     finally:
+        # agent.stop()
         pass
