@@ -43,6 +43,37 @@ To ensure seamless installation and configuration, use the provided `setup.sh` s
   - [Python 3.11](https://www.python.org/downloads/release/python-3110/)
 
 ---
+## How It Works
+
+The robot head is controlled by a Python-based system that listens to user input (voice commands) and responds with dynamic actions. The core functionalities are:
+
+1. **Voice Interaction**:
+    - **Whisper** is used to transcribe speech in real-time.
+    - **gTTS** is used to generate speech responses from text.
+
+2. **Dynamic Eye and Head Movements**:
+    - Eye animations are shown using **Waveshare LCD displays**.
+    - Head movements are controlled by **MyActuator servos**, providing realistic motions such as head tilts and nods.
+
+3. **Decision-Making Class**:
+    - The **Decision** class, using pre-programmed responses (e.g., greetings, commands), decides how the robot should respond based on the input.
+    - The `get_response` function processes the message, checks for greetings and keywords, and updates the robot’s movements and facial expressions accordingly.
+
+4. **Future Enhancements**:
+    - Facial and gesture recognition using **OpenCV** and **MediaPipe**.
+    - Integration of the **Raspberry Pi Camera** for improved interaction.
+
+---
+
+## Project Goals
+
+The main goals of this project are:
+
+- **Real-time voice interaction**: Provide a smooth, conversational interaction with the robot using voice commands.
+- **Dynamic feedback**: Display visual feedback through dynamic eye movements and animated facial expressions.
+- **Extendable platform**: Build a foundation for further features like facial recognition, gesture tracking, and more complex interactions.
+
+---
 
 ## Project Goals
 The primary objective is to create an interactive platform combining:
