@@ -57,7 +57,6 @@ The robot head is controlled by a Python-based system that listens to user input
 
     2.1. **Whiteboard Interface**: Animated Visual Feedback
         The **whiteboard** is a visual interface where animated graphics (GIFs) are displayed to represent the robot's "expressions." This interface leverages the LCD screens for a more engaging interaction experience. Key aspects include:
-        
         - **Dynamic Eye Movements**: 
           - Depending on the robot's emotional state or context, the eyes can blink, look left or right, and even display special animations (e.g., "amoureux" for love or "animal" for playful expressions).
           - The animations are displayed on **Waveshare 1.28inch Round LCD modules**, with GIFs or specific visuals representing the state.
@@ -74,6 +73,7 @@ The robot head is controlled by a Python-based system that listens to user input
           <img width="959" alt="image" src="https://github.com/user-attachments/assets/b47c1adb-7715-4e2c-89aa-2d8919faf96f">
 
 
+        
         
    
     2.2. **Chat Interface**: Voice Interaction and Transcription
