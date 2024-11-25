@@ -2,13 +2,13 @@ import random
 import time
 import re
 if __name__ == "__main__":
-    from Whiteboard import Whiteboard
+    from RobotHead import RobotHead
 else:
-    from lib.Whiteboard import Whiteboard
+    from lib.RobotHead import RobotHead
 
 class Decision:
-    def __init__(self, simulation_mode=True):
-        self.agent = RobotHead(simulation_mode=simulation_mode)
+    def __init__(self, device="Wi-Fi", simulation_mode=True):
+        self.agent = RobotHead(device=device, simulation_mode=simulation_mode)
         self.responses = {
             "bonjour": {
                 "answer_text": "Bonjour, comment puis-je vous aider ?",
@@ -132,7 +132,8 @@ class Decision:
 
 if __name__ == "__main__":
     # Création d'un objet Decision
-    decision = Decision()
+    # decision = Decision(device="Wi-Fi", simulation_mode=True) # SIMULATION MODE
+    decision = Decision(device="wlan0", simulation_mode=False) # WITH RASPBERRY PI (ROBOT HEAD)
 
     # Exemple de message à tester
     test_messages = [
@@ -143,8 +144,6 @@ if __name__ == "__main__":
         "Bonsoir, robot !",
         "Help me please.",
         "Quel est votre nom ?",
-        "joyeux",
-        "singe",
         "amoureux",
         "heureux",
         "singe"
