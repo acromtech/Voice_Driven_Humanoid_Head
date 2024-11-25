@@ -124,14 +124,17 @@ To perform integration testing:
 
 ### 2. Unit Testing
 For unit testing:
-    - Run the Python scripts for each module or file individually.
-    - Adjust the device configuration in the agent initialization at the start of each script. Update "Wi-Fi" to your specific device (e.g., "wlan0").
-            agent = RobotHead(device="Wi-Fi", simulation_mode=True)
+- Run the Python scripts for each module or file individually.
+- Adjust the device configuration in the agent initialization at the start of each script. Replace `"Wi-Fi"` with your specific device (e.g., `"wlan0"`) as follows:
+  ```python
+  agent = RobotHead(device="Wi-Fi", simulation_mode=True)
+
     
 
-### 2. Agent Testing
+### 3. Agent Testing
 To evaluate the agent's performance:
-      - Execute the test_igs_syteme.py script!!!!!!!!!!!!!!!!!!!!!!!!!! : This script contains predefined scenarios to test the agent’s behavior.
+- Execute the `test_igs_syteme.py` script: This script contains predefined scenarios to test the agent’s behavior.
+
 
 
 ---
