@@ -53,7 +53,9 @@ The robot head is controlled by a Python-based system that listens to user input
 
 2. **Dynamic Eye and Mouth & Head Movements**:
     - Eye and mouth animations are shown using **Waveshare LCD displays** and on the **Whiteboard** simultaneously.
-       2.1. **Whiteboard Interface**: Animated Visual Feedback
+       
+
+    2.1. **Whiteboard Interface**: Animated Visual Feedback
         The **whiteboard** is a visual interface where animated graphics (GIFs) are displayed to represent the robot's "expressions." This interface leverages the LCD screens for a more engaging interaction experience. Key aspects include:
         
         - **Dynamic Eye Movements**: 
@@ -73,7 +75,8 @@ The robot head is controlled by a Python-based system that listens to user input
 
 
         
-         2.2. **Chat Interface**: Voice Interaction and Transcription
+   
+    2.2. **Chat Interface**: Voice Interaction and Transcription
         The **chat interface** provides real-time transcription of user speech and displays the robot's textual responses. It simulates a conversation log, making it easy for users to follow the interaction. Key components include:
         
         - **Speech Recognition**: 
