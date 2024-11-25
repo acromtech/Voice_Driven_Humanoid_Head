@@ -50,17 +50,16 @@ class AnimatedScreen:
 
     def gif_choice(self, answer, speed_multiplier=1.0):
         base_path = os.getcwd()
-        if __name__ == "__main__":
-            pic_path = os.path.join(base_path, "pic")
-        else: 
-            pic_path = os.path.join(base_path, "lib/pic")
-        if answer == "coeur":
+        if "/lib" not in base_path:
+            base_path = os.path.join(base_path, "lib")
+        pic_path = os.path.join(base_path, "pic")
+        if answer == "amoureux":
             gif_path = os.path.join(pic_path, "love.gif")
             self.display_gif(gif_path, speed_multiplier)
-        elif answer == "etoile":
+        elif answer == "heureux":
             gif_path = os.path.join(pic_path, "star.gif")
             self.display_gif(gif_path, speed_multiplier)
-        elif answer == "singe":
+        elif answer == "animal":
             gif_path = os.path.join(pic_path, "monkey.gif")
             self.display_gif(gif_path, speed_multiplier)
         else:
@@ -71,8 +70,8 @@ class AnimatedScreen:
         self.display.clear()
 
 # Fonction pour animer un écran dans un thread
-def animate_screen(screen, gif_path, stop_event, speed_multiplier):
-    screen.display_gif(gif_path, stop_event, speed_multiplier)
+def animate_screen(screen, gif_path, speed_multiplier):
+    screen.display_gif(gif_path, speed_multiplier)
 
 if __name__ == "__main__":
     # GPIO and SPI pin configuration
@@ -83,11 +82,6 @@ if __name__ == "__main__":
     bl_eye_left = 23
     device_eye_left = 0
 
-    rst_eye_right = 22
-    dc_eye_right = 24
-    bl_eye_right = 26
-    device_eye_right = 1
-
     # Mouth (SPI1)
     bus_mouth = 1
     rst_mouth = 5
@@ -97,39 +91,28 @@ if __name__ == "__main__":
 
     # Initialize the screens
     eye_left = AnimatedScreen(bus_eyes, device_eye_left, rst_eye_left, dc_eye_left, bl_eye_left)
-    eye_right = AnimatedScreen(bus_eyes, device_eye_right, rst_eye_right, dc_eye_right, bl_eye_right)
     mouth = AnimatedScreen(bus_mouth, device_mouth, rst_mouth, dc_mouth, bl_mouth)
 
     # Paths to GIFs
     gif_eye_left = './pic/load1.gif'
-    gif_eye_right = './pic/load1.gif'
     gif_mouth = './pic/load3.gif'
 
     # Speed multipliers (1.0 = normal speed, >1 = slower, <1 = faster)
     speed_eye_left = 0.01
-    speed_eye_right = 0.01
     speed_mouth = 0.01
 
     # Launch animations in separate threads
     try:
         thread_eye_left = threading.Thread(target=animate_screen, args=(eye_left, gif_eye_left, speed_eye_left))
-        thread_eye_right = threading.Thread(target=animate_screen, args=(eye_right, gif_eye_right, speed_eye_right))
         thread_mouth = threading.Thread(target=animate_screen, args=(mouth, gif_mouth, speed_mouth))
 
         thread_eye_left.start()
-        thread_eye_right.start()
         thread_mouth.start()
 
         input("Animations are running. Press Enter to stop...")
 
-        # Signal threads to stop
-        stop_event_eye_left.set()
-        stop_event_eye_right.set()
-        stop_event_mouth.set()
-
         # Wait for threads to finish
         thread_eye_left.join()
-        thread_eye_right.join()
         thread_mouth.join()
 
     except KeyboardInterrupt:
@@ -137,7 +120,6 @@ if __name__ == "__main__":
     finally:
         # Clear screens before exiting
         eye_left.clear()
-        eye_right.clear()
         mouth.clear()
         logging.info("Program stopped.")
 

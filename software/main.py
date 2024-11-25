@@ -6,18 +6,13 @@ from lib.TextToSpeech import TextToSpeech
 
 simulation_mode = False
 
-def execute_eyes_animation(eye_left, eye_right, answer_eyes):
-    eye_left.gif_choice(answer_eyes, speed_multiplier=1.0)
-    eye_right.gif_choice(answer_eyes, speed_multiplier=1.0)
+def execute_eyes_animation(eyes, answer_eyes):
+    eyes.gif_choice(answer_eyes, speed_multiplier=1.0)
     print("execute anim:", answer_eyes)
 
 def execute_mouth_animation(mouth, answer_mouth):
-    if answer_mouth == "open":
-        print("Playing smile GIF for the mouth...")
-        mouth.display_gif('./pic/open.gif', delay=0.1)
-    elif answer_mouth == "close":
-        print("Playing frown GIF for the mouth...")
-        mouth.display_gif('./pic/close.gif', delay=0.1)
+    if answer_mouth == "smile":
+        mouth.display_gif('./lib/pic/monkey.gif', speed_multiplier=1.0)
     else:
         print("No mouth animation specified.")
 
@@ -36,12 +31,11 @@ def main():
     # Initialize modules
     if simulation_mode == False:
         from lib.AnimatedScreen import AnimatedScreen
-        eye_left = AnimatedScreen(bus=0, device=0, rst=27, dc=25, bl=23)
-        eye_right = AnimatedScreen(bus=0, device=1, rst=22, dc=24, bl=26)
+        eyes = AnimatedScreen(bus=0, device=0, rst=27, dc=25, bl=23)
         mouth = AnimatedScreen(bus=1, device=0, rst=5, dc=19, bl=6)
     text_to_speech = TextToSpeech(playback_device_name="UACDemoV1.0", sample_rate=48000, speed_factor=1.15)
     audio_transcription = AudioTranscription(recording_device_name="USB PnP Sound Device", playback_device_name="UACDemoV1.0", mic_sample_rate=44100, silence_threshold=0.02, silence_duration=0.5) 
-    decision = Decision()
+    decision = Decision(device="wlan0", simulation_mode=simulation_mode)
 
     try:
         print("Waiting for a voice command...")
@@ -60,9 +54,9 @@ def main():
                     # Threads pour les différentes actions
                     threads = [
                         threading.Thread(target=text_to_speech.generate_audio, args=('fr', answer_text)),
-                        threading.Thread(target=execute_eyes_animation, args=(eye_left, eye_right, answer_eyes)),
+                        threading.Thread(target=execute_eyes_animation, args=(eyes, answer_eyes)),
                         threading.Thread(target=execute_mouth_animation, args=(mouth, answer_mouth)),
-                        threading.Thread(target=execute_movement, args=(answer_move,)),
+                        threading.Thread(target=execute_movement, args=(answer_move)),
                     ]
 
                     # Démarrer tous les threads
@@ -77,10 +71,8 @@ def main():
         print("Stopping the program.")
     finally:
         if simulation_mode == False:
-            eye_left.clear()
-            eye_right.clear()
+            eyes.clear()
             mouth.clear()
 
 if __name__ == "__main__":
     main()
-

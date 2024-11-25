@@ -46,10 +46,10 @@ class Decision:
                 "answer_eyes": "look_left",
                 "answer_mouth": "smile"
             },
-            "singe": {
+            "animal": {
                 "answer_text": "Ooo Ooo Ah Ah !",
                 "answer_move": "head_bob",
-                "answer_eyes": "singe",
+                "answer_eyes": "animal",
                 "answer_mouth": "smile"
             },
             "amoureux": {
@@ -148,7 +148,7 @@ if __name__ == "__main__":
         "Quel est votre nom ?",
         "amoureux",
         "heureux",
-        "singe"
+        "animal"
     ]
 
     # Test des messages

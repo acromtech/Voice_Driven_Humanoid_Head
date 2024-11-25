@@ -89,7 +89,7 @@ class RobotHead:
             selected_gifs_eyes = self.gif_paths[0:2]
         elif answer_eyes == "heureux":
             selected_gifs_eyes = self.gif_paths[2:4]
-        elif answer_eyes == "singe":
+        elif answer_eyes == "animal":
             selected_gifs_eyes = self.gif_paths[4:6]
         else:
             print("Choix invalide")
@@ -135,7 +135,7 @@ if __name__ == "__main__":
         agent = RobotHead(device="wlan0", simulation_mode=False) # With RaspberryPi (RobotHead)
         while True:
         # Demander le choix de l'utilisateur
-            answer_eyes = input("Entrez 'amoureux'/'heureux'/'singe' ou 'quitter': ").strip().lower()
+            answer_eyes = input("Entrez 'amoureux'/'heureux'/'animal' ou 'quitter': ").strip().lower()
             agent.clear()
             agent.gif_choice(answer_eyes)
             if answer_eyes == 'quitter':
