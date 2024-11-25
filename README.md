@@ -69,7 +69,8 @@ The robot head is controlled by a Python-based system that listens to user input
         
         **Example Workflow**:
         - If the user says, "heureux," the robot's eyes will display the "star" GIF, and the mouth will show a "moving mouth."
-        <img width="959" alt="image" src="https://github.com/user-attachments/assets/9446868b-976f-4ffa-b07d-e14e1ab28012">
+          <img width="959" alt="image" src="https://github.com/user-attachments/assets/b47c1adb-7715-4e2c-89aa-2d8919faf96f">
+
 
         
          2.2. **Chat Interface**: Voice Interaction and Transcription
@@ -88,8 +89,7 @@ The robot head is controlled by a Python-based system that listens to user input
             ```
             Robot: Bonjour, comment puis-je vous aider ?
             ```
-<img width="959" alt="image" src="https://github.com/user-attachments/assets/b47c1adb-7715-4e2c-89aa-2d8919faf96f">
-
+        <img width="959" alt="image" src="https://github.com/user-attachments/assets/9446868b-976f-4ffa-b07d-e14e1ab28012">
         
         - **Seamless Integration with Decisions**:
           - The `Decision` class matches the transcription to a predefined response and updates both the whiteboard and chat interfaces accordingly.
