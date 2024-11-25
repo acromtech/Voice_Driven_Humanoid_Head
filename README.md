@@ -60,6 +60,11 @@ The robot head is controlled by a Python-based system that listens to user input
 
 <img width="959" alt="image" src="https://github.com/user-attachments/assets/9446868b-976f-4ffa-b07d-e14e1ab28012">
 
+<img width="959" alt="image" src="https://github.com/user-attachments/assets/b47c1adb-7715-4e2c-89aa-2d8919faf96f">
+
+
+
+
     - The `get_response` function processes the message, checks for greetings and keywords, and updates the robot’s movements and facial expressions accordingly.
 
 4. **Future Enhancements**:
