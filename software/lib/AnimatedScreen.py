@@ -53,15 +53,26 @@ class AnimatedScreen:
         if "/lib" not in base_path:
             base_path = os.path.join(base_path, "lib")
         pic_path = os.path.join(base_path, "pic")
+        gif_path_eye = os.path.join(pic_path, "neutre.gif")
+        self.display_gif(gif_path_eye, speed_multiplier)
+        gif_path_mouth = os.path.join(pic_path, "mouth3.gif")
+        self.display_gif(gif_path_mouth, speed_multiplier)
+        
         if answer == "amoureux":
             gif_path = os.path.join(pic_path, "love.gif")
             self.display_gif(gif_path, speed_multiplier)
+            gif_path_bouche = os.path.join(pic_path, "mouth2.gif")
+            self.display_gif(gif_path_bouche, speed_multiplier)
         elif answer == "heureux":
             gif_path = os.path.join(pic_path, "star.gif")
             self.display_gif(gif_path, speed_multiplier)
+            gif_path_bouche = os.path.join(pic_path, "mouth2.gif")
+            self.display_gif(gif_path_bouche, speed_multiplier)
         elif answer == "animal":
             gif_path = os.path.join(pic_path, "monkey.gif")
             self.display_gif(gif_path, speed_multiplier)
+            gif_path_bouche = os.path.join(pic_path, "mouth2.gif")
+            self.display_gif(gif_path_bouche, speed_multiplier)
         else:
             print("No animation specified for this case")
 
