@@ -96,8 +96,8 @@ class Decision:
         for keyword, response in self.responses.items():
             if re.search(r'\b' + re.escape(keyword) + r'\b', normalized_text):  # Ensure word boundaries
                 self.agent.clear()
-                self.agent.gif_choice(response["answer_eyes"])
-                self.agent.chat(response["answer_text"])                
+                self.agent.gif_choice(response["answer_eyes"], response["answer_mouth"])
+                self.agent.chat(response["answer_text"])
                 return response["answer_text"], response["answer_move"], response["answer_eyes"], response["answer_mouth"]
 
         # If no response is found, provide the default response

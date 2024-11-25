@@ -48,33 +48,31 @@ class AnimatedScreen:
         except Exception as e:
             logging.error(f"Erreur lors de l'affichage du GIF : {e}")
 
-    def gif_choice(self, answer, speed_multiplier=1.0):
+    def gif_choice_eyes(self, answer, speed_multiplier=1.0):
         base_path = os.getcwd()
         if "/lib" not in base_path:
             base_path = os.path.join(base_path, "lib")
         pic_path = os.path.join(base_path, "pic")
-        gif_path_eye = os.path.join(pic_path, "neutre.gif")
-        self.display_gif(gif_path_eye, speed_multiplier)
-        gif_path_mouth = os.path.join(pic_path, "mouth3.gif")
-        self.display_gif(gif_path_mouth, speed_multiplier)
-        
         if answer == "amoureux":
             gif_path = os.path.join(pic_path, "love.gif")
-            self.display_gif(gif_path, speed_multiplier)
-            gif_path_bouche = os.path.join(pic_path, "mouth2.gif")
-            self.display_gif(gif_path_bouche, speed_multiplier)
         elif answer == "heureux":
             gif_path = os.path.join(pic_path, "star.gif")
-            self.display_gif(gif_path, speed_multiplier)
-            gif_path_bouche = os.path.join(pic_path, "mouth2.gif")
-            self.display_gif(gif_path_bouche, speed_multiplier)
         elif answer == "animal":
             gif_path = os.path.join(pic_path, "monkey.gif")
-            self.display_gif(gif_path, speed_multiplier)
-            gif_path_bouche = os.path.join(pic_path, "mouth2.gif")
-            self.display_gif(gif_path_bouche, speed_multiplier)
         else:
-            print("No animation specified for this case")
+            gif_path = os.path.join(pic_path, "neutre.gif")
+        self.display_gif(gif_path, speed_multiplier)
+
+    def gif_choice_mouth(self, answer, speed_multiplier=1.0):
+        base_path = os.getcwd()
+        if "/lib" not in base_path:
+            base_path = os.path.join(base_path, "lib")
+        pic_path = os.path.join(base_path, "pic")
+        if answer == "big_smile":
+            gif_path = os.path.join(pic_path, "mouth2.gif")
+        else:
+            gif_path = os.path.join(pic_path, "mouth3.gif")
+        self.display_gif(gif_path, speed_multiplier)
 
     def clear(self):
         """Nettoie l'écran."""

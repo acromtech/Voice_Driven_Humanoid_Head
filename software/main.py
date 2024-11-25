@@ -7,14 +7,12 @@ from lib.TextToSpeech import TextToSpeech
 simulation_mode = False
 
 def execute_eyes_animation(eyes, answer_eyes):
-    eyes.gif_choice(answer_eyes, speed_multiplier=1.0)
+    eyes.gif_choice_eyes(answer_eyes, speed_multiplier=1.0)
     print("execute anim:", answer_eyes)
 
 def execute_mouth_animation(mouth, answer_mouth):
-    if answer_mouth == "smile":
-        mouth.display_gif('./lib/pic/monkey.gif', speed_multiplier=1.0)
-    else:
-        print("No mouth animation specified.")
+    mouth.gif_choice_mouth(answer_mouth, speed_multiplier=1.0)
+    print("execute anim:", answer_mouth)
 
 def execute_movement(answer_move):
     if answer_move:

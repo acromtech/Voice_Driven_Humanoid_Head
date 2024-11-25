@@ -85,23 +85,23 @@ class RobotHead:
         """Efface le contenu du Whiteboard et du chat"""
         self.igs.service_call("Whiteboard", "clear", None, "")
 
-    def gif_choice(self, answer_eyes):
+    def gif_choice(self, answer_eyes, answer_mouth):
         """Affiche des GIFs en fonction de la sélection de l'utilisateur (yeux + bouche)."""
-        
-        # Par défaut, les yeux sont neutres et la bouche est mouth3.png
-        selected_gifs_eyes = [self.gif_paths[8]]  # Le GIF neutre est à l'index 7
-        mouth_gif = self.gif_paths[7]  # Par défaut, la bouche est mouth3.png
 
         # Vérification du choix de l'utilisateur pour les yeux
         if answer_eyes == "amoureux":
             selected_gifs_eyes = self.gif_paths[0:2]  # Coeurs
-            mouth_gif = self.gif_paths[6]  # Si les yeux sont amoureux, on utilise mouth2.gif
         elif answer_eyes == "heureux":
             selected_gifs_eyes = self.gif_paths[2:4]  # Etoiles
-            mouth_gif = self.gif_paths[6]  # Si les yeux sont heureux, on utilise mouth2.gif
         elif answer_eyes == "animal":
-            selected_gifs_eyes = self.gif_paths[4:6]  # Singes
-            mouth_gif = self.gif_paths[6]  # Si les yeux sont animaux, on utilise mouth2.gif
+            selected_gifs_eyes = self.gif_paths[4:6]  # Singe
+        else:
+            selected_gifs_eyes = [self.gif_paths[8]]
+
+        if answer_mouth == "big_smile":
+            mouth_gif = self.gif_paths[6]
+        else:
+            mouth_gif = self.gif_paths[7]
 
         # Positions horizontales
         start_x_eyes_left = self.cell_width * 0.1  # Colonne 1
@@ -137,8 +137,8 @@ if __name__ == "__main__":
     try:
         # Initialisation de l'agent
         #agent = RobotHead(device="Wi-Fi", simulation_mode=True) # Simulation
-        agent = RobotHead(device="wlo1", simulation_mode=True) # Simulation
-        #agent = RobotHead(device="wlan0", simulation_mode=False) # With RaspberryPi (RobotHead)
+        #agent = RobotHead(device="wlo1", simulation_mode=True) # Simulation
+        agent = RobotHead(device="wlan0", simulation_mode=False) # With RaspberryPi (RobotHead)
         while True:
         # Demander le choix de l'utilisateur
             answer_eyes = input("Entrez 'amoureux'/'heureux'/'animal' ou 'quitter': ").strip().lower()
