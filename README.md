@@ -107,6 +107,39 @@ The robot head is controlled by a Python-based system that listens to user input
     - Facial and gesture recognition using **OpenCV** and **MediaPipe**.
     - Integration of the **Raspberry Pi Camera** for improved interaction.
 
+
+---
+
+## V&V (Verification and Validation)
+
+This section describes the testing strategy implemented to ensure proper functionality of the humanoid robot head.
+
+### 1. Integration Testing
+To perform integration testing:
+1. Run the [main.py](./software/main.py):
+   Ensure to adjust the device parameter to match your hardware setup. Modify line 38 of the main script:
+          decision = Decision(device="wlan0", simulation_mode=simulation_mode)
+   Replace "wlan0" with your device, such as "Wi-Fi", if using a different setup.
+
+2. Unit Testing
+For unit testing:
+    Run the Python scripts for each module or file individually.
+    Adjust the device configuration in the agent initialization at the start of each script. For example:
+            agent = RobotHead(device="Wi-Fi", simulation_mode=True)
+    Update "Wi-Fi" to your specific device (e.g., "wlan0").
+
+3. Agent Testing
+To evaluate the agent's performance:
+      Execute the test_igs_syteme.py script!!!!!!!!!!!!!!!!!!!!!!!!!!
+    This script contains predefined scenarios to test the agent’s behavior.
+
+
+---
+
+## System Architecture
+<img width="878" alt="image" src="https://github.com/user-attachments/assets/179a303a-4917-4b71-b2dd-fb0eb7199d7a">
+
+
 ---
 
 ## Project Goals
