@@ -117,8 +117,10 @@ This section describes the testing strategy implemented to ensure proper functio
 
 ### 1. Integration Testing
 To perform integration testing:
-Run the [main.py](./software/main.py):
-   -Ensure to adjust the device parameter to match your hardware setup. Replace "wlan0" with your device, such as "Wi-Fi", if using a different setup (Modify line 38 of the main script).
+- Run the [main.py](./software/main.py) script.
+- Ensure to adjust the device parameter to match your hardware setup. Replace `"wlan0"` with your specific device (e.g., `"Wi-Fi"`) by modifying **line 38** in the main script:
+  ```python
+  decision = Decision(device="wlan0", simulation_mode=simulation_mode)
 
 ### 2. Unit Testing
 For unit testing:
