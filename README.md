@@ -77,7 +77,7 @@ The robot head is controlled by a Python-based system that listens to user input
         
         
    
-    2.2. **Chat Interface**: Voice Interaction and Transcription
+  2.2. **Chat Interface**: Voice Interaction and Transcription
         The **chat interface** provides real-time transcription of user speech and displays the robot's textual responses. It simulates a conversation log, making it easy for users to follow the interaction. Key components include:
         
     - **Speech Recognition**: 
