@@ -417,24 +417,6 @@
                 "className": "RobotHead",
                 "color": 0,
                 "definition": {
-                    "inputs": [
-                        {
-                            "name": "agent_name",
-                            "type": "STRING"
-                        },
-                        {
-                            "name": "device",
-                            "type": "STRING"
-                        },
-                        {
-                            "name": "port",
-                            "type": "INTEGER"
-                        },
-                        {
-                            "name": "simulation_mode",
-                            "type": "BOOL"
-                        }
-                    ],
                     "services": [
                         {
                             "arguments": [
@@ -861,6 +843,14 @@
                                 "isAttachedToCircle": false,
                                 "mac": "B0:60:88:AD:65:C9",
                                 "uuid": "213e6f39-fed1-4708-9140-53a4231bc68b"
+                            },
+                            {
+                                "commandLine": "/usr/bin/python3.8",
+                                "hostname": "alexis-ZenBook-UX482EA-UX482EA",
+                                "ip": "192.168.1.91",
+                                "isAttachedToCircle": false,
+                                "mac": "B0:60:88:AD:65:C9",
+                                "uuid": "94a1f42f-4612-4049-8137-73d004bad36e"
                             }
                         ]
                     },
@@ -1049,36 +1039,6 @@
                             "y": 141.7834841400669
                         },
                         {
-                            "data": {
-                                "entries": [
-                                    ""
-                                ],
-                                "value_type": "INTEGER"
-                            },
-                            "height": 79,
-                            "name": "",
-                            "tool": "com.ingescape.circle.tool.writer",
-                            "uuid": "5917cb90-5b37-4df9-9706-40c1b306870e",
-                            "width": 256,
-                            "x": 827.4673775015574,
-                            "y": 372.32461338227745
-                        },
-                        {
-                            "data": {
-                                "entries": [
-                                    ""
-                                ],
-                                "value_type": "INTEGER"
-                            },
-                            "height": 79,
-                            "name": "",
-                            "tool": "com.ingescape.circle.tool.writer",
-                            "uuid": "da9d81fd-cda5-4da3-a28c-69f4ed42673b",
-                            "width": 256,
-                            "x": 829.2326945019538,
-                            "y": 280.14894625857346
-                        },
-                        {
                             "class": "87e7fe53-409e-49f9-b1ed-79547f65a3c3",
                             "comment": "",
                             "height": 114,
@@ -1175,30 +1135,6 @@
                         "source": "51a6a838-897a-40c0-bbdf-4cd945fcbeb1",
                         "sourceIO": {
                             "name": "answer_text",
-                            "type": "OUTPUT"
-                        }
-                    },
-                    {
-                        "destination": "adeb57a7-1ada-41cf-af9f-aa1da035c65b",
-                        "destinationIO": {
-                            "name": "port",
-                            "type": "INPUT"
-                        },
-                        "source": "da9d81fd-cda5-4da3-a28c-69f4ed42673b",
-                        "sourceIO": {
-                            "name": "value",
-                            "type": "OUTPUT"
-                        }
-                    },
-                    {
-                        "destination": "adeb57a7-1ada-41cf-af9f-aa1da035c65b",
-                        "destinationIO": {
-                            "name": "bitrate",
-                            "type": "INPUT"
-                        },
-                        "source": "5917cb90-5b37-4df9-9706-40c1b306870e",
-                        "sourceIO": {
-                            "name": "value",
                             "type": "OUTPUT"
                         }
                     },

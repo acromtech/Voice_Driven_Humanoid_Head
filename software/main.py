@@ -4,7 +4,29 @@ from lib.AudioTranscription import AudioTranscription
 from lib.Decision import Decision
 from lib.TextToSpeech import TextToSpeech
 
+# CONFIG RASPBERRY PI
+"""
 simulation_mode = False
+device = "wlan0"
+playback_device_name = "UACDemoV1.0"
+sample_rate = 48000
+speed_factor_tts = 1.15
+recording_device_name = "USB PnP Sound Device"
+mic_sample_rate = 44100
+silence_threshold = 0.02
+silence_duration = 0.5
+"""
+
+# YOUR LAPTOP CONFIG
+simulation_mode = True
+device = "wlo1"
+playback_device_name = "UACDemoV1.0"
+sample_rate = 48000
+speed_factor_tts = 1.15
+recording_device_name = "USB PnP Sound Device"
+mic_sample_rate = 44100
+silence_threshold = 0.02
+silence_duration = 0.5
 
 def execute_eyes_animation(eyes, answer_eyes):
     eyes.gif_choice_eyes(answer_eyes, speed_multiplier=1.0)
@@ -27,13 +49,13 @@ def execute_tts(text_to_speech, answer_text):
 
 def main():
     # Initialize modules
-    if simulation_mode == False:
+    if simulation_mode==False:
         from lib.AnimatedScreen import AnimatedScreen
         eyes = AnimatedScreen(bus=0, device=0, rst=27, dc=25, bl=23)
         mouth = AnimatedScreen(bus=1, device=0, rst=5, dc=19, bl=6)
-    text_to_speech = TextToSpeech(playback_device_name="UACDemoV1.0", sample_rate=48000, speed_factor=1.15)
-    audio_transcription = AudioTranscription(recording_device_name="USB PnP Sound Device", playback_device_name="UACDemoV1.0", mic_sample_rate=44100, silence_threshold=0.02, silence_duration=0.5) 
-    decision = Decision(device="wlan0", simulation_mode=simulation_mode)
+    text_to_speech = TextToSpeech(playback_device_name=playback_device_name, sample_rate=sample_rate, speed_factor=speed_factor_tts)
+    audio_transcription = AudioTranscription(recording_device_name=recording_device_name, playback_device_name=playback_device_name, mic_sample_rate=mic_sample_rate, silence_threshold=silence_threshold, silence_duration=silence_duration) 
+    decision = Decision(device=device, simulation_mode=simulation_mode)
 
     try:
         print("Waiting for a voice command...")
