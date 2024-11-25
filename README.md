@@ -118,4 +118,4 @@ The main goals of this project are:
 
 
 
-For installation and setup, please refer to the [setup.sh](./setup.sh) script. Follow its execution steps to prepare your environment.
+For installation and setup, please refer to the [setup.sh](./software/setup.sh) script. Follow its execution steps to prepare your environment.
