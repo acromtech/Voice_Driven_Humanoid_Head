@@ -133,7 +133,7 @@ For unit testing:
 
 ### 3. Agent Testing
 To evaluate the agent's performance:
-- Execute the `test_igs_syteme.py` script: This script contains predefined scenarios to test the agent’s behavior.
+- Execute the [test_robothead.igsscript](./software/test_robothead.igsscript) script: This script contains predefined scenarios to test the agent’s behavior.
 
 
 
