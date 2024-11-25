@@ -51,12 +51,15 @@ The robot head is controlled by a Python-based system that listens to user input
     - **Whisper** is used to transcribe speech in real-time.
     - **gTTS** is used to generate speech responses from text.
 
-2. **Dynamic Eye and Head Movements**:
-    - Eye animations are shown using **Waveshare LCD displays**.
-    - Head movements are controlled by **MyActuator servos**, providing realistic motions such as head tilts and nods.
+2. **Dynamic Eye and Mouth & Head Movements**:
+    - Eye and mouth animations are shown using **Waveshare LCD displays** and on the **Whiteboard** simultaneously.
+    - Head movements are controlled by **MyActuator servos**, providing realistic motions such as head tilts and shake.
 
 3. **Decision-Making Class**:
     - The **Decision** class, using pre-programmed responses (e.g., greetings, commands), decides how the robot should respond based on the input.
+
+<img width="959" alt="image" src="https://github.com/user-attachments/assets/9446868b-976f-4ffa-b07d-e14e1ab28012">
+
     - The `get_response` function processes the message, checks for greetings and keywords, and updates the robot’s movements and facial expressions accordingly.
 
 4. **Future Enhancements**:
@@ -75,10 +78,6 @@ The main goals of this project are:
 
 ---
 
-## Project Goals
-The primary objective is to create an interactive platform combining:
-1. **Visual Feedback**: Eye animations through dynamic displays.
-2. **Voice Interaction**: Real-time transcription and response.
-3. **Future Enhancements**: Facial and gesture recognition to deepen human-robot interaction.
+
 
 For installation and setup, please refer to the [setup.sh](./setup.sh) script. Follow its execution steps to prepare your environment.
