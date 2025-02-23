@@ -8,7 +8,7 @@ sudo snap install astral-uv --classic
 uv sync 
 
 echo "Dependencies installation..."
-sudo apt install -y 
+sudo apt install -y \
     python3-picamera2 \
     libasound-dev \
     libportaudio2 \
