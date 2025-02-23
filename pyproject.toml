@@ -13,7 +13,7 @@ dependencies = [
     "scipy",
     "can",
     "vosk",
-    "opencv-python",
+    "opencv-python-headless",
     "picamera2>=0.3.25",
 ]
 
