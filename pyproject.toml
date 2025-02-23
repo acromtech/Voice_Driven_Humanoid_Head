@@ -1,0 +1,25 @@
+[project]
+name = "PGE_2024_2025"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "gTTS",
+    "pydub",
+    "playsound",
+    "numpy==1.24.0",
+    "pillow",
+    "sounddevice",
+    "scipy",
+    "can",
+    "opencv-python"
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.0.1",
+]
+
+[tool.uv.sources]
+pypi = true
