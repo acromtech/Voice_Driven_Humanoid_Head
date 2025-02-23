@@ -20,6 +20,3 @@ dependencies = [
 dev = [
     "pre-commit>=4.0.1",
 ]
-
-[tool.uv.sources]
-pypi = true
