@@ -12,7 +12,7 @@ dependencies = [
     "sounddevice",
     "scipy",
     "can",
-    "vosk"
+    "vosk",
     "opencv-python"
 ]
 
