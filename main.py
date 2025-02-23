@@ -73,7 +73,10 @@ def main():
         recording_device_name=recording_device_name, mic_sample_rate=mic_sample_rate
     )
     decision = Decision(device=device, simulation_mode=simulation_mode)
-
+    
+    # Launch music
+    text_to_speech.play_music("./data/start_modern.mp3")
+    
     try:
         print("Waiting for a voice command...")
         while True:
