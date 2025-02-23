@@ -1,0 +1,38 @@
+repos:
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.9.1
+  hooks:
+  - id: ruff
+    args:
+    - --fix
+    - --exit-non-zero-on-fix
+  - id: ruff-format
+- repo: https://github.com/cheshirekow/cmake-format-precommit
+  rev: v0.6.13
+  hooks:
+  - id: cmake-format
+- repo: https://github.com/pre-commit/mirrors-clang-format
+  rev: v19.1.6
+  hooks:
+  - id: clang-format
+    args: [--style=WebKit]
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v5.0.0
+  hooks:
+  # - id: check-added-large-file
+  - id: check-ast
+  - id: check-executables-have-shebangs
+  - id: check-json
+  - id: check-merge-conflict
+  - id: check-symlinks
+  - id: check-toml
+  - id: check-yaml
+  - id: debug-statements
+  - id: destroyed-symlinks
+  - id: detect-private-key
+  - id: end-of-file-fixer
+  - id: fix-byte-order-marker
+  - id: mixed-line-ending
+  - id: trailing-whitespace
+
+exclude: (^software/lib/vosk_model/)
