@@ -5,7 +5,7 @@ sudo apt update && sudo apt upgrade -y
 
 echo "uv project installations..."
 sudo snap install astral-uv --classic
-uv sync 
+uv sync
 
 echo "Dependencies installation..."
 sudo apt install -y \
