@@ -1,6 +1,7 @@
 import time
 import threading
-from lib.AudioTranscription import AudioTranscription
+from lib.CameraStream import CameraStream
+from lib.AudioTranscription2 import AudioTranscription
 from lib.Decision import Decision
 from lib.TextToSpeech import TextToSpeech
 
@@ -28,6 +29,10 @@ mic_sample_rate = 44100
 silence_threshold = 0.02
 silence_duration = 0.5
 
+camera_stream = CameraStream()
+camera_thread = threading.Thread(target=camera_stream.start_stream, daemon=True)
+camera_thread.start()
+
 def execute_eyes_animation(eyes, answer_eyes):
     eyes.gif_choice_eyes(answer_eyes, speed_multiplier=1.0)
     print("execute anim:", answer_eyes)
@@ -54,7 +59,7 @@ def main():
         eyes = AnimatedScreen(bus=0, device=0, rst=27, dc=25, bl=23)
         mouth = AnimatedScreen(bus=1, device=0, rst=5, dc=19, bl=6)
     text_to_speech = TextToSpeech(playback_device_name=playback_device_name, sample_rate=sample_rate, speed_factor=speed_factor_tts)
-    audio_transcription = AudioTranscription(recording_device_name=recording_device_name, playback_device_name=playback_device_name, mic_sample_rate=mic_sample_rate, silence_threshold=silence_threshold, silence_duration=silence_duration) 
+    audio_transcription = AudioTranscription(recording_device_name=recording_device_name, mic_sample_rate=mic_sample_rate)
     decision = Decision(device=device, simulation_mode=simulation_mode)
 
     try:

@@ -23,6 +23,7 @@ sudo pip3 install scipy
 sudo pip3 install can
 sudo pip3 install ingescape
 sudo pip3 install spidev
+sudo pip3 install opencv-python
 
 # Installer des utilitaires et bibliothèques nécessaires
 echo "Installation des bibliothèques et outils nécessaires..."

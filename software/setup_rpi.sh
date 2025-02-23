@@ -7,6 +7,7 @@ sudo apt update && sudo apt upgrade -y
 # Installer Python et pip (dernière version)
 echo "Installation de Python et pip..."
 sudo apt install -y python3 python3-pip
+sudo apt install -y python3-picamera2
 
 # Installer les dépendances Python
 echo "Installation des dépendances Python..."
@@ -22,7 +23,8 @@ sudo pip3 install \
     sounddevice \
     scipy \
     can \
-    ingescape
+    ingescape \
+    opencv-python
 
 # Installer des utilitaires et bibliothèques nécessaires
 echo "Installation des bibliothèques et outils nécessaires..."
