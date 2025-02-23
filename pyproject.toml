@@ -15,6 +15,7 @@ dependencies = [
     "vosk",
     "opencv-python-headless",
     "picamera2>=0.3.25",
+    "prctl"
 ]
 
 [dependency-groups]
