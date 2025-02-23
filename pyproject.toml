@@ -7,12 +7,12 @@ requires-python = ">=3.10"
 dependencies = [
     "gTTS",
     "pydub",
-    "playsound",
     "numpy==1.24.0",
     "pillow",
     "sounddevice",
     "scipy",
     "can",
+    "vosk"
     "opencv-python"
 ]
 

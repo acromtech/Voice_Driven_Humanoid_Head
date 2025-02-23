@@ -15,6 +15,12 @@ sudo apt install -y libasound-dev libportaudio2 libportaudiocpp0 portaudio19-dev
     python3-dev \
     libsndfile1
 
+cd ./software/lib
+wget https://alphacephei.com/vosk/models/vosk-model-fr-0.22.zip
+unzip vosk-model-fr-0.22.zip
+rm -f vosk-model-fr-0.22.zip
+mv vosk-model-fr-0.22 vosk_model
+
 # Configurer le SPI
 echo "Activation des modules SPI..."
 if ! grep -q "^dtparam=spi=on" /boot/config.txt; then

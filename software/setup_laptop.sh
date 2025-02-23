@@ -10,6 +10,12 @@ sudo apt install -y libasound-dev libportaudio2 libportaudiocpp0 portaudio19-dev
     ffmpeg \
     python3-dev \
     libsndfile1
+    
+cd ./software/lib
+wget https://alphacephei.com/vosk/models/vosk-model-fr-0.22.zip
+unzip vosk-model-fr-0.22.zip
+rm -f vosk-model-fr-0.22.zip
+mv vosk-model-fr-0.22 vosk_model
 
 # Redémarrer pour appliquer les modifications
 echo "Installation terminée. Un redémarrage est nécessaire pour appliquer les modifications."
