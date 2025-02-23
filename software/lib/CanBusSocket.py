@@ -16,13 +16,14 @@ Usage:
 """
 
 import os
-import string
 import time
 import can
 
-class CanBusSocket:
 
-    def __init__(self, channel: str = 'can0', bustype: str = 'socketcan', bitrate: int = 1000000):
+class CanBusSocket:
+    def __init__(
+        self, channel: str = "can0", bustype: str = "socketcan", bitrate: int = 1000000
+    ):
         """
         Initialize the CanBusSocket instance with channel, bustype, and bitrate.
 
@@ -34,7 +35,7 @@ class CanBusSocket:
         self.channel = channel
         self.bustype = bustype
         self.bitrate = bitrate
-   
+
     def set_channel(self, channel):
         """
         Set the channel.
@@ -66,7 +67,7 @@ class CanBusSocket:
         """
         Shut down the CAN bus socket.
         """
-        os.system(f'sudo ifconfig {self.channel} down')
+        os.system(f"sudo ifconfig {self.channel} down")
 
     def sendMessage(self, id, data):
         """
@@ -84,7 +85,7 @@ class CanBusSocket:
         while True:
             msg = self.bus.recv(10.0)
             if msg is None:
-                print('No message was received')
+                print("No message was received")
             else:
-                print(f'Received frame: \n{msg}\n')
+                print(f"Received frame: \n{msg}\n")
                 return msg

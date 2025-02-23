@@ -7,17 +7,20 @@ import sys
 import numpy as np
 from pydub import AudioSegment
 
+
 class TextToSpeech:
-    def __init__(self, playback_device_name="UACDemoV1.0", sample_rate=48000, speed_factor=1.15):
+    def __init__(
+        self, playback_device_name="UACDemoV1.0", sample_rate=48000, speed_factor=1.15
+    ):
         """Initialise la classe avec des paramètres configurables"""
         self.playback_device_name = playback_device_name
         self.sample_rate = sample_rate
         self.speed_factor = speed_factor
         self.texts = {
-            'fr': "Bonjour, ceci est un test en français.",
-            'en': "Hello, this is a test in English.",
-            'de': "Hallo, dies ist ein Test auf Deutsch.",
-            'fi': "Hei, tämä on testi suomeksi."
+            "fr": "Bonjour, ceci est un test en français.",
+            "en": "Hello, this is a test in English.",
+            "de": "Hallo, dies ist ein Test auf Deutsch.",
+            "fi": "Hei, tämä on testi suomeksi.",
         }
 
     def generate_audio(self, lang, text=None):
@@ -33,7 +36,7 @@ class TextToSpeech:
         tts = gTTS(text=text, lang=lang, slow=False)
 
         # Sauvegarder dans un fichier temporaire
-        with tempfile.NamedTemporaryFile(delete=True, suffix='.mp3') as temp_file:
+        with tempfile.NamedTemporaryFile(delete=True, suffix=".mp3") as temp_file:
             tts.save(temp_file.name)
 
             # Charger l'audio avec pydub
@@ -60,7 +63,9 @@ class TextToSpeech:
             sd.wait()  # Attendre la fin de la lecture
             playback_end = time.time()
 
-            print(f"Temps pour la lecture audio : {playback_end - playback_start:.2f} secondes")
+            print(
+                f"Temps pour la lecture audio : {playback_end - playback_start:.2f} secondes"
+            )
 
         print(f"Played audio for language: {lang}")
 
@@ -68,7 +73,7 @@ class TextToSpeech:
         """Retourne l'index du périphérique correspondant au nom."""
         devices = sd.query_devices()
         for i, device in enumerate(devices):
-            if device_name in device['name']:
+            if device_name in device["name"]:
                 return i
         return None
 
@@ -93,19 +98,24 @@ class TextToSpeech:
 
             # Lire l'audio avec sounddevice
             playback_start = time.time()
-            print(f"Lecture de la musique avec le périphérique : {self.playback_device_name}")
+            print(
+                f"Lecture de la musique avec le périphérique : {self.playback_device_name}"
+            )
             sd.play(samples, samplerate=self.sample_rate, device=playback_device)
             sd.wait()
             playback_end = time.time()
 
-            print(f"Temps pour la lecture audio : {playback_end - playback_start:.2f} secondes")
+            print(
+                f"Temps pour la lecture audio : {playback_end - playback_start:.2f} secondes"
+            )
             print(f"Played music from: {file_path}")
         else:
             print(f"The file '{file_path}' does not exist.")
 
+
 if __name__ == "__main__":
     # Rediriger stderr vers /dev/null pour supprimer les messages d'erreur
-    sys.stderr = open(os.devnull, 'w')
+    sys.stderr = open(os.devnull, "w")
 
     # Paramètres configurables par l'utilisateur
     playback_device_name = "UACDemoV1.0"  # Nom du périphérique audio
@@ -113,7 +123,11 @@ if __name__ == "__main__":
     speed_factor = 1.15  # Facteur de vitesse pour accélérer la voix
 
     # Initialiser la classe avec les paramètres configurés
-    tts = TextToSpeech(playback_device_name=playback_device_name, sample_rate=sample_rate, speed_factor=speed_factor)
+    tts = TextToSpeech(
+        playback_device_name=playback_device_name,
+        sample_rate=sample_rate,
+        speed_factor=speed_factor,
+    )
 
     # Générer et lire l'audio pour chaque langue avec le texte par défaut
     for lang in tts.texts.keys():
@@ -121,10 +135,11 @@ if __name__ == "__main__":
 
     # Exemple de génération d'audio avec un texte personnalisé
     custom_text_fr = "Ceci est un texte personnalisé en Français"
-    tts.generate_audio('fr', custom_text_fr)
+    tts.generate_audio("fr", custom_text_fr)
 
     # Lire un fichier musical spécifique
-    tts.play_music("./data/monkey.mp3")  # Assurez-vous que le fichier existe dans le même répertoire
+    tts.play_music(
+        "./data/monkey.mp3"
+    )  # Assurez-vous que le fichier existe dans le même répertoire
 
     print("Test de Text-to-speech terminé.")
-

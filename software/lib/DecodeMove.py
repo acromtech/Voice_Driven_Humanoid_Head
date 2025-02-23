@@ -18,24 +18,74 @@ class DecodeMove:
         if self.answer_move == "head_nod":
             # A nod consists of moving the head up and down (pitch axis)
             self.trajectory = [
-                {"time": 0, "positions": [0, 0, 0], "speeds": [0, 0, 0], "accelerations": [0, 50, 0]},
-                {"time": 0.5, "positions": [0, 30, 0], "speeds": [0, 20, 0], "accelerations": [0, 0, 0]},
-                {"time": 1.0, "positions": [0, 0, 0], "speeds": [0, -20, 0], "accelerations": [0, -50, 0]},
+                {
+                    "time": 0,
+                    "positions": [0, 0, 0],
+                    "speeds": [0, 0, 0],
+                    "accelerations": [0, 50, 0],
+                },
+                {
+                    "time": 0.5,
+                    "positions": [0, 30, 0],
+                    "speeds": [0, 20, 0],
+                    "accelerations": [0, 0, 0],
+                },
+                {
+                    "time": 1.0,
+                    "positions": [0, 0, 0],
+                    "speeds": [0, -20, 0],
+                    "accelerations": [0, -50, 0],
+                },
             ]
         elif self.answer_move == "head_shake":
             # A shake consists of rotating left and right (yaw axis)
             self.trajectory = [
-                {"time": 0, "positions": [0, 0, 0], "speeds": [0, 0, 0], "accelerations": [50, 0, 0]},
-                {"time": 0.5, "positions": [30, 0, 0], "speeds": [20, 0, 0], "accelerations": [0, 0, 0]},
-                {"time": 1.0, "positions": [-30, 0, 0], "speeds": [-20, 0, 0], "accelerations": [-50, 0, 0]},
-                {"time": 1.5, "positions": [0, 0, 0], "speeds": [0, 0, 0], "accelerations": [0, 0, 0]},
+                {
+                    "time": 0,
+                    "positions": [0, 0, 0],
+                    "speeds": [0, 0, 0],
+                    "accelerations": [50, 0, 0],
+                },
+                {
+                    "time": 0.5,
+                    "positions": [30, 0, 0],
+                    "speeds": [20, 0, 0],
+                    "accelerations": [0, 0, 0],
+                },
+                {
+                    "time": 1.0,
+                    "positions": [-30, 0, 0],
+                    "speeds": [-20, 0, 0],
+                    "accelerations": [-50, 0, 0],
+                },
+                {
+                    "time": 1.5,
+                    "positions": [0, 0, 0],
+                    "speeds": [0, 0, 0],
+                    "accelerations": [0, 0, 0],
+                },
             ]
         elif self.answer_move == "head_tilt":
             # A tilt consists of tilting the head sideways (roll axis)
             self.trajectory = [
-                {"time": 0, "positions": [0, 0, 0], "speeds": [0, 0, 0], "accelerations": [0, 0, 50]},
-                {"time": 0.5, "positions": [0, 0, 30], "speeds": [0, 0, 20], "accelerations": [0, 0, 0]},
-                {"time": 1.0, "positions": [0, 0, 0], "speeds": [0, 0, -20], "accelerations": [0, 0, -50]},
+                {
+                    "time": 0,
+                    "positions": [0, 0, 0],
+                    "speeds": [0, 0, 0],
+                    "accelerations": [0, 0, 50],
+                },
+                {
+                    "time": 0.5,
+                    "positions": [0, 0, 30],
+                    "speeds": [0, 0, 20],
+                    "accelerations": [0, 0, 0],
+                },
+                {
+                    "time": 1.0,
+                    "positions": [0, 0, 0],
+                    "speeds": [0, 0, -20],
+                    "accelerations": [0, 0, -50],
+                },
             ]
         else:
             raise ValueError(f"Unknown movement command: {self.answer_move}")

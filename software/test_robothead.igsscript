@@ -18,4 +18,3 @@
     RobotHead.stop()
     assert RobotHead.lastAction == "Service stop"
 }
-

@@ -2,18 +2,25 @@ import ctypes
 import os
 import time
 
-def service_callback(sender_agent_name, sender_agent_uuid, service_name, arguments, token, my_data):
+
+def service_callback(
+    sender_agent_name, sender_agent_uuid, service_name, arguments, token, my_data
+):
     pass
     # add code here if needed
-    
+
+
 class RobotHead:
-    def __init__(self, agent_name="RobotHead", device="Wi-Fi", port=5670, simulation_mode=True):
+    def __init__(
+        self, agent_name="RobotHead", device="Wi-Fi", port=5670, simulation_mode=True
+    ):
         """Initialisation de l'agent et des configurations de base."""
-        if simulation_mode == False:
+        if not simulation_mode:
             # Charger les bibliothèques nécessaires
             ctypes.CDLL("libsystemd.so", mode=ctypes.RTLD_GLOBAL)
             ctypes.CDLL("libuuid.so", mode=ctypes.RTLD_GLOBAL)
         import ingescape as igs
+
         self.igs = igs
 
         self.agent_name = agent_name
@@ -78,7 +85,7 @@ class RobotHead:
             os.path.join(pic_path, "monkey.gif"),  # Singe GIF 2
             os.path.join(pic_path, "mouth2.gif"),  # Mouth GIF
             os.path.join(pic_path, "mouth3.png"),  # Mouth IMAGE PNG
-            os.path.join(pic_path, "neutre.gif")  # Mouth GIF
+            os.path.join(pic_path, "neutre.gif"),  # Mouth GIF
         ]
 
         # Démarrage de l'agent
@@ -88,7 +95,9 @@ class RobotHead:
     def add_image(self, image_path, x, y, width, height):
         """Ajoute une image sur le tableau blanc."""
         self.cpt = self.cpt + 1
-        self.igs.service_call("Whiteboard", "addImageFromUrl", (image_path, x, y, width, height), "")
+        self.igs.service_call(
+            "Whiteboard", "addImageFromUrl", (image_path, x, y, width, height), ""
+        )
 
     def chat(self, message_text):
         """Envoie un message sur le tableau blanc."""
@@ -128,32 +137,58 @@ class RobotHead:
 
         # Position verticale ajustée
         start_y_eyes = self.cell_height_line1 * 0.1  # Les yeux restent en haut
-        start_y_mouth = self.cell_height_line1 + (self.cell_height_line2 * 0.2)  # BOUCHE PLUS HAUT
+        start_y_mouth = self.cell_height_line1 + (
+            self.cell_height_line2 * 0.2
+        )  # BOUCHE PLUS HAUT
 
         # Placer les GIFs des yeux
-        self.add_image(selected_gifs_eyes[0], start_x_eyes_left, start_y_eyes, self.gif_width, self.gif_height_line1)
-        self.add_image(selected_gifs_eyes[0], start_x_eyes_right, start_y_eyes, self.gif_width, self.gif_height_line1)
+        self.add_image(
+            selected_gifs_eyes[0],
+            start_x_eyes_left,
+            start_y_eyes,
+            self.gif_width,
+            self.gif_height_line1,
+        )
+        self.add_image(
+            selected_gifs_eyes[0],
+            start_x_eyes_right,
+            start_y_eyes,
+            self.gif_width,
+            self.gif_height_line1,
+        )
 
         # Placer le GIF de la bouche
-        self.add_image(mouth_gif, start_x_mouth, start_y_mouth, self.gif_width, self.gif_height_line2)
-
+        self.add_image(
+            mouth_gif,
+            start_x_mouth,
+            start_y_mouth,
+            self.gif_width,
+            self.gif_height_line2,
+        )
 
     def stop(self):
         self.igs.stop()
 
+
 if __name__ == "__main__":
     try:
         # Initialisation de l'agent
-        #agent = RobotHead(device="Wi-Fi", simulation_mode=True) # Simulation
-        agent = RobotHead(device="wlo1", simulation_mode=True) # Simulation
-        #agent = RobotHead(device="wlan0", simulation_mode=False) # With RaspberryPi (RobotHead)
+        # agent = RobotHead(device="Wi-Fi", simulation_mode=True) # Simulation
+        agent = RobotHead(device="wlo1", simulation_mode=True)  # Simulation
+        # agent = RobotHead(device="wlan0", simulation_mode=False) # With RaspberryPi (RobotHead)
         while True:
-        # Demander le choix de l'utilisateur
-            answer_eyes = input("Entrez 'amoureux'/'heureux'/'animal' ou 'quitter': ").strip().lower()
-            answer_mouth = input("Entrez 'big_smile'/'smile' ou 'quitter': ").strip().lower()
+            # Demander le choix de l'utilisateur
+            answer_eyes = (
+                input("Entrez 'amoureux'/'heureux'/'animal' ou 'quitter': ")
+                .strip()
+                .lower()
+            )
+            answer_mouth = (
+                input("Entrez 'big_smile'/'smile' ou 'quitter': ").strip().lower()
+            )
             agent.clear()
             agent.gif_choice(answer_eyes, answer_mouth)
-            if answer_eyes == 'quitter':
+            if answer_eyes == "quitter":
                 agent.clear_all()
                 break
     finally:

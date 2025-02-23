@@ -49,4 +49,3 @@ if [[ $restart_choice == "y" || $restart_choice == "Y" ]]; then
 else
     echo "Redémarrez manuellement pour appliquer les modifications."
 fi
-

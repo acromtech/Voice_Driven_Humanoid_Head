@@ -1,5 +1,7 @@
 from CanBusGsUsb import CanBusGsUsb
 import sys
+
+
 class ProtocolV2(CanBusGsUsb):
     # Attributes
     BASE_ADDR_ID = 0x140
@@ -33,7 +35,7 @@ class ProtocolV2(CanBusGsUsb):
     ADDR_READ_MULTITURN_ENCODER_OFFSET = 0x62
     ADDR_WRITE_MULTITURN_ENCODER_VALUES_TO_ROM_AS_MOTOR_ZERO = 0x63
     ADDR_WRITE_MULTITURN_ENCODER_CURRENT_POSITION_TO_ROM_AS_MOTOR_ZERO = 0x64
-    
+
     ADDR_READ_SINGLETURN_ENCODER_DATA = 0x90
     ADDR_WRITE_ENCODER_VALUES_TO_ROM_AS_MOTOR_ZERO = 0x91
     ADDR_WRITE_SINGLETURN_ENCODER_CURRENT_POSITION_TO_ROM_AS_MOTOR_ZERO = 0x19
@@ -66,11 +68,10 @@ class ProtocolV2(CanBusGsUsb):
     ADDR_BRAKE_CLOSE = 0x78
     ADDR_CAN_ID_SETTING_AND_READING = 0x79
 
-    def __init__(self,id:int,reducer_ratio:int,can_bus:CanBusGsUsb):
+    def __init__(self, id: int, reducer_ratio: int, can_bus: CanBusGsUsb):
         self.id = id
         self.reducer_ratio = reducer_ratio
         self.can_bus = can_bus
-
 
     def read_position_loop_Kp(self, debug=None):
         """
@@ -91,12 +92,27 @@ class ProtocolV2(CanBusGsUsb):
         - position_loop_KP: Position loop KP parameters (float).
         """
         # Send command to read the current Position loop KP parameters
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                        data=[self.ADDR_READ_POSITION_LOOP_KP, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_POSITION_LOOP_KP,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract Position loop KP parameters from the response and convert from Q24 to float
-        position_loop_KP_q24 = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
-        position_loop_KP = position_loop_KP_q24 / 16777216.0  # Conversion from Q24 to float
+        position_loop_KP_q24 = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
+        position_loop_KP = (
+            position_loop_KP_q24 / 16777216.0
+        )  # Conversion from Q24 to float
 
         # Print debug information if enabled
         if debug:
@@ -123,12 +139,27 @@ class ProtocolV2(CanBusGsUsb):
         - position_loop_KI: Position loop Ki parameters (float).
         """
         # Send command to read the current Position loop Ki parameters
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_READ_POSITION_LOOP_KI, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_POSITION_LOOP_KI,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract Position loop Ki parameters from the response and convert from Q24 to float
-        position_loop_KI_q24 = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
-        position_loop_KI = position_loop_KI_q24 / 16777216.0  # Conversion from Q24 to float
+        position_loop_KI_q24 = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
+        position_loop_KI = (
+            position_loop_KI_q24 / 16777216.0
+        )  # Conversion from Q24 to float
 
         # Print debug information if enabled
         if debug:
@@ -155,11 +186,24 @@ class ProtocolV2(CanBusGsUsb):
         - speed_loop_KP: Speed loop KP parameters (float).
         """
         # Send command to read the current Speed loop KP parameters
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_READ_SPEED_LOOP_KP, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_SPEED_LOOP_KP,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract Speed loop KP parameters from the response and convert from Q24 to float
-        speed_loop_KP_q24 = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        speed_loop_KP_q24 = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
         speed_loop_KP = speed_loop_KP_q24 / 16777216.0  # Conversion from Q24 to float
 
         # Print debug information if enabled
@@ -187,11 +231,24 @@ class ProtocolV2(CanBusGsUsb):
         - speed_loop_KI: Speed loop Ki parameters (float).
         """
         # Send command to read the current Speed loop Ki parameters
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_READ_SPEED_LOOP_KI, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_SPEED_LOOP_KI,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract Speed loop Ki parameters from the response and convert from Q24 to float
-        speed_loop_KI_q24 = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        speed_loop_KI_q24 = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
         speed_loop_KI = speed_loop_KI_q24 / 16777216.0  # Conversion from Q24 to float
 
         # Print debug information if enabled
@@ -219,12 +276,27 @@ class ProtocolV2(CanBusGsUsb):
         - current_loop_KP: Current loop Kp parameters (float).
         """
         # Send command to read the current Current loop Kp parameters
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_READ_CURRENT_LOOP_KP, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_CURRENT_LOOP_KP,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract Current loop Kp parameters from the response and convert from Q24 to float
-        current_loop_KP_q24 = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
-        current_loop_KP = current_loop_KP_q24 / 16777216.0  # Conversion from Q24 to float
+        current_loop_KP_q24 = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
+        current_loop_KP = (
+            current_loop_KP_q24 / 16777216.0
+        )  # Conversion from Q24 to float
 
         # Print debug information if enabled
         if debug:
@@ -251,19 +323,33 @@ class ProtocolV2(CanBusGsUsb):
         - current_loop_KI: Current loop Ki parameters (float).
         """
         # Send command to read the current Current loop Ki parameters
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_READ_CURRENT_LOOP_KI, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_CURRENT_LOOP_KI,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract Current loop Ki parameters from the response and convert from Q24 to float
-        current_loop_KI_q24 = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
-        current_loop_KI = current_loop_KI_q24 / 16777216.0  # Conversion from Q24 to float
+        current_loop_KI_q24 = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
+        current_loop_KI = (
+            current_loop_KI_q24 / 16777216.0
+        )  # Conversion from Q24 to float
 
         # Print debug information if enabled
         if debug:
             print(f"Current loop KI parameters: {current_loop_KI}")
 
         return current_loop_KI
-
 
     def write_position_loop_Kp_to_RAM(self, position_loop_kp, debug=None):
         """
@@ -288,13 +374,24 @@ class ProtocolV2(CanBusGsUsb):
         position_loop_kp_q24 = int(position_loop_kp * 16777216)
 
         # Send command to write the Kp parameters of the position loop to the RAM
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_WRITE_POSITION_LOOP_KP_TO_RAM, 0x00, 0x00, 0x00, 
-                                            (position_loop_kp_q24 >> 0) & 0xFF, (position_loop_kp_q24 >> 8) & 0xFF, 
-                                            (position_loop_kp_q24 >> 16) & 0xFF, (position_loop_kp_q24 >> 24) & 0xFF])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_WRITE_POSITION_LOOP_KP_TO_RAM,
+                0x00,
+                0x00,
+                0x00,
+                (position_loop_kp_q24 >> 0) & 0xFF,
+                (position_loop_kp_q24 >> 8) & 0xFF,
+                (position_loop_kp_q24 >> 16) & 0xFF,
+                (position_loop_kp_q24 >> 24) & 0xFF,
+            ],
+        )
 
         # Extract confirmation of Position loop Kp parameters from the response
-        position_loop_kp_confirmed = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        position_loop_kp_confirmed = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
 
         # Convert confirmed position_loop_kp from Q24 format to float
         position_loop_kp_confirmed_float = position_loop_kp_confirmed / 16777216.0
@@ -328,13 +425,24 @@ class ProtocolV2(CanBusGsUsb):
         position_loop_ki_q24 = int(position_loop_ki * 16777216)
 
         # Send command to write the Ki parameters of the position loop to the RAM
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_WRITE_POSITION_LOOP_KI_TO_RAM, 0x00, 0x00, 0x00, 
-                                            (position_loop_ki_q24 >> 0) & 0xFF, (position_loop_ki_q24 >> 8) & 0xFF, 
-                                            (position_loop_ki_q24 >> 16) & 0xFF, (position_loop_ki_q24 >> 24) & 0xFF])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_WRITE_POSITION_LOOP_KI_TO_RAM,
+                0x00,
+                0x00,
+                0x00,
+                (position_loop_ki_q24 >> 0) & 0xFF,
+                (position_loop_ki_q24 >> 8) & 0xFF,
+                (position_loop_ki_q24 >> 16) & 0xFF,
+                (position_loop_ki_q24 >> 24) & 0xFF,
+            ],
+        )
 
         # Extract confirmation of Position loop Ki parameters from the response
-        position_loop_ki_confirmed = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        position_loop_ki_confirmed = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
 
         # Convert confirmed position_loop_ki from Q24 format to float
         position_loop_ki_confirmed_float = position_loop_ki_confirmed / 16777216.0
@@ -368,13 +476,24 @@ class ProtocolV2(CanBusGsUsb):
         speed_loop_kp_q24 = int(speed_loop_kp * 16777216)
 
         # Send command to write the Kp parameters of the speed loop to the RAM
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_WRITE_SPEED_LOOP_KP_TO_RAM, 0x00, 0x00, 0x00, 
-                                            (speed_loop_kp_q24 >> 0) & 0xFF, (speed_loop_kp_q24 >> 8) & 0xFF, 
-                                            (speed_loop_kp_q24 >> 16) & 0xFF, (speed_loop_kp_q24 >> 24) & 0xFF])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_WRITE_SPEED_LOOP_KP_TO_RAM,
+                0x00,
+                0x00,
+                0x00,
+                (speed_loop_kp_q24 >> 0) & 0xFF,
+                (speed_loop_kp_q24 >> 8) & 0xFF,
+                (speed_loop_kp_q24 >> 16) & 0xFF,
+                (speed_loop_kp_q24 >> 24) & 0xFF,
+            ],
+        )
 
         # Extract confirmation of Speed loop Kp parameters from the response
-        speed_loop_kp_confirmed = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        speed_loop_kp_confirmed = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
 
         # Convert confirmed speed_loop_kp from Q24 format to float
         speed_loop_kp_confirmed_float = speed_loop_kp_confirmed / 16777216.0
@@ -408,13 +527,24 @@ class ProtocolV2(CanBusGsUsb):
         speed_loop_ki_q24 = int(speed_loop_ki * 16777216)
 
         # Send command to write the Ki parameters of the speed loop to the RAM
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_WRITE_SPEED_LOOP_KI_TO_RAM, 0x00, 0x00, 0x00, 
-                                            (speed_loop_ki_q24 >> 0) & 0xFF, (speed_loop_ki_q24 >> 8) & 0xFF, 
-                                            (speed_loop_ki_q24 >> 16) & 0xFF, (speed_loop_ki_q24 >> 24) & 0xFF])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_WRITE_SPEED_LOOP_KI_TO_RAM,
+                0x00,
+                0x00,
+                0x00,
+                (speed_loop_ki_q24 >> 0) & 0xFF,
+                (speed_loop_ki_q24 >> 8) & 0xFF,
+                (speed_loop_ki_q24 >> 16) & 0xFF,
+                (speed_loop_ki_q24 >> 24) & 0xFF,
+            ],
+        )
 
         # Extract confirmation of Speed loop Ki parameters from the response
-        speed_loop_ki_confirmed = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        speed_loop_ki_confirmed = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
 
         # Convert confirmed speed_loop_ki from Q24 format to float
         speed_loop_ki_confirmed_float = speed_loop_ki_confirmed / 16777216.0
@@ -448,13 +578,24 @@ class ProtocolV2(CanBusGsUsb):
         current_loop_kp_q24 = int(current_loop_kp * 16777216)
 
         # Send command to write the Kp parameters of the current loop to the RAM
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_WRITE_CURRENT_LOOP_KP_TO_RAM, 0x00, 0x00, 0x00, 
-                                            (current_loop_kp_q24 >> 0) & 0xFF, (current_loop_kp_q24 >> 8) & 0xFF, 
-                                            (current_loop_kp_q24 >> 16) & 0xFF, (current_loop_kp_q24 >> 24) & 0xFF])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_WRITE_CURRENT_LOOP_KP_TO_RAM,
+                0x00,
+                0x00,
+                0x00,
+                (current_loop_kp_q24 >> 0) & 0xFF,
+                (current_loop_kp_q24 >> 8) & 0xFF,
+                (current_loop_kp_q24 >> 16) & 0xFF,
+                (current_loop_kp_q24 >> 24) & 0xFF,
+            ],
+        )
 
         # Extract confirmation of Current loop Kp parameters from the response
-        current_loop_kp_confirmed = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        current_loop_kp_confirmed = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
 
         # Convert confirmed current_loop_kp from Q24 format to float
         current_loop_kp_confirmed_float = current_loop_kp_confirmed / 16777216.0
@@ -488,13 +629,24 @@ class ProtocolV2(CanBusGsUsb):
         current_loop_ki_q24 = int(current_loop_ki * 16777216)
 
         # Send command to write the Ki parameters of the current loop to the RAM
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_WRITE_CURRENT_LOOP_KI_TO_RAM, 0x00, 0x00, 0x00, 
-                                            (current_loop_ki_q24 >> 0) & 0xFF, (current_loop_ki_q24 >> 8) & 0xFF, 
-                                            (current_loop_ki_q24 >> 16) & 0xFF, (current_loop_ki_q24 >> 24) & 0xFF])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_WRITE_CURRENT_LOOP_KI_TO_RAM,
+                0x00,
+                0x00,
+                0x00,
+                (current_loop_ki_q24 >> 0) & 0xFF,
+                (current_loop_ki_q24 >> 8) & 0xFF,
+                (current_loop_ki_q24 >> 16) & 0xFF,
+                (current_loop_ki_q24 >> 24) & 0xFF,
+            ],
+        )
 
         # Extract confirmation of Current loop Ki parameters from the response
-        current_loop_ki_confirmed = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        current_loop_ki_confirmed = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
 
         # Convert confirmed current_loop_ki from Q24 format to float
         current_loop_ki_confirmed_float = current_loop_ki_confirmed / 16777216.0
@@ -504,7 +656,6 @@ class ProtocolV2(CanBusGsUsb):
             print("Current loop Ki set to ", current_loop_ki_confirmed_float)
 
         return current_loop_ki_confirmed_float
-
 
     def write_position_loop_Kp_to_ROM(self, position_loop_kp, debug=None):
         """
@@ -529,13 +680,24 @@ class ProtocolV2(CanBusGsUsb):
         position_loop_kp_q24 = int(position_loop_kp * 16777216)
 
         # Send command to write the Kp parameters of the position loop to the ROM
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_WRITE_POSITION_LOOP_KP_TO_ROM, 0x00, 0x00, 0x00, 
-                                            (position_loop_kp_q24 >> 0) & 0xFF, (position_loop_kp_q24 >> 8) & 0xFF, 
-                                            (position_loop_kp_q24 >> 16) & 0xFF, (position_loop_kp_q24 >> 24) & 0xFF])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_WRITE_POSITION_LOOP_KP_TO_ROM,
+                0x00,
+                0x00,
+                0x00,
+                (position_loop_kp_q24 >> 0) & 0xFF,
+                (position_loop_kp_q24 >> 8) & 0xFF,
+                (position_loop_kp_q24 >> 16) & 0xFF,
+                (position_loop_kp_q24 >> 24) & 0xFF,
+            ],
+        )
 
         # Extract confirmation of Position loop Kp parameters from the response
-        position_loop_kp_confirmed = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        position_loop_kp_confirmed = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
 
         # Convert confirmed position_loop_kp from Q24 format to float
         position_loop_kp_confirmed_float = position_loop_kp_confirmed / 16777216.0
@@ -569,13 +731,24 @@ class ProtocolV2(CanBusGsUsb):
         position_loop_ki_q24 = int(position_loop_ki * 16777216)
 
         # Send command to write the Ki parameters of the position loop to the ROM
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_WRITE_POSITION_LOOP_KI_TO_ROM, 0x00, 0x00, 0x00, 
-                                            (position_loop_ki_q24 >> 0) & 0xFF, (position_loop_ki_q24 >> 8) & 0xFF, 
-                                            (position_loop_ki_q24 >> 16) & 0xFF, (position_loop_ki_q24 >> 24) & 0xFF])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_WRITE_POSITION_LOOP_KI_TO_ROM,
+                0x00,
+                0x00,
+                0x00,
+                (position_loop_ki_q24 >> 0) & 0xFF,
+                (position_loop_ki_q24 >> 8) & 0xFF,
+                (position_loop_ki_q24 >> 16) & 0xFF,
+                (position_loop_ki_q24 >> 24) & 0xFF,
+            ],
+        )
 
         # Extract confirmation of Position loop Ki parameters from the response
-        position_loop_ki_confirmed = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        position_loop_ki_confirmed = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
 
         # Convert confirmed position_loop_ki from Q24 format to float
         position_loop_ki_confirmed_float = position_loop_ki_confirmed / 16777216.0
@@ -609,13 +782,24 @@ class ProtocolV2(CanBusGsUsb):
         speed_loop_kp_q24 = int(speed_loop_kp * 16777216)
 
         # Send command to write the Kp parameters of the speed loop to the ROM
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_WRITE_SPEED_LOOP_KP_TO_ROM, 0x00, 0x00, 0x00, 
-                                            (speed_loop_kp_q24 >> 0) & 0xFF, (speed_loop_kp_q24 >> 8) & 0xFF, 
-                                            (speed_loop_kp_q24 >> 16) & 0xFF, (speed_loop_kp_q24 >> 24) & 0xFF])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_WRITE_SPEED_LOOP_KP_TO_ROM,
+                0x00,
+                0x00,
+                0x00,
+                (speed_loop_kp_q24 >> 0) & 0xFF,
+                (speed_loop_kp_q24 >> 8) & 0xFF,
+                (speed_loop_kp_q24 >> 16) & 0xFF,
+                (speed_loop_kp_q24 >> 24) & 0xFF,
+            ],
+        )
 
         # Extract confirmation of Speed loop Kp parameters from the response
-        speed_loop_kp_confirmed = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        speed_loop_kp_confirmed = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
 
         # Convert confirmed speed_loop_kp from Q24 format to float
         speed_loop_kp_confirmed_float = speed_loop_kp_confirmed / 16777216.0
@@ -649,13 +833,24 @@ class ProtocolV2(CanBusGsUsb):
         speed_loop_ki_q24 = int(speed_loop_ki * 16777216)
 
         # Send command to write the Ki parameters of the speed loop to the ROM
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_WRITE_SPEED_LOOP_KI_TO_ROM, 0x00, 0x00, 0x00, 
-                                            (speed_loop_ki_q24 >> 0) & 0xFF, (speed_loop_ki_q24 >> 8) & 0xFF, 
-                                            (speed_loop_ki_q24 >> 16) & 0xFF, (speed_loop_ki_q24 >> 24) & 0xFF])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_WRITE_SPEED_LOOP_KI_TO_ROM,
+                0x00,
+                0x00,
+                0x00,
+                (speed_loop_ki_q24 >> 0) & 0xFF,
+                (speed_loop_ki_q24 >> 8) & 0xFF,
+                (speed_loop_ki_q24 >> 16) & 0xFF,
+                (speed_loop_ki_q24 >> 24) & 0xFF,
+            ],
+        )
 
         # Extract confirmation of Speed loop Ki parameters from the response
-        speed_loop_ki_confirmed = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        speed_loop_ki_confirmed = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
 
         # Convert confirmed speed_loop_ki from Q24 format to float
         speed_loop_ki_confirmed_float = speed_loop_ki_confirmed / 16777216.0
@@ -689,13 +884,24 @@ class ProtocolV2(CanBusGsUsb):
         current_loop_kp_q24 = int(current_loop_kp * 16777216)
 
         # Send command to write the Kp parameters of the current loop to the ROM
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_WRITE_CURRENT_LOOP_KP_TO_ROM, 0x00, 0x00, 0x00, 
-                                            (current_loop_kp_q24 >> 0) & 0xFF, (current_loop_kp_q24 >> 8) & 0xFF, 
-                                            (current_loop_kp_q24 >> 16) & 0xFF, (current_loop_kp_q24 >> 24) & 0xFF])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_WRITE_CURRENT_LOOP_KP_TO_ROM,
+                0x00,
+                0x00,
+                0x00,
+                (current_loop_kp_q24 >> 0) & 0xFF,
+                (current_loop_kp_q24 >> 8) & 0xFF,
+                (current_loop_kp_q24 >> 16) & 0xFF,
+                (current_loop_kp_q24 >> 24) & 0xFF,
+            ],
+        )
 
         # Extract confirmation of Current loop Kp parameters from the response
-        current_loop_kp_confirmed = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        current_loop_kp_confirmed = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
 
         # Convert confirmed current_loop_kp from Q24 format to float
         current_loop_kp_confirmed_float = current_loop_kp_confirmed / 16777216.0
@@ -729,13 +935,24 @@ class ProtocolV2(CanBusGsUsb):
         current_loop_ki_q24 = int(current_loop_ki * 16777216)
 
         # Send command to write the Ki parameters of the current loop to the ROM
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_WRITE_CURRENT_LOOP_KI_TO_ROM, 0x00, 0x00, 0x00, 
-                                            (current_loop_ki_q24 >> 0) & 0xFF, (current_loop_ki_q24 >> 8) & 0xFF, 
-                                            (current_loop_ki_q24 >> 16) & 0xFF, (current_loop_ki_q24 >> 24) & 0xFF])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_WRITE_CURRENT_LOOP_KI_TO_ROM,
+                0x00,
+                0x00,
+                0x00,
+                (current_loop_ki_q24 >> 0) & 0xFF,
+                (current_loop_ki_q24 >> 8) & 0xFF,
+                (current_loop_ki_q24 >> 16) & 0xFF,
+                (current_loop_ki_q24 >> 24) & 0xFF,
+            ],
+        )
 
         # Extract confirmation of Current loop Ki parameters from the response
-        current_loop_ki_confirmed = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        current_loop_ki_confirmed = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
 
         # Convert confirmed current_loop_ki from Q24 format to float
         current_loop_ki_confirmed_float = current_loop_ki_confirmed / 16777216.0
@@ -745,7 +962,6 @@ class ProtocolV2(CanBusGsUsb):
             print("Current loop Ki set to ", current_loop_ki_confirmed_float)
 
         return current_loop_ki_confirmed_float
-
 
     def read_acceleration(self, debug=None):
         """
@@ -766,11 +982,24 @@ class ProtocolV2(CanBusGsUsb):
         - acceleration: Motor acceleration data in dps/s.
         """
         # Send command to read motor acceleration data
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_READ_ACCELERATION, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_ACCELERATION,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract acceleration data from the response
-        acceleration = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        acceleration = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
 
         # Print debug information if enabled
         if debug:
@@ -798,20 +1027,30 @@ class ProtocolV2(CanBusGsUsb):
         - acceleration: Acceleration data as confirmed by the drive.
         """
         # Send command to write acceleration data to the RAM
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_WRITE_ACCELERATION_TO_RAM, 0x00, 0x00, 0x00, 
-                                            (acceleration >> 0) & 0xFF, (acceleration >> 8) & 0xFF, 
-                                            (acceleration >> 16) & 0xFF, (acceleration >> 24) & 0xFF])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_WRITE_ACCELERATION_TO_RAM,
+                0x00,
+                0x00,
+                0x00,
+                (acceleration >> 0) & 0xFF,
+                (acceleration >> 8) & 0xFF,
+                (acceleration >> 16) & 0xFF,
+                (acceleration >> 24) & 0xFF,
+            ],
+        )
 
         # Extract confirmation of acceleration data from the response
-        acceleration_confirmed = msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        acceleration_confirmed = (
+            msg.data[4] | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        )
 
         # Print debug information if enabled
         if debug:
             print("Acceleration set to ", acceleration_confirmed)
 
         return acceleration_confirmed
-
 
     def read_multiturn_encoder_position(self, debug=None):
         """
@@ -833,11 +1072,29 @@ class ProtocolV2(CanBusGsUsb):
         - encoder_position: Encoder multi-turn position.
         """
         # Send command to read encoder multi-turn position
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_READ_MULTITURN_ENCODER_POSITION, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_MULTITURN_ENCODER_POSITION,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract encoder position data from the response
-        encoder_position = msg.data[1] | (msg.data[2] << 8) | (msg.data[3] << 16) | (msg.data[4] << 24) | (msg.data[5] << 32) | (msg.data[6] << 40)
+        encoder_position = (
+            msg.data[1]
+            | (msg.data[2] << 8)
+            | (msg.data[3] << 16)
+            | (msg.data[4] << 24)
+            | (msg.data[5] << 32)
+            | (msg.data[6] << 40)
+        )
 
         # Check if encoder position is negative
         if msg.data[7] != 0:
@@ -869,11 +1126,29 @@ class ProtocolV2(CanBusGsUsb):
         - encoder_raw: Encoder multi-turn original position.
         """
         # Send command to read encoder multi-turn original position
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_READ_MULTITURN_ENCODER_ORIGINAL_POSITION, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_MULTITURN_ENCODER_ORIGINAL_POSITION,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract encoder original position data from the response
-        encoder_raw = msg.data[1] | (msg.data[2] << 8) | (msg.data[3] << 16) | (msg.data[4] << 24) | (msg.data[5] << 32) | (msg.data[6] << 40)
+        encoder_raw = (
+            msg.data[1]
+            | (msg.data[2] << 8)
+            | (msg.data[3] << 16)
+            | (msg.data[4] << 24)
+            | (msg.data[5] << 32)
+            | (msg.data[6] << 40)
+        )
 
         # Check if encoder original position is negative
         if msg.data[7] != 0:
@@ -905,11 +1180,29 @@ class ProtocolV2(CanBusGsUsb):
         - encoder_zero_offset: Encoder multi-turn zero offset value.
         """
         # Send command to read encoder multi-turn zero offset value
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_READ_MULTITURN_ENCODER_OFFSET, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_MULTITURN_ENCODER_OFFSET,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract encoder zero offset value from the response
-        encoder_zero_offset = msg.data[1] | (msg.data[2] << 8) | (msg.data[3] << 16) | (msg.data[4] << 24) | (msg.data[5] << 32) | (msg.data[6] << 40)
+        encoder_zero_offset = (
+            msg.data[1]
+            | (msg.data[2] << 8)
+            | (msg.data[3] << 16)
+            | (msg.data[4] << 24)
+            | (msg.data[5] << 32)
+            | (msg.data[6] << 40)
+        )
 
         # Check if encoder zero offset is negative
         if msg.data[7] != 0:
@@ -921,8 +1214,9 @@ class ProtocolV2(CanBusGsUsb):
 
         return encoder_zero_offset
 
-    
-    def write_multiturn_encoder_value_position_to_ROM_as_motor_zero(self, encoder_offset, debug=None):
+    def write_multiturn_encoder_value_position_to_ROM_as_motor_zero(
+        self, encoder_offset, debug=None
+    ):
         """
         Writes the encoder zero offset value to ROM as motor zero.
 
@@ -945,20 +1239,29 @@ class ProtocolV2(CanBusGsUsb):
         encoder_offset = abs(encoder_offset)
 
         # Send command to write encoder zero offset value to ROM as motor zero
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[
-                                        self.ADDR_WRITE_MULTITURN_ENCODER_VALUES_TO_ROM_AS_MOTOR_ZERO,
-                                        (encoder_offset >> 0) & 0xFF,
-                                        (encoder_offset >> 8) & 0xFF,
-                                        (encoder_offset >> 16) & 0xFF,
-                                        (encoder_offset >> 24) & 0xFF,
-                                        (encoder_offset >> 32) & 0xFF,
-                                        (encoder_offset >> 40) & 0xFF,
-                                        is_negative
-                                    ])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_WRITE_MULTITURN_ENCODER_VALUES_TO_ROM_AS_MOTOR_ZERO,
+                (encoder_offset >> 0) & 0xFF,
+                (encoder_offset >> 8) & 0xFF,
+                (encoder_offset >> 16) & 0xFF,
+                (encoder_offset >> 24) & 0xFF,
+                (encoder_offset >> 32) & 0xFF,
+                (encoder_offset >> 40) & 0xFF,
+                is_negative,
+            ],
+        )
 
         # Extract encoder offset value from the response
-        encoder_offset = msg.data[1] | (msg.data[2] << 8) | (msg.data[3] << 16) | (msg.data[4] << 24) | (msg.data[5] << 32) | (msg.data[6] << 40)
+        encoder_offset = (
+            msg.data[1]
+            | (msg.data[2] << 8)
+            | (msg.data[3] << 16)
+            | (msg.data[4] << 24)
+            | (msg.data[5] << 32)
+            | (msg.data[6] << 40)
+        )
 
         # Check if encoder offset is negative
         if msg.data[7] != 0:
@@ -992,16 +1295,30 @@ class ProtocolV2(CanBusGsUsb):
         - encoder_offset: Encoder offset value.
         """
         # Send command to write current encoder position to ROM as motor zero
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[
-                                        self.ADDR_WRITE_MULTITURN_ENCODER_CURRENT_POSITION_TO_ROM_AS_MOTOR_ZERO,
-                                        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-                                    ])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_WRITE_MULTITURN_ENCODER_CURRENT_POSITION_TO_ROM_AS_MOTOR_ZERO,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract encoder offset value from the response
-        encoder_offset = (msg.data[1] | (msg.data[2] << 8) | (msg.data[3] << 16) | 
-                        (msg.data[4] << 24) | (msg.data[5] << 32) | (msg.data[6] << 40) | 
-                        (msg.data[7] << 48))
+        encoder_offset = (
+            msg.data[1]
+            | (msg.data[2] << 8)
+            | (msg.data[3] << 16)
+            | (msg.data[4] << 24)
+            | (msg.data[5] << 32)
+            | (msg.data[6] << 40)
+            | (msg.data[7] << 48)
+        )
 
         # Check if encoder offset is negative
         if msg.data[7] != 0:
@@ -1037,8 +1354,19 @@ class ProtocolV2(CanBusGsUsb):
         - encoder_offset: Encoder offset in degrees.
         """
         # Send command to read single-turn encoder data
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_READ_SINGLETURN_ENCODER_DATA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_SINGLETURN_ENCODER_DATA,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract data from the response
         current_position = (msg.data[2] | (msg.data[3] << 8)) * (360 / 65535)
@@ -1074,11 +1402,22 @@ class ProtocolV2(CanBusGsUsb):
         - new_encoder_offset: Updated encoder offset value after writing to ROM.
         """
         # Send command to set the encoder zero offset
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_WRITE_ENCODER_VALUES_TO_ROM_AS_MOTOR_ZERO, 0x00, 0x00, 0x00, 0x00, 0x00, offset & 0xFF, (offset >> 8) & 0xFF])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_WRITE_ENCODER_VALUES_TO_ROM_AS_MOTOR_ZERO,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                offset & 0xFF,
+                (offset >> 8) & 0xFF,
+            ],
+        )
 
         # Extract the new encoder offset from the response
-        new_encoder_offset = (msg.data[6] | (msg.data[7] << 8))
+        new_encoder_offset = msg.data[6] | (msg.data[7] << 8)
 
         # Print debug information if enabled
         if debug is not None:
@@ -1086,7 +1425,9 @@ class ProtocolV2(CanBusGsUsb):
 
         return new_encoder_offset
 
-    def write_singleturn_encoder_current_position_to_ROM_as_motor_zero(self, debug=None):
+    def write_singleturn_encoder_current_position_to_ROM_as_motor_zero(
+        self, debug=None
+    ):
         """
         Writes the current encoder position of the motor as the initial position to the ROM.
 
@@ -1108,11 +1449,22 @@ class ProtocolV2(CanBusGsUsb):
         - encoder_offset: Encoder zero offset value written to ROM.
         """
         # Send command to write the current encoder position as the initial position to the ROM
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_WRITE_SINGLETURN_ENCODER_CURRENT_POSITION_TO_ROM_AS_MOTOR_ZERO, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_WRITE_SINGLETURN_ENCODER_CURRENT_POSITION_TO_ROM_AS_MOTOR_ZERO,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract the encoder zero offset from the response
-        encoder_offset = (msg.data[6] | (msg.data[7] << 8))
+        encoder_offset = msg.data[6] | (msg.data[7] << 8)
 
         # Print debug information if enabled
         if debug is not None:
@@ -1139,11 +1491,29 @@ class ProtocolV2(CanBusGsUsb):
         - motor_angle: Motor angle in degrees.
         """
         # Send command to read the multi-turn angle of the motor
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_READ_MULTITURN_ANGLE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_MULTITURN_ANGLE,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract motor angle data from the response
-        motor_angle = (msg.data[1] | (msg.data[2] << 8) | (msg.data[3] << 16) | (msg.data[4] << 24) | (msg.data[5] << 32) | (msg.data[6] << 40)) * 0.01
+        motor_angle = (
+            msg.data[1]
+            | (msg.data[2] << 8)
+            | (msg.data[3] << 16)
+            | (msg.data[4] << 24)
+            | (msg.data[5] << 32)
+            | (msg.data[6] << 40)
+        ) * 0.01
 
         # Check if the motor angle is negative and adjust if necessary
         if msg.data[7] != 0:
@@ -1151,7 +1521,7 @@ class ProtocolV2(CanBusGsUsb):
 
         # Print debug information if enabled
         if debug is not None:
-            print(f"Encoder multiturn angle: {motor_angle:.2f}°", end='\r')
+            print(f"Encoder multiturn angle: {motor_angle:.2f}°", end="\r")
 
         return motor_angle
 
@@ -1175,18 +1545,28 @@ class ProtocolV2(CanBusGsUsb):
         - circle_angle: Single circle angle of the motor in degrees.
         """
         # Send command to read the single circle angle of the motor
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_READ_SINGLE_CIRCLE_ANGLE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_SINGLE_CIRCLE_ANGLE,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract single circle angle data from the response
         circle_angle = (msg.data[6] | (msg.data[7] << 8)) * 0.01
 
         # Print debug information if enabled
         if debug is not None:
-            print(f"Encoder singleturn position: {circle_angle:.2f}°", end='\r')
+            print(f"Encoder singleturn position: {circle_angle:.2f}°", end="\r")
 
         return circle_angle
-
 
     def read_motor_status_1_error_flag(self, debug=None):
         """
@@ -1215,8 +1595,19 @@ class ProtocolV2(CanBusGsUsb):
         - error_state: Error state flag indicating various motor states.
         """
         # Send command to read motor status and error flag
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_READ_MOTOR_STATUS_1_ERROR_FLAG, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_MOTOR_STATUS_1_ERROR_FLAG,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract motor temperature, voltage, and error state from the response
         motor_temp = msg.data[1]
@@ -1228,25 +1619,46 @@ class ProtocolV2(CanBusGsUsb):
             print(f"Motor temperature: {motor_temp}°C")
             print(f"Voltage: {voltage}V")
             print("Error States:")
-            if error_state & 0x0001: print("  - Hardware over-current")
-            if error_state & 0x0002: print("  - Motor stalled")
-            if error_state & 0x0004: print("  - Low voltage")
-            if error_state & 0x0008: print("  - Over-voltage")
-            if error_state & 0x0010: print("  - Over-current")
-            if error_state & 0x0020: print("  - Brake opening failed")
-            if error_state & 0x0040: print("  - Bus current error")
-            if error_state & 0x0080: print("  - Battery voltage error")
-            if error_state & 0x0100: print("  - Overspeed")
-            if error_state & 0x0200: print("  - Position loop exceeded error")
-            if error_state & 0x0400: print("  - VDD error")
-            if error_state & 0x0800: print("  - DSP internal sensor temperature is overheated")
-            if error_state & 0x1000: print("  - Motor temperature is overheated")
-            if error_state & 0x2000: print("  - Encoder calibration error")
-            if error_state & 0x00F0: print("  - PID parameter write ROM protection, non-safe operation")
-            if error_state & 0x00F1: print("  - Encoder value is written into ROM protection, non-safe operation")
-            if error_state & 0x00F2: print("  - Three-loop switching operation error, non-safe operation")
-            if error_state & 0x00F3: print("  - Motor brake is not open")
-            if error_state & 0x00F4: print("  - Motor write ROM protection, non-safe operation")
+            if error_state & 0x0001:
+                print("  - Hardware over-current")
+            if error_state & 0x0002:
+                print("  - Motor stalled")
+            if error_state & 0x0004:
+                print("  - Low voltage")
+            if error_state & 0x0008:
+                print("  - Over-voltage")
+            if error_state & 0x0010:
+                print("  - Over-current")
+            if error_state & 0x0020:
+                print("  - Brake opening failed")
+            if error_state & 0x0040:
+                print("  - Bus current error")
+            if error_state & 0x0080:
+                print("  - Battery voltage error")
+            if error_state & 0x0100:
+                print("  - Overspeed")
+            if error_state & 0x0200:
+                print("  - Position loop exceeded error")
+            if error_state & 0x0400:
+                print("  - VDD error")
+            if error_state & 0x0800:
+                print("  - DSP internal sensor temperature is overheated")
+            if error_state & 0x1000:
+                print("  - Motor temperature is overheated")
+            if error_state & 0x2000:
+                print("  - Encoder calibration error")
+            if error_state & 0x00F0:
+                print("  - PID parameter write ROM protection, non-safe operation")
+            if error_state & 0x00F1:
+                print(
+                    "  - Encoder value is written into ROM protection, non-safe operation"
+                )
+            if error_state & 0x00F2:
+                print("  - Three-loop switching operation error, non-safe operation")
+            if error_state & 0x00F3:
+                print("  - Motor brake is not open")
+            if error_state & 0x00F4:
+                print("  - Motor write ROM protection, non-safe operation")
 
         return motor_temp, voltage, error_state
 
@@ -1278,14 +1690,25 @@ class ProtocolV2(CanBusGsUsb):
         - encoder_position: Encoder position value.
         """
         # Send command to read motor status and parameters
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_READ_MOTOR_STATUS_2, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_MOTOR_STATUS_2,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract motor parameters from the response
         motor_temp = msg.data[1]
-        torque_current = (msg.data[2] | (msg.data[3] << 8))
-        motor_speed = (msg.data[4] | (msg.data[5] << 8))
-        encoder_position = (msg.data[6] | (msg.data[7] << 8))
+        torque_current = msg.data[2] | (msg.data[3] << 8)
+        motor_speed = msg.data[4] | (msg.data[5] << 8)
+        encoder_position = msg.data[6] | (msg.data[7] << 8)
 
         # Print debug information if enabled
         if debug is not None:
@@ -1324,12 +1747,23 @@ class ProtocolV2(CanBusGsUsb):
         - phase_C_current: Phase C current in amperes.
         """
         # Send command to read motor status and parameters
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_READ_MOTOR_STATUS_3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_MOTOR_STATUS_3,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract motor parameters from the response
         motor_temp = msg.data[1]
-        
+
         # Calculate phase A current
         phase_A_current = (msg.data[2] | (msg.data[3] << 8)) * (1 / 64)
 
@@ -1340,7 +1774,7 @@ class ProtocolV2(CanBusGsUsb):
         phase_C_current = (msg.data[6] | (msg.data[7] << 8)) * (1 / 64)
 
         # Print debug information if enabled
-        if debug != None:
+        if debug is not None:
             print(f"Motor temperature: {motor_temp}°C")
             print(f"Phase A current: {phase_A_current}A")
             print(f"Phase B current: {phase_B_current}A")
@@ -1348,10 +1782,9 @@ class ProtocolV2(CanBusGsUsb):
 
         return motor_temp, phase_A_current, phase_B_current, phase_C_current
 
-
-    def motor_off(self, debug=None): 
+    def motor_off(self, debug=None):
         """
-        Turn off the motor, and clear the running state of the motor and the previously received control commands at the same time. 
+        Turn off the motor, and clear the running state of the motor and the previously received control commands at the same time.
 
         Command Structure:
         - DATA[0]: Command byte (0x80)
@@ -1367,16 +1800,24 @@ class ProtocolV2(CanBusGsUsb):
         - success: 1 if the motor was successfully turned off, 0 otherwise.
         """
         # Send command to turn off the motor
-        msg = self.can_bus.sendMessage(self.BASE_ADDR_ID + self.id, [self.ADDR_MOTOR_OFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
-        
+        msg = self.can_bus.sendMessage(
+            self.BASE_ADDR_ID + self.id,
+            [self.ADDR_MOTOR_OFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+        )
+
         # Check if the response matches the sent command
-        success = 1 if msg.can_id == self.BASE_ADDR_ID + self.id and all(data == 0x00 for data in msg.data[1:]) else 0
+        success = (
+            1
+            if msg.can_id == self.BASE_ADDR_ID + self.id
+            and all(data == 0x00 for data in msg.data[1:])
+            else 0
+        )
 
         return success
 
     def stop(self, debug=None):
         """
-        Stop the motor, but do not clear the running state of the motor and the previously received control commands. 
+        Stop the motor, but do not clear the running state of the motor and the previously received control commands.
 
         Command Structure:
         - DATA[0]: Command byte (0x81)
@@ -1392,16 +1833,24 @@ class ProtocolV2(CanBusGsUsb):
         - success: 1 if the motor was successfully stopped, 0 otherwise.
         """
         # Send command to stop the motor
-        msg = self.can_bus.sendMessage(self.BASE_ADDR_ID + self.id, [self.ADDR_STOP, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
-        
+        msg = self.can_bus.sendMessage(
+            self.BASE_ADDR_ID + self.id,
+            [self.ADDR_STOP, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+        )
+
         # Check if the response matches the sent command
-        success = 1 if msg.can_id == self.BASE_ADDR_ID + self.id and all(data == 0x00 for data in msg.data[1:]) else 0
+        success = (
+            1
+            if msg.can_id == self.BASE_ADDR_ID + self.id
+            and all(data == 0x00 for data in msg.data[1:])
+            else 0
+        )
 
         return success
 
     def running(self, debug=None):
         """
-        Resume motor operation from the motor stop command (recover the control mode before the stop). 
+        Resume motor operation from the motor stop command (recover the control mode before the stop).
 
         Command Structure:
         - DATA[0]: Command byte (0x88)
@@ -1417,13 +1866,20 @@ class ProtocolV2(CanBusGsUsb):
         - success: 1 if the motor resumed operation successfully, 0 otherwise.
         """
         # Send command to resume motor operation
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, data=[self.ADDR_RUNNING, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
-        
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[self.ADDR_RUNNING, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+        )
+
         # Check if the response matches the sent command
-        success = 1 if msg.can_id == self.BASE_ADDR_ID + self.id and all(data == 0x00 for data in msg.data[1:]) else 0
+        success = (
+            1
+            if msg.can_id == self.BASE_ADDR_ID + self.id
+            and all(data == 0x00 for data in msg.data[1:])
+            else 0
+        )
 
         return success
-
 
     def torque_closed_loop_control(self, torque, debug=None):
         """
@@ -1462,19 +1918,29 @@ class ProtocolV2(CanBusGsUsb):
         torque_current_raw = int(torque * (2048 / 33))
 
         # Send command to control torque current output
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_TORQUE_CLOSED_LOOP_CONTROL, 0x00, 0x00, 0x00, 
-                                            (torque_current_raw >> 0) & 0xFF, (torque_current_raw >> 8) & 0xFF, 0x00, 0x00])
-        
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_TORQUE_CLOSED_LOOP_CONTROL,
+                0x00,
+                0x00,
+                0x00,
+                (torque_current_raw >> 0) & 0xFF,
+                (torque_current_raw >> 8) & 0xFF,
+                0x00,
+                0x00,
+            ],
+        )
+
         # Extract motor parameters from the response
         motor_temp = msg.data[1]
-        torque_current_raw = (msg.data[2] | (msg.data[3] << 8))
+        torque_current_raw = msg.data[2] | (msg.data[3] << 8)
         torque_current = torque_current_raw * (33 / 2048)  # Convert to amperes
-        motor_speed = (msg.data[4] | (msg.data[5] << 8))
-        encoder_position = (msg.data[6] | (msg.data[7] << 8))
+        motor_speed = msg.data[4] | (msg.data[5] << 8)
+        encoder_position = msg.data[6] | (msg.data[7] << 8)
 
         # Print debug information if enabled
-        if debug != None:
+        if debug is not None:
             print(f"Motor temperature: {motor_temp}°C")
             print(f"Torque current value (-33~33A): {torque_current:.2f}A")
             print(f"Motor speed: {motor_speed}dps")
@@ -1518,20 +1984,29 @@ class ProtocolV2(CanBusGsUsb):
         speed_control_raw = int(speed * 100)
 
         # Send command to control motor speed
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_SPEED_CLOSED_LOOP_CONTROL, 0x00, 0x00, 0x00, 
-                                            (speed_control_raw >> 0) & 0xFF, (speed_control_raw >> 8) & 0xFF, 
-                                            (speed_control_raw >> 16) & 0xFF, (speed_control_raw >> 24) & 0xFF])
-        
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_SPEED_CLOSED_LOOP_CONTROL,
+                0x00,
+                0x00,
+                0x00,
+                (speed_control_raw >> 0) & 0xFF,
+                (speed_control_raw >> 8) & 0xFF,
+                (speed_control_raw >> 16) & 0xFF,
+                (speed_control_raw >> 24) & 0xFF,
+            ],
+        )
+
         # Extract motor parameters from the response
         motor_temp = msg.data[1]
-        torque_current_raw = (msg.data[2] | (msg.data[3] << 8))
+        torque_current_raw = msg.data[2] | (msg.data[3] << 8)
         torque_current = torque_current_raw * (33 / 2048)  # Convert to amperes
-        motor_speed = (msg.data[4] | (msg.data[5] << 8))
-        encoder_position = (msg.data[6] | (msg.data[7] << 8))
+        motor_speed = msg.data[4] | (msg.data[5] << 8)
+        encoder_position = msg.data[6] | (msg.data[7] << 8)
 
         # Print debug information if enabled
-        if debug != None:
+        if debug is not None:
             print(f"Motor temperature: {motor_temp}°C")
             print(f"Torque current value (-33~33A): {torque_current:.2f}A")
             print(f"Motor speed: {motor_speed:.2f}dps")
@@ -1539,7 +2014,9 @@ class ProtocolV2(CanBusGsUsb):
 
         return motor_temp, torque_current, motor_speed, encoder_position
 
-    def position_closed_loop_control_1(self, target_position, wait_for_completion=True, debug=None):
+    def position_closed_loop_control_1(
+        self, target_position, wait_for_completion=True, debug=None
+    ):
         """
         Control the position of the motor (multi-turn angle).
 
@@ -1570,10 +2047,10 @@ class ProtocolV2(CanBusGsUsb):
         - motor_angle: Current motor angle in degrees.
 
         Memo:
-        1. The control value angleControl under this command is limited by the Max Angle value in the host computer of debugging software. 
-        2. The maximum speed of the motor under this command is limited by the Max Speed value in the upper computer of debugging software. 
-        3. In this control mode, the maximum acceleration of the motor is limited by the Max Acceleration value in the host computer of debugging software. 
-        4. In this control mode, the maximum torque current of the motor is limited by the Max Torque Current value in the host computer of debugging software. 
+        1. The control value angleControl under this command is limited by the Max Angle value in the host computer of debugging software.
+        2. The maximum speed of the motor under this command is limited by the Max Speed value in the upper computer of debugging software.
+        3. In this control mode, the maximum acceleration of the motor is limited by the Max Acceleration value in the host computer of debugging software.
+        4. In this control mode, the maximum torque current of the motor is limited by the Max Torque Current value in the host computer of debugging software.
         """
 
         # Convert angleControl to multiples of 0.01 degree (0.01 degree/LSB)
@@ -1582,37 +2059,47 @@ class ProtocolV2(CanBusGsUsb):
         # Ensure target_position is within the valid range [0, 0xFFFFFFFF] (int32_t)
         if target_position < 0 or target_position > 0xFFFFFFFF:
             # Raise a ValueError if target_position is out of range
-            raise ValueError("Invalid target position value. Target position must be in the range [0, 42949672.95]°")
+            raise ValueError(
+                "Invalid target position value. Target position must be in the range [0, 42949672.95]°"
+            )
 
         # Send command to control motor target_position
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_POSITION_MULTITURN_CLOSED_LOOP_CONTROL, 
-                                            0x00, 0x00, 0x00,
-                                            (target_position >> 0) & 0xFF, 
-                                            (target_position >> 8) & 0xFF,
-                                            (target_position >> 16) & 0xFF, 
-                                            (target_position >> 24) & 0xFF])
+        self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_POSITION_MULTITURN_CLOSED_LOOP_CONTROL,
+                0x00,
+                0x00,
+                0x00,
+                (target_position >> 0) & 0xFF,
+                (target_position >> 8) & 0xFF,
+                (target_position >> 16) & 0xFF,
+                (target_position >> 24) & 0xFF,
+            ],
+        )
 
         # Wait for motor to reach target position if specified
         if wait_for_completion:
             while True:
                 # Read current motor angle from multiturn encoder
                 motor_angle = self.read_multiturn_encoder_angle()
-                
+
                 # Read motor status (temperature, torque current, speed)
-                motor_temp, torque_current, motor_speed, encoder_position = self.read_motor_status_2()
-                
+                motor_temp, torque_current, motor_speed, encoder_position = (
+                    self.read_motor_status_2()
+                )
+
                 # Clear previous debug messages
                 sys.stdout.write("\033[F")  # Move cursor up one line
                 sys.stdout.write("\033[K")  # Clear the line
-                
+
                 # Print debug information
                 if debug:
                     print(f"Motor temperature: {motor_temp}°C")
                     print(f"Torque current: {torque_current}A")
                     print(f"Motor speed: {motor_speed}dps")
                     print(f"Motor angle: {motor_angle}°")
-                
+
                 # Exit loop when motor reaches target position and speed is zero
                 if abs(motor_angle - target_position) < 0.1 and motor_speed == 0.0:
                     break
@@ -1621,10 +2108,12 @@ class ProtocolV2(CanBusGsUsb):
             print("Debug information:")
             print(f"Initial position: {self.read_multiturn_encoder_angle()}°")
             print(f"Target position: {target_position}°")
-        
+
         return motor_temp, torque_current, motor_speed, motor_angle
 
-    def position_closed_loop_control_2(self, speed, target_position, wait_for_completion=True, debug=None):
+    def position_closed_loop_control_2(
+        self, speed, target_position, wait_for_completion=True, debug=None
+    ):
         """
         Control the position of the motor (multi-turn angle) with speed limit.
 
@@ -1667,47 +2156,57 @@ class ProtocolV2(CanBusGsUsb):
         # Ensure target_position is within the valid range [0, 0xFFFFFFFF] (int32_t)
         if target_position < 0 or target_position > 0xFFFFFFFF:
             # Raise a ValueError if target_position is out of range
-            raise ValueError("Invalid target position value. Target position must be in the range [0, 42949672.95]°")
-        
+            raise ValueError(
+                "Invalid target position value. Target position must be in the range [0, 42949672.95]°"
+            )
+
         # Ensure speed is within the valid range [0, 65535]
         if speed < 0 or speed > 0xFFFF:
             # Raise a ValueError if speed is out of range
-            raise ValueError("Invalid speed value. Speed must be in the range [0, 65535]")
-        
+            raise ValueError(
+                "Invalid speed value. Speed must be in the range [0, 65535]"
+            )
+
         # Convert target_position to multiples of 0.01 degree (0.01 degree/LSB)
         angle_control = int(target_position * 100)
-        
+
         # Send command to control motor target_position with speed limit
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_POSITION_MULTITURN_SPEED_CLOSED_LOOP_CONTROL,
-                                            0x00, 
-                                            (speed >> 0) & 0xFF, 
-                                            (speed >> 8) & 0xFF, 
-                                            (angle_control >> 0) & 0xFF, 
-                                            (angle_control >> 8) & 0xFF,
-                                            (angle_control >> 16) & 0xFF, 
-                                            (angle_control >> 24) & 0xFF])
-        
+        self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_POSITION_MULTITURN_SPEED_CLOSED_LOOP_CONTROL,
+                0x00,
+                (speed >> 0) & 0xFF,
+                (speed >> 8) & 0xFF,
+                (angle_control >> 0) & 0xFF,
+                (angle_control >> 8) & 0xFF,
+                (angle_control >> 16) & 0xFF,
+                (angle_control >> 24) & 0xFF,
+            ],
+        )
+
         # Wait for motor to reach target position if specified
         if wait_for_completion:
             while True:
                 # Read current motor angle from multiturn encoder
                 motor_angle = self.read_multiturn_encoder_angle()
-                
+
                 # Read motor status (temperature, torque current, speed)
-                motor_temp, torque_current, motor_speed, encoder_position = self.read_motor_status_2()
-                
+                motor_temp, torque_current, motor_speed, encoder_position = (
+                    self.read_motor_status_2()
+                )
+
                 # Clear previous debug messages
                 sys.stdout.write("\033[F")  # Move cursor up one line
                 sys.stdout.write("\033[K")  # Clear the line
-                
+
                 # Print debug information
                 if debug:
                     print(f"Motor temperature: {motor_temp}°C")
                     print(f"Torque current: {torque_current}A")
                     print(f"Motor speed: {motor_speed}dps")
                     print(f"Motor angle: {motor_angle}°")
-                
+
                 # Exit loop when motor reaches target position and speed is zero
                 if abs(motor_angle - target_position) < 0.1 and motor_speed == 0.0:
                     break
@@ -1716,10 +2215,12 @@ class ProtocolV2(CanBusGsUsb):
             print("Debug information:")
             print(f"Initial position: {self.read_multiturn_encoder_angle()}°")
             print(f"Target position: {target_position}°")
-        
+
         return motor_temp, torque_current, motor_speed, motor_angle
-	
-    def position_closed_loop_control_3(self, direction, position, wait_for_completion=True, debug=None):
+
+    def position_closed_loop_control_3(
+        self, direction, position, wait_for_completion=True, debug=None
+    ):
         """
         Control the position of the motor (single-turn angle) with specified rotation direction.
 
@@ -1758,47 +2259,60 @@ class ProtocolV2(CanBusGsUsb):
         3. In this control mode, the maximum torque current of the motor is limited by the Max TorqueCurrent value in the host computer.
         """
 
-         # Ensure position is within the valid range [0, 360]
+        # Ensure position is within the valid range [0, 360]
         if position < 0 or position > 360:
             # Raise a ValueError if position is out of range
-            raise ValueError("Invalid position value. Position must be in the range [0, 360]")
+            raise ValueError(
+                "Invalid position value. Position must be in the range [0, 360]"
+            )
 
         # Ensure direction is either 0x00 or 0x01
         if direction not in [0x00, 0x01]:
             # Raise a ValueError if direction is incorrect
-            raise ValueError("Invalid direction value. Direction must be 0x00 (clockwise) or 0x01 (counterclockwise)")
-        
+            raise ValueError(
+                "Invalid direction value. Direction must be 0x00 (clockwise) or 0x01 (counterclockwise)"
+            )
+
         # Convert position to multiples of 0.01 degree (0.01 degree/LSB)
         angle_control = int(position * 100)
-        
+
         # Send command to control motor position with specified direction
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                       data=[self.ADDR_POSITION_SINGLETURN_DIRECTION_CLOSED_LOOP_CONTROL, 
-                                             direction & 0xFF, 0x00, 0x00,
-                                             (angle_control >> 0) & 0xFF, 
-                                             (angle_control >> 8) & 0xFF, 
-                                             0x00, 0x00])
-        
+        self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_POSITION_SINGLETURN_DIRECTION_CLOSED_LOOP_CONTROL,
+                direction & 0xFF,
+                0x00,
+                0x00,
+                (angle_control >> 0) & 0xFF,
+                (angle_control >> 8) & 0xFF,
+                0x00,
+                0x00,
+            ],
+        )
+
         # Wait for motor to reach target position if specified
         if wait_for_completion:
             while True:
                 # Read current motor angle from single-turn encoder
                 motor_angle = self.read_singleturn_encoder_angle()
-                
+
                 # Read motor status (temperature, torque current, speed)
-                motor_temp, torque_current, motor_speed, encoder_position = self.read_motor_status_2()
-                
+                motor_temp, torque_current, motor_speed, encoder_position = (
+                    self.read_motor_status_2()
+                )
+
                 # Clear previous debug messages
                 sys.stdout.write("\033[F")  # Move cursor up one line
                 sys.stdout.write("\033[K")  # Clear the line
-                
+
                 # Print debug information
                 if debug:
                     print(f"Motor temperature: {motor_temp}°C")
                     print(f"Torque current: {torque_current}A")
                     print(f"Motor speed: {motor_speed}dps")
                     print(f"Motor angle: {motor_angle}°")
-                
+
                 # Exit loop when motor reaches target position and speed is zero
                 if abs(motor_angle - position) < 0.1 and motor_speed == 0.0:
                     break
@@ -1807,10 +2321,12 @@ class ProtocolV2(CanBusGsUsb):
             print("Debug information:")
             print(f"Initial position: {self.read_singleturn_encoder_angle()}°")
             print(f"Target position: {position}°")
-        
+
         return motor_temp, torque_current, motor_speed, motor_angle
 
-    def position_closed_loop_control_4(self, speed, direction, position, wait_for_completion=True, debug=None):
+    def position_closed_loop_control_4(
+        self, speed, direction, position, wait_for_completion=True, debug=None
+    ):
         """
         Control the position of the motor (single-turn angle) with specified rotation direction and speed limit.
 
@@ -1852,51 +2368,64 @@ class ProtocolV2(CanBusGsUsb):
         # Ensure position is within the valid range [0, 360]
         if position < 0 or position > 360:
             # Raise a ValueError if position is out of range
-            raise ValueError("Invalid position value. Position must be in the range [0, 360]")
+            raise ValueError(
+                "Invalid position value. Position must be in the range [0, 360]"
+            )
 
         # Ensure speed is within the valid range [0, 65535]
         if speed < 0 or speed > 0xFFFF:
             # Raise a ValueError if speed is out of range
-            raise ValueError("Invalid speed value. Speed must be in the range [0, 65535]")
+            raise ValueError(
+                "Invalid speed value. Speed must be in the range [0, 65535]"
+            )
 
         # Ensure direction is either 0x00 or 0x01
         if direction not in [0x00, 0x01]:
             # Raise a ValueError if direction is incorrect
-            raise ValueError("Invalid direction value. Direction must be 0x00 (clockwise) or 0x01 (counterclockwise)")
+            raise ValueError(
+                "Invalid direction value. Direction must be 0x00 (clockwise) or 0x01 (counterclockwise)"
+            )
 
         # Convert position to multiples of 0.01 degree (0.01 degree/LSB)
         angle_control = int(position * 100)
-        
+
         # Send command to control motor position with specified direction and speed limit
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id, 
-                                    data=[self.ADDR_POSITION_SINGLETURN_SPEED_DIRECTION_CLOSED_LOOP_CONTROL, 
-                                            direction & 0xFF, 
-                                            (speed >> 0) & 0xFF, 
-                                            (speed >> 8) & 0xFF,
-                                            (angle_control >> 0) & 0xFF, 
-                                            (angle_control >> 8) & 0xFF, 
-                                            0x00, 0x00])
-        
+        self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_POSITION_SINGLETURN_SPEED_DIRECTION_CLOSED_LOOP_CONTROL,
+                direction & 0xFF,
+                (speed >> 0) & 0xFF,
+                (speed >> 8) & 0xFF,
+                (angle_control >> 0) & 0xFF,
+                (angle_control >> 8) & 0xFF,
+                0x00,
+                0x00,
+            ],
+        )
+
         # Wait for motor to reach target position if specified
         if wait_for_completion:
             while True:
                 # Read current motor angle from single-turn encoder
                 motor_angle = self.read_singleturn_encoder_angle()
-                
+
                 # Read motor status (temperature, torque current, speed)
-                motor_temp, torque_current, motor_speed, encoder_position = self.read_motor_status_2()
-                
+                motor_temp, torque_current, motor_speed, encoder_position = (
+                    self.read_motor_status_2()
+                )
+
                 # Clear previous debug messages
                 sys.stdout.write("\033[F")  # Move cursor up one line
                 sys.stdout.write("\033[K")  # Clear the line
-                
+
                 # Print debug information
                 if debug:
                     print(f"Motor temperature: {motor_temp}°C")
                     print(f"Torque current: {torque_current}A")
                     print(f"Motor speed: {motor_speed}dps")
                     print(f"Motor angle: {motor_angle}°")
-                
+
                 # Exit loop when motor reaches target position and speed is zero
                 if abs(motor_angle - position) < 0.1 and motor_speed == 0.0:
                     break
@@ -1905,10 +2434,12 @@ class ProtocolV2(CanBusGsUsb):
             print("Debug information:")
             print(f"Initial position: {self.read_singleturn_encoder_angle()}°")
             print(f"Target position: {position}°")
-        
+
         return motor_temp, torque_current, motor_speed, motor_angle
 
-    def position_closed_loop_control_5(self, target_position, wait_for_completion=True, debug=None):
+    def position_closed_loop_control_5(
+        self, target_position, wait_for_completion=True, debug=None
+    ):
         """
         Control the incremental position of the motor (multi-turn angle) with specified angle control value.
 
@@ -1945,19 +2476,27 @@ class ProtocolV2(CanBusGsUsb):
         # Ensure target_position is within the valid range [0, 0xFFFFFFFF] (int32_t)
         if target_position < 0 or target_position > 0xFFFFFFFF:
             # Raise a ValueError if position is out of range
-            raise ValueError("Invalid position value. Position must be in the range [0, 42949672.95]°")
+            raise ValueError(
+                "Invalid position value. Position must be in the range [0, 42949672.95]°"
+            )
 
         # Get initial motor target_position
         initial_position = self.read_multiturn_encoder_angle()
 
         # Send command to control motor position with specified angle control value
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id,
-                                        data=[self.ADDR_POSITION_MULTITURN_INCREMENTAL_CLOSED_LOOP_CONTROL,
-                                                0x00, 0x00, 0x00,
-                                                (target_position >> 0) & 0xFF,
-                                                (target_position >> 8) & 0xFF,
-                                                (target_position >> 16) & 0xFF,
-                                                (target_position >> 24) & 0xFF])
+        self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_POSITION_MULTITURN_INCREMENTAL_CLOSED_LOOP_CONTROL,
+                0x00,
+                0x00,
+                0x00,
+                (target_position >> 0) & 0xFF,
+                (target_position >> 8) & 0xFF,
+                (target_position >> 16) & 0xFF,
+                (target_position >> 24) & 0xFF,
+            ],
+        )
 
         # Wait for motor to reach target position if specified
         if wait_for_completion:
@@ -1966,7 +2505,9 @@ class ProtocolV2(CanBusGsUsb):
                 motor_angle = self.read_multiturn_encoder_angle()
 
                 # Read motor status (temperature, torque current, speed)
-                motor_temp, torque_current, motor_speed, encoder_position = self.read_motor_status_2()
+                motor_temp, torque_current, motor_speed, encoder_position = (
+                    self.read_motor_status_2()
+                )
 
                 # Clear previous debug messages
                 sys.stdout.write("\033[F")  # Move cursor up one line
@@ -1980,12 +2521,17 @@ class ProtocolV2(CanBusGsUsb):
                     print(f"Motor angle: {motor_angle}°")
 
                 # Exit loop when motor reaches target position and speed is zero
-                if abs(initial_position + target_position - motor_angle) < 0.1 and motor_speed == 0.0:
+                if (
+                    abs(initial_position + target_position - motor_angle) < 0.1
+                    and motor_speed == 0.0
+                ):
                     break
 
         return motor_temp, torque_current, motor_speed, motor_angle
 
-    def position_closed_loop_control_6(self, maxSpeed, target_position, wait_for_completion=True, debug=None):
+    def position_closed_loop_control_6(
+        self, maxSpeed, target_position, wait_for_completion=True, debug=None
+    ):
         """
         Control the incremental position (multi-turn angle) of the motor with specified angle control value and maximum speed limit.
 
@@ -2023,23 +2569,31 @@ class ProtocolV2(CanBusGsUsb):
         # Ensure target_position is within the valid range [0, 0xFFFFFFFF] (int32_t)
         if target_position < 0 or target_position > 0xFFFFFFFF:
             # Raise a ValueError if target_position is out of range
-            raise ValueError("Invalid target position value. Target position must be in the range [0, 42949672.95]°")
+            raise ValueError(
+                "Invalid target position value. Target position must be in the range [0, 42949672.95]°"
+            )
 
         # Ensure maxSpeed is within the valid range [0, 0xFFFF] (uint16_t)
         if maxSpeed < 0 or maxSpeed > 0xFFFF:
             # Raise a ValueError if maxSpeed is out of range
-            raise ValueError("Invalid maxSpeed value. MaxSpeed must be in the range [0, 65535]dps")
+            raise ValueError(
+                "Invalid maxSpeed value. MaxSpeed must be in the range [0, 65535]dps"
+            )
 
         # Send command to control motor target_position with specified angle control value and maximum speed limit
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id,
-                                        data=[self.ADDR_POSITION_MULTITURN_INCREMENTAL_SPEED_CLOSED_LOOP_CONTROL,
-                                                0x00,
-                                                (maxSpeed >> 0) & 0xFF,
-                                                (maxSpeed >> 8) & 0xFF,
-                                                (target_position >> 0) & 0xFF,
-                                                (target_position >> 8) & 0xFF,
-                                                (target_position >> 16) & 0xFF,
-                                                (target_position >> 24) & 0xFF])
+        self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_POSITION_MULTITURN_INCREMENTAL_SPEED_CLOSED_LOOP_CONTROL,
+                0x00,
+                (maxSpeed >> 0) & 0xFF,
+                (maxSpeed >> 8) & 0xFF,
+                (target_position >> 0) & 0xFF,
+                (target_position >> 8) & 0xFF,
+                (target_position >> 16) & 0xFF,
+                (target_position >> 24) & 0xFF,
+            ],
+        )
 
         # Wait for motor to reach target position if specified
         if wait_for_completion:
@@ -2051,7 +2605,9 @@ class ProtocolV2(CanBusGsUsb):
                 motor_angle = self.read_multiturn_encoder_angle()
 
                 # Read motor status (temperature, torque current, speed)
-                motor_temp, torque_current, motor_speed, encoder_position = self.read_motor_status_2()
+                motor_temp, torque_current, motor_speed, encoder_position = (
+                    self.read_motor_status_2()
+                )
 
                 # Clear previous debug messages
                 sys.stdout.write("\033[F")  # Move cursor up one line
@@ -2065,11 +2621,13 @@ class ProtocolV2(CanBusGsUsb):
                     print(f"Motor angle: {motor_angle}°")
 
                 # Exit loop when motor reaches target position and speed is zero
-                if abs(initial_position + target_position - motor_angle) < 0.1 and motor_speed == 0.0:
+                if (
+                    abs(initial_position + target_position - motor_angle) < 0.1
+                    and motor_speed == 0.0
+                ):
                     break
 
         return motor_temp, torque_current, motor_speed, motor_angle
-
 
     def read_running_mode(self, debug=None):
         """
@@ -2096,8 +2654,19 @@ class ProtocolV2(CanBusGsUsb):
         """
 
         # Send command to read current motor running mode
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id,
-                                        data=[self.ADDR_READ_RUNNING_MODE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_RUNNING_MODE,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract motor running mode from the response
         run_mode = msg.data[7]
@@ -2131,8 +2700,10 @@ class ProtocolV2(CanBusGsUsb):
         """
 
         # Send command to read current motor power
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id,
-                                        data=[self.ADDR_READ_POWER_VALUE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[self.ADDR_READ_POWER_VALUE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+        )
 
         # Extract motor power from the response
         motor_power = (msg.data[6] << 0) | (msg.data[7] << 8) * 0.1
@@ -2166,8 +2737,19 @@ class ProtocolV2(CanBusGsUsb):
         """
 
         # Send command to read current auxiliary battery voltage
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id,
-                                        data=[self.ADDR_READ_BATTERY_VOLTAGE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_READ_BATTERY_VOLTAGE,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Extract battery voltage from the response
         battery_voltage = msg.data[7] * 0.1
@@ -2208,27 +2790,42 @@ class ProtocolV2(CanBusGsUsb):
         TF_current = int(TF_current * 100)  # Convert TF_current to int16_t type
         # Ensure TF_current is within the valid range [-32768, 32767]
         if TF_current < -32768 or TF_current > 32767:
-            raise ValueError("Invalid TF feedforward current value. TF feedforward current must be in the range [-32768, 32767]")
+            raise ValueError(
+                "Invalid TF feedforward current value. TF feedforward current must be in the range [-32768, 32767]"
+            )
 
         # Ensure encoder_position is within the valid range [-2147483648, 2147483647]
         if encoder_position < -2147483648 or encoder_position > 2147483647:
-            raise ValueError("Invalid encoder position value. Encoder position must be in the range [-2147483648, 2147483647]")
+            raise ValueError(
+                "Invalid encoder position value. Encoder position must be in the range [-2147483648, 2147483647]"
+            )
 
         # Send command to set feedforward setting
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id,
-                                        data=[self.ADDR_FEEDFORWARD_SETTING, 
-                                                0x00, 
-                                                (TF_current >> 0) & 0xFF, 
-                                                (TF_current >> 8) & 0xFF,
-                                                (encoder_position >> 0) & 0xFF, 
-                                                (encoder_position >> 8) & 0xFF, 
-                                                (encoder_position >> 16) & 0xFF, 
-                                                (encoder_position >> 24) & 0xFF])
+        msg = self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_FEEDFORWARD_SETTING,
+                0x00,
+                (TF_current >> 0) & 0xFF,
+                (TF_current >> 8) & 0xFF,
+                (encoder_position >> 0) & 0xFF,
+                (encoder_position >> 8) & 0xFF,
+                (encoder_position >> 16) & 0xFF,
+                (encoder_position >> 24) & 0xFF,
+            ],
+        )
 
         # Read response
-        torque_current = ((msg.data[0] << 0) | (msg.data[1] << 8)) / 100  # Correcting the scaling
+        torque_current = (
+            (msg.data[0] << 0) | (msg.data[1] << 8)
+        ) / 100  # Correcting the scaling
         motor_speed = (msg.data[2] << 0) | (msg.data[3] << 8)
-        encoder_position = (msg.data[4] << 0) | (msg.data[5] << 8) | (msg.data[6] << 16) | (msg.data[7] << 24)
+        encoder_position = (
+            (msg.data[4] << 0)
+            | (msg.data[5] << 8)
+            | (msg.data[6] << 16)
+            | (msg.data[7] << 24)
+        )
 
         # Print debug information if specified
         if debug:
@@ -2253,8 +2850,10 @@ class ProtocolV2(CanBusGsUsb):
         - debug: Boolean flag indicating whether to print debug information.
         """
         # Send command to reset the system software
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id,
-                                        data=[self.ADDR_SYSTEM_RESET, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[self.ADDR_SYSTEM_RESET, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+        )
 
         # Print debug information if specified
         if debug:
@@ -2275,8 +2874,10 @@ class ProtocolV2(CanBusGsUsb):
         - debug: Boolean flag indicating whether to print debug information.
         """
         # Send command to open the system brake
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id,
-                                        data=[self.ADDR_BRAKE_OPENING, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[self.ADDR_BRAKE_OPENING, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+        )
 
         # Print debug information if specified
         if debug:
@@ -2297,8 +2898,10 @@ class ProtocolV2(CanBusGsUsb):
         - debug: Boolean flag indicating whether to print debug information.
         """
         # Send command to close the system brake
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id,
-                                        data=[self.ADDR_BRAKE_CLOSE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[self.ADDR_BRAKE_CLOSE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+        )
 
         # Print debug information if specified
         if debug:
@@ -2325,18 +2928,24 @@ class ProtocolV2(CanBusGsUsb):
         """
         # Ensure CAN_ID is within the valid range [1, 32]
         if CAN_ID < 1 or CAN_ID > 32:
-            raise ValueError("Invalid CAN ID value. CAN ID must be in the range [1, 32]")
+            raise ValueError(
+                "Invalid CAN ID value. CAN ID must be in the range [1, 32]"
+            )
 
         # Send command to set or read CAN ID
-        msg = self.can_bus.sendMessage(id=self.BASE_ADDR_ID + self.id,
-                                        data=[self.ADDR_CAN_ID_SETTING_AND_READING, 
-                                                0x00, 
-                                                read_write_flag, 
-                                                0x00, 
-                                                (CAN_ID >> 0) & 0xFF, 
-                                                (CAN_ID >> 8) & 0xFF, 
-                                                0x00, 
-                                                0x00])
+        self.can_bus.sendMessage(
+            id=self.BASE_ADDR_ID + self.id,
+            data=[
+                self.ADDR_CAN_ID_SETTING_AND_READING,
+                0x00,
+                read_write_flag,
+                0x00,
+                (CAN_ID >> 0) & 0xFF,
+                (CAN_ID >> 8) & 0xFF,
+                0x00,
+                0x00,
+            ],
+        )
 
         # Print debug information if specified
         if debug:
@@ -2344,19 +2953,19 @@ class ProtocolV2(CanBusGsUsb):
                 print(f"Reading CAN ID: {CAN_ID}")
             else:
                 print(f"Setting CAN ID to: {CAN_ID}")
-    
-    def multiple_motor_torque_closed_loop(self,debug=None):
-        """"
+
+    def multiple_motor_torque_closed_loop(self, debug=None):
+        """ "
         The format of the message used to send commands to multiple motors at the same time, as followed:
         Identifier : 0x280
         Frame format : DATA
         Frame type : standard frame
         DLC : 8byte
-        The host simultaneously send this command to control the torque current output up to 4 motors. 
-        Thecontrol value iqControl is int16_t type, the value range is -2000~2000, corresponding to the actual torquecurrent range -32A~32A 
-        (The bus current and the actual torque of the motor vary from motor tomotor). 
-        The motor ID should be set to #1~#4, and cannot be repeated, corresponding to the 4 torquecurrentsinthe frame data. 
-        
+        The host simultaneously send this command to control the torque current output up to 4 motors.
+        Thecontrol value iqControl is int16_t type, the value range is -2000~2000, corresponding to the actual torquecurrent range -32A~32A
+        (The bus current and the actual torque of the motor vary from motor tomotor).
+        The motor ID should be set to #1~#4, and cannot be repeated, corresponding to the 4 torquecurrentsinthe frame data.
+
         Data field Description Data
         DATA[0] Torque current 1 control value low byte DATA[0] = *(uint8_t *)(&iqControl_1)
         DATA[1] Torque current 1 control value high byte DATA[1] = *((uint8_t *)(&iqControl_1)+1)

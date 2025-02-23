@@ -11,6 +11,7 @@ from PIL import Image, ImageSequence
 sys.path.append("..")
 from lib import LCD_1inch28
 
+
 class AnimatedScreen:
     def __init__(self, bus, device, rst, dc, bl):
         """
@@ -43,7 +44,7 @@ class AnimatedScreen:
             for frame in ImageSequence.Iterator(gif):
                 frame = frame.resize((240, 240))  # Adapter à la résolution de l'écran
                 self.display.ShowImage(frame)
-                frame_duration = gif.info.get('duration', 100) / 1000.0  # En secondes
+                frame_duration = gif.info.get("duration", 100) / 1000.0  # En secondes
                 time.sleep(frame_duration * speed_multiplier)
         except Exception as e:
             logging.error(f"Erreur lors de l'affichage du GIF : {e}")
@@ -78,9 +79,11 @@ class AnimatedScreen:
         """Nettoie l'écran."""
         self.display.clear()
 
+
 # Fonction pour animer un écran dans un thread
 def animate_screen(screen, gif_path, speed_multiplier):
     screen.display_gif(gif_path, speed_multiplier)
+
 
 if __name__ == "__main__":
     # GPIO and SPI pin configuration
@@ -99,12 +102,14 @@ if __name__ == "__main__":
     device_mouth = 0
 
     # Initialize the screens
-    eye_left = AnimatedScreen(bus_eyes, device_eye_left, rst_eye_left, dc_eye_left, bl_eye_left)
+    eye_left = AnimatedScreen(
+        bus_eyes, device_eye_left, rst_eye_left, dc_eye_left, bl_eye_left
+    )
     mouth = AnimatedScreen(bus_mouth, device_mouth, rst_mouth, dc_mouth, bl_mouth)
 
     # Paths to GIFs
-    gif_eye_left = './pic/load1.gif'
-    gif_mouth = './pic/load3.gif'
+    gif_eye_left = "./pic/load1.gif"
+    gif_mouth = "./pic/load3.gif"
 
     # Speed multipliers (1.0 = normal speed, >1 = slower, <1 = faster)
     speed_eye_left = 0.01
@@ -112,8 +117,12 @@ if __name__ == "__main__":
 
     # Launch animations in separate threads
     try:
-        thread_eye_left = threading.Thread(target=animate_screen, args=(eye_left, gif_eye_left, speed_eye_left))
-        thread_mouth = threading.Thread(target=animate_screen, args=(mouth, gif_mouth, speed_mouth))
+        thread_eye_left = threading.Thread(
+            target=animate_screen, args=(eye_left, gif_eye_left, speed_eye_left)
+        )
+        thread_mouth = threading.Thread(
+            target=animate_screen, args=(mouth, gif_mouth, speed_mouth)
+        )
 
         thread_eye_left.start()
         thread_mouth.start()
@@ -131,4 +140,3 @@ if __name__ == "__main__":
         eye_left.clear()
         mouth.clear()
         logging.info("Program stopped.")
-

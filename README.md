@@ -86,51 +86,51 @@ The robot head is controlled by a Python-based system that listens to user input
 
 2. **Dynamic Eye and Mouth & Head Movements**:
     - Eye and mouth animations are shown using **Waveshare LCD displays** and on the **Whiteboard** simultaneously.
-       
+
 
     2.1. **Whiteboard Interface**: Animated Visual Feedback
         The **whiteboard** is a visual interface where animated graphics (GIFs) are displayed to represent the robot's "expressions." This interface leverages the LCD screens for a more engaging interaction experience. Key aspects include:
 
-  - **Dynamic Eye Movements**: 
+  - **Dynamic Eye Movements**:
           - Depending on the robot's emotional state or context, the eyes can blink, look left or right, and even display special animations (e.g., "amoureux" for love or "animal" for playful expressions).
           - The animations are displayed on **Waveshare 1.28inch Round LCD modules**, with GIFs or specific visuals representing the state.
-        
-  - **Mouth Animations**: 
+
+  - **Mouth Animations**:
           - Along with eye movements, mouth visuals change to reflect emotions (e.g., smile, wide open).
           - These animations provide non-verbal feedback that complements voice responses.
-        
-   - **Integration with Decisions**: 
+
+   - **Integration with Decisions**:
           - The `Decision` class drives the updates on the whiteboard interface by selecting appropriate GIFs or animations based on user input and predefined responses.
-        
+
         **Example Workflow**:
         - If the user says, "heureux," the robot's eyes will display the "star" GIF, and the mouth will show a "moving mouth."
           <img width="959" alt="image" src="https://github.com/user-attachments/assets/b47c1adb-7715-4e2c-89aa-2d8919faf96f">
 
 
-        
-        
-   
+
+
+
   2.2. **Chat Interface**: Voice Interaction and Transcription
         The **chat interface** provides real-time transcription of user speech and displays the robot's textual responses. It simulates a conversation log, making it easy for users to follow the interaction. Key components include:
-        
-   - **Speech Recognition**: 
+
+   - **Speech Recognition**:
           - The **Whisper** model transcribes user speech into text, which is displayed in the chat.
           - Example: If the user says, *"Bonjour, robot !"*, the chat log will show:
             ```
             User: Bonjour, robot !
             ```
-        
-  - **Text-to-Speech Responses**: 
+
+  - **Text-to-Speech Responses**:
           - The robot generates a voice response using **gTTS** and simultaneously displays the response text in the chat.
           - Example: If the robot responds, *"Bonjour, comment puis-je vous aider ?"*, the chat log will show:
             ```
             Robot: Bonjour, comment puis-je vous aider ?
             ```
         <img width="959" alt="image" src="https://github.com/user-attachments/assets/9446868b-976f-4ffa-b07d-e14e1ab28012">
-        
+
     - **Seamless Integration with Decisions**:
           - The `Decision` class matches the transcription to a predefined response and updates both the whiteboard and chat interfaces accordingly.
-            
+
 
 4. **Decision-Making Class**:
     - The **Decision** class, using pre-programmed responses (e.g., greetings, commands), decides how the robot should respond based on the input.
@@ -178,6 +178,9 @@ The main goals of this project are:
 
 ---
 
+## Notes :
 
+Check precommit errors : `uv run pre-commit run -a`
+ssh connection RaspberryPi : `...`
 
 For installation and setup, please refer to the [setup_software.sh](./software/setup_software.sh) script. Follow its execution steps to prepare your environment.

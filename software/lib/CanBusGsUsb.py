@@ -11,18 +11,11 @@ Usage:
 3. Optionally, set up and shut down the device with setup and shutdown methods.
 """
 
-import os
-import time
 from gs_usb.gs_usb import GsUsb
 from gs_usb.gs_usb_frame import GsUsbFrame
-from gs_usb.constants import (
-    CAN_EFF_FLAG,
-    CAN_ERR_FLAG,
-    CAN_RTR_FLAG,
-)
+
 
 class CanBusGsUsb:
-
     def __init__(self, port: int, bitrate: int):
         """
         Initialize the CanBusGsUsb instance with port number and bitrate.
@@ -45,8 +38,6 @@ class CanBusGsUsb:
             print("Cannot set bitrate for gs_usb")
         else:
             print("Bitrate set to", self.bitrate)
-
-    import time
 
     def sendMessage(self, id, data, debug=None, timeout=2):
         """

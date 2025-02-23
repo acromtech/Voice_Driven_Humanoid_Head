@@ -33,13 +33,16 @@ camera_stream = CameraStream()
 camera_thread = threading.Thread(target=camera_stream.start_stream, daemon=True)
 camera_thread.start()
 
+
 def execute_eyes_animation(eyes, answer_eyes):
     eyes.gif_choice_eyes(answer_eyes, speed_multiplier=1.0)
     print("execute anim:", answer_eyes)
 
+
 def execute_mouth_animation(mouth, answer_mouth):
     mouth.gif_choice_mouth(answer_mouth, speed_multiplier=1.0)
     print("execute anim:", answer_mouth)
+
 
 def execute_movement(answer_move):
     if answer_move:
@@ -49,17 +52,26 @@ def execute_movement(answer_move):
     else:
         print("No movement specified.")
 
+
 def execute_tts(text_to_speech, answer_text):
-    text_to_speech.generate_audio('fr', answer_text)
+    text_to_speech.generate_audio("fr", answer_text)
+
 
 def main():
     # Initialize modules
-    if simulation_mode==False:
+    if not simulation_mode:
         from lib.AnimatedScreen import AnimatedScreen
+
         eyes = AnimatedScreen(bus=0, device=0, rst=27, dc=25, bl=23)
         mouth = AnimatedScreen(bus=1, device=0, rst=5, dc=19, bl=6)
-    text_to_speech = TextToSpeech(playback_device_name=playback_device_name, sample_rate=sample_rate, speed_factor=speed_factor_tts)
-    audio_transcription = AudioTranscription(recording_device_name=recording_device_name, mic_sample_rate=mic_sample_rate)
+    text_to_speech = TextToSpeech(
+        playback_device_name=playback_device_name,
+        sample_rate=sample_rate,
+        speed_factor=speed_factor_tts,
+    )
+    audio_transcription = AudioTranscription(
+        recording_device_name=recording_device_name, mic_sample_rate=mic_sample_rate
+    )
     decision = Decision(device=device, simulation_mode=simulation_mode)
 
     try:
@@ -70,17 +82,26 @@ def main():
 
             if message_text:
                 print(f"Received command: {message_text}")
-                answer_text, answer_move, answer_eyes, answer_mouth = decision.get_response(message_text)
+                answer_text, answer_move, answer_eyes, answer_mouth = (
+                    decision.get_response(message_text)
+                )
                 print(f"Response: {answer_text}")
                 print(f"Planned movement: {answer_move}")
                 print(f"Eye animation: {answer_eyes}")
                 print(f"Mouth animation: {answer_mouth}")
-                if simulation_mode == False:
+                if not simulation_mode:
                     # Threads pour les différentes actions
                     threads = [
-                        threading.Thread(target=text_to_speech.generate_audio, args=('fr', answer_text)),
-                        threading.Thread(target=execute_eyes_animation, args=(eyes, answer_eyes)),
-                        threading.Thread(target=execute_mouth_animation, args=(mouth, answer_mouth)),
+                        threading.Thread(
+                            target=text_to_speech.generate_audio,
+                            args=("fr", answer_text),
+                        ),
+                        threading.Thread(
+                            target=execute_eyes_animation, args=(eyes, answer_eyes)
+                        ),
+                        threading.Thread(
+                            target=execute_mouth_animation, args=(mouth, answer_mouth)
+                        ),
                         threading.Thread(target=execute_movement, args=(answer_move)),
                     ]
 
@@ -95,9 +116,10 @@ def main():
     except KeyboardInterrupt:
         print("Stopping the program.")
     finally:
-        if simulation_mode == False:
+        if not simulation_mode:
             eyes.clear()
             mouth.clear()
+
 
 if __name__ == "__main__":
     main()

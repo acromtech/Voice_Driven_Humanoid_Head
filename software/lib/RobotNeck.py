@@ -1,8 +1,6 @@
-import os
-import time
-
 from MyActuatorRMD import MyActuatorRMD
 from CanBusGsUsb import CanBusGsUsb
+
 
 class RobotNeck:
     def __init__(self, can_bus_channel=0, can_bus_baudrate=1000000):
@@ -38,10 +36,14 @@ class RobotNeck:
         - acceleration: Accélération à configurer pour le moteur.
         """
         kp1, ki1, kp2, ki2, kp3, ki3 = motor.write_pid_parameter_to_RAM(
-            pid_params[0], pid_params[1], pid_params[2],
-            pid_params[3], pid_params[4], pid_params[5]
+            pid_params[0],
+            pid_params[1],
+            pid_params[2],
+            pid_params[3],
+            pid_params[4],
+            pid_params[5],
         )
-        
+
         # Lecture de la position actuelle et mise à zéro de l'offset
         init_pos = motor.read_singleturn_encoder_position()
         motor.write_encoder_offset(0)
@@ -50,16 +52,16 @@ class RobotNeck:
         # Sauvegarde de la position initiale
         if motor == self.motor_1:
             self.init_pos_1 = init_pos
-            self.move_motor(self.motor_1,200,-2)
+            self.move_motor(self.motor_1, 200, -2)
         elif motor == self.motor_2:
             self.init_pos_2 = init_pos
-            self.move_motor(self.motor_2,200,-50)
+            self.move_motor(self.motor_2, 200, -50)
         elif motor == self.motor_3:
             self.init_pos_3 = init_pos
-            self.move_motor(self.motor_3,200,-2)
-        
-        #self.motor.running()
-        
+            self.move_motor(self.motor_3, 200, -2)
+
+        # self.motor.running()
+
     def move_motor(self, motor, speed, position):
         """
         Effectue un mouvement pour un moteur donné.
@@ -91,7 +93,9 @@ class RobotNeck:
         # Commande du moteur
         motor.position_closed_loop_control_4(speed, direction, target_position)
         current_pos = motor.read_singleturn_encoder_position()
-        print(f"Motor {motor.id}: moved to {target_position}° (current position: {current_pos})")
+        print(
+            f"Motor {motor.id}: moved to {target_position}° (current position: {current_pos})"
+        )
 
     def shutdown(self):
         """Arrête le bus CAN proprement."""
@@ -100,6 +104,7 @@ class RobotNeck:
         self.motor_2.stop()
         self.motor_3.stop()
         print("CAN bus shutdown.")
+
 
 # Exemple d'utilisation
 if __name__ == "__main__":
@@ -116,7 +121,11 @@ if __name__ == "__main__":
         active_motor = neck.motor_1
         while True:
             print(f"Controlling Motor {active_motor.id}")
-            command = input("Enter command (w: +10°, s: -10°, enter: next motor, q: quit): ").strip().lower()
+            command = (
+                input("Enter command (w: +10°, s: -10°, enter: next motor, q: quit): ")
+                .strip()
+                .lower()
+            )
 
             if command == "w":
                 neck.move_motor(active_motor, speed=200, position=10)
@@ -135,4 +144,3 @@ if __name__ == "__main__":
                 print("Invalid command.")
     finally:
         neck.shutdown()
-
