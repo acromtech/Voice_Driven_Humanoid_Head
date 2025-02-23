@@ -9,7 +9,7 @@ SetLogLevel(-1)
 
 
 class AudioTranscription:
-    def __init__(self, recording_device_name, target_sample_rate=16000):
+    def __init__(self, recording_device_name, target_sample_rate=44100):
         self.RECORDING_DEVICE_NAME = recording_device_name
         self.TARGET_SAMPLE_RATE = target_sample_rate
 

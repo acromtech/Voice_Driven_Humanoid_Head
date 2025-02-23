@@ -13,7 +13,8 @@ dependencies = [
     "scipy",
     "can",
     "vosk",
-    "opencv-python"
+    "opencv-python",
+    "picamera2>=0.3.25",
 ]
 
 [dependency-groups]
