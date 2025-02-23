@@ -6,25 +6,7 @@ sudo apt update && sudo apt upgrade -y
 
 # Installer Python et pip (dernière version)
 echo "Installation de Python et pip..."
-sudo apt install -y python3 python3-pip
-sudo apt install -y python3-picamera2
-
-# Installer les dépendances Python
-echo "Installation des dépendances Python..."
-sudo pip3 install \
-    gTTS \
-    pydub \
-    playsound \
-    torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116 \
-    numpy==1.24.0 \
-    git+https://github.com/openai/whisper.git \
-    faster-whisper \
-    pillow \
-    sounddevice \
-    scipy \
-    can \
-    ingescape \
-    opencv-python
+sudo apt install -y python3 python3-pip python3-picamera2
 
 # Installer des utilitaires et bibliothèques nécessaires
 echo "Installation des bibliothèques et outils nécessaires..."
