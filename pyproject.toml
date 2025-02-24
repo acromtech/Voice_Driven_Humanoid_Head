@@ -7,16 +7,15 @@ requires-python = "==3.10.*"
 dependencies = [
     "gTTS",
     "pydub",
-    "numpy==1.24.0",
+    "numpy",
     "pillow",
     "sounddevice",
     "scipy",
     "can",
     "vosk",
     "opencv-python-headless",
-    "meson>=1.7.0",
-    "spidev>=3.6",
-    "rpi-gpio>=0.7.1",
+    "spidev",
+    "rpi-gpio",
     "thread>=2.0.5",
 ]
 
