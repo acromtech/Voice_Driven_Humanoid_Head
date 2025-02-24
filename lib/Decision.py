@@ -1,15 +1,8 @@
 import time
 import re
 
-if __name__ == "__main__":
-    from RobotHead import RobotHead
-else:
-    from lib.RobotHead import RobotHead
-
-
 class Decision:
-    def __init__(self, device="Wi-Fi", simulation_mode=True):
-        self.agent = RobotHead(device=device, simulation_mode=simulation_mode)
+    def __init__(self, simulation_mode=True):
         self.responses = {
             "bonjour": {
                 "answer_text": "Bonjour, comment puis-je vous aider ?",
@@ -75,7 +68,6 @@ class Decision:
 
     def get_response(self, message_text):
         """Retourne la réponse correspondante au message de transcription."""
-        self.agent.chat(message_text)
         normalized_text = message_text.lower()
 
         # Check for time-based greetings

@@ -14,8 +14,9 @@ dependencies = [
     "can",
     "vosk",
     "opencv-python-headless",
-    "picamera2>=0.3.25",
-    "prctl"
+    "meson>=1.7.0",
+    "spidev>=3.6",
+    "rpi-gpio>=0.7.1",
 ]
 
 [dependency-groups]

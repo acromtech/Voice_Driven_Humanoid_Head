@@ -1,6 +1,5 @@
 import time
 import threading
-from lib.CameraStream import CameraStream
 from lib.AudioTranscription2 import AudioTranscription
 from lib.Decision import Decision
 from lib.TextToSpeech import TextToSpeech
@@ -19,8 +18,7 @@ silence_duration = 0.5
 """
 
 # YOUR LAPTOP CONFIG
-simulation_mode = True
-device = "wlo1"
+simulation_mode = False
 playback_device_name = "UACDemoV1.0"
 sample_rate = 48000
 speed_factor_tts = 1.15
@@ -29,19 +27,14 @@ mic_sample_rate = 44100
 silence_threshold = 0.02
 silence_duration = 0.5
 
-camera_stream = CameraStream()
-camera_thread = threading.Thread(target=camera_stream.start_stream, daemon=True)
-camera_thread.start()
-
-
 def execute_eyes_animation(eyes, answer_eyes):
     eyes.gif_choice_eyes(answer_eyes, speed_multiplier=1.0)
     print("execute anim:", answer_eyes)
 
 
-def execute_mouth_animation(mouth, answer_mouth):
-    mouth.gif_choice_mouth(answer_mouth, speed_multiplier=1.0)
-    print("execute anim:", answer_mouth)
+#def execute_mouth_animation(mouth, answer_mouth):
+#    mouth.gif_choice_mouth(answer_mouth, speed_multiplier=1.0)
+#    print("execute anim:", answer_mouth)
 
 
 def execute_movement(answer_move):
@@ -63,16 +56,16 @@ def main():
         from lib.AnimatedScreen import AnimatedScreen
 
         eyes = AnimatedScreen(bus=0, device=0, rst=27, dc=25, bl=23)
-        mouth = AnimatedScreen(bus=1, device=0, rst=5, dc=19, bl=6)
+        #mouth = AnimatedScreen(bus=1, device=0, rst=5, dc=19, bl=6)
     text_to_speech = TextToSpeech(
         playback_device_name=playback_device_name,
         sample_rate=sample_rate,
         speed_factor=speed_factor_tts,
     )
     audio_transcription = AudioTranscription(
-        recording_device_name=recording_device_name, mic_sample_rate=mic_sample_rate
+        recording_device_name=recording_device_name, target_sample_rate=mic_sample_rate
     )
-    decision = Decision(device=device, simulation_mode=simulation_mode)
+    decision = Decision(simulation_mode)
     
     # Launch music
     text_to_speech.play_music("./data/start_modern.mp3")
@@ -102,9 +95,9 @@ def main():
                         threading.Thread(
                             target=execute_eyes_animation, args=(eyes, answer_eyes)
                         ),
-                        threading.Thread(
-                            target=execute_mouth_animation, args=(mouth, answer_mouth)
-                        ),
+                        #threading.Thread(
+                        #    target=execute_mouth_animation, args=(mouth, answer_mouth)
+                        #),
                         threading.Thread(target=execute_movement, args=(answer_move)),
                     ]
 
@@ -121,7 +114,7 @@ def main():
     finally:
         if not simulation_mode:
             eyes.clear()
-            mouth.clear()
+            #mouth.clear()
 
 
 if __name__ == "__main__":
