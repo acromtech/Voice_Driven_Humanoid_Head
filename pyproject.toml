@@ -17,6 +17,7 @@ dependencies = [
     "meson>=1.7.0",
     "spidev>=3.6",
     "rpi-gpio>=0.7.1",
+    "thread>=2.0.5",
 ]
 
 [dependency-groups]

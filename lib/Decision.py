@@ -93,9 +93,6 @@ class Decision:
             if re.search(
                 r"\b" + re.escape(keyword) + r"\b", normalized_text
             ):  # Ensure word boundaries
-                self.agent.clear()
-                self.agent.gif_choice(response["answer_eyes"], response["answer_mouth"])
-                self.agent.chat(response["answer_text"])
                 return (
                     response["answer_text"],
                     response["answer_move"],
@@ -146,16 +143,11 @@ class Decision:
             if answer_mouth:
                 self.responses[keyword]["answer_mouth"] = answer_mouth
 
-    def reset(self):
-        self.agent.clear_all()
-
 
 if __name__ == "__main__":
     # Création d'un objet Decision
     # decision = Decision(device="Wi-Fi", simulation_mode=True) # SIMULATION MODE
-    decision = Decision(
-        device="wlan0", simulation_mode=False
-    )  # WITH RASPBERRY PI (ROBOT HEAD)
+    decision = Decision(simulation_mode=False)  # WITH RASPBERRY PI (ROBOT HEAD)
 
     # Exemple de message à tester
     test_messages = [

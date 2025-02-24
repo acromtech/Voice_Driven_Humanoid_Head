@@ -27,12 +27,13 @@ mic_sample_rate = 44100
 silence_threshold = 0.02
 silence_duration = 0.5
 
+
 def execute_eyes_animation(eyes, answer_eyes):
     eyes.gif_choice_eyes(answer_eyes, speed_multiplier=1.0)
     print("execute anim:", answer_eyes)
 
 
-#def execute_mouth_animation(mouth, answer_mouth):
+# def execute_mouth_animation(mouth, answer_mouth):
 #    mouth.gif_choice_mouth(answer_mouth, speed_multiplier=1.0)
 #    print("execute anim:", answer_mouth)
 
@@ -56,7 +57,7 @@ def main():
         from lib.AnimatedScreen import AnimatedScreen
 
         eyes = AnimatedScreen(bus=0, device=0, rst=27, dc=25, bl=23)
-        #mouth = AnimatedScreen(bus=1, device=0, rst=5, dc=19, bl=6)
+        # mouth = AnimatedScreen(bus=1, device=0, rst=5, dc=19, bl=6)
     text_to_speech = TextToSpeech(
         playback_device_name=playback_device_name,
         sample_rate=sample_rate,
@@ -66,10 +67,10 @@ def main():
         recording_device_name=recording_device_name, target_sample_rate=mic_sample_rate
     )
     decision = Decision(simulation_mode)
-    
+
     # Launch music
-    text_to_speech.play_music("./data/start_modern.mp3")
-    
+    text_to_speech.play_music("./lib/data/start_modern.mp3")
+
     try:
         print("Waiting for a voice command...")
         while True:
@@ -95,10 +96,10 @@ def main():
                         threading.Thread(
                             target=execute_eyes_animation, args=(eyes, answer_eyes)
                         ),
-                        #threading.Thread(
+                        # threading.Thread(
                         #    target=execute_mouth_animation, args=(mouth, answer_mouth)
-                        #),
-                        threading.Thread(target=execute_movement, args=(answer_move)),
+                        # ),
+                        # threading.Thread(target=execute_movement, args=(answer_move)),
                     ]
 
                     # Démarrer tous les threads
@@ -114,7 +115,7 @@ def main():
     finally:
         if not simulation_mode:
             eyes.clear()
-            #mouth.clear()
+            # mouth.clear()
 
 
 if __name__ == "__main__":

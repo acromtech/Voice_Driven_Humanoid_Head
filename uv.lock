@@ -353,6 +353,18 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/66/b7/4a1bc231e0681ebf339337b0cd05b91dc6a0d701fa852bb812e244b7a030/srt-3.5.3.tar.gz", hash = "sha256:4884315043a4f0740fd1f878ed6caa376ac06d70e135f306a6dc44632eed0cc0", size = 28296 }
 
 [[package]]
+name = "thread"
+version = "2.0.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/9d/ca/54e573b183e3364cde7fafd57d98b5163adce0cc7637b6a676ff206e0795/thread-2.0.5.tar.gz", hash = "sha256:4bf22559103d9fa24a055d225ad67aec1bd4ef20bd7fbaf3338f4a0de7fafc8f", size = 18114 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f8/60/d5cd417a01f4005f7d8fdab41f08139e1fbe345ad9b798d822fb07ea3e29/thread-2.0.5-py3-none-any.whl", hash = "sha256:a7e38f37863edd9387890310f63c71281c417650103bc50a69b6997e29ce3cf8", size = 17490 },
+]
+
+[[package]]
 name = "tqdm"
 version = "4.67.1"
 source = { registry = "https://pypi.org/simple" }
@@ -362,6 +374,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/a8/4b/29b4ef32e036bb34e4ab51796dd745cdba7ed47ad142a9f4a1eb8e0c744d/tqdm-4.67.1.tar.gz", hash = "sha256:f8aef9c52c08c13a65f30ea34f4e5aac3fd1a34959879d7e59e63027286627f2", size = 169737 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d0/30/dc54f88dd4a2b5dc8a0279bdd7270e735851848b762aeb1c1184ed1f6b14/tqdm-4.67.1-py3-none-any.whl", hash = "sha256:26445eca388f82e72884e0d580d5464cd801a3ea01e63e5601bdff9ba6a48de2", size = 78540 },
+]
+
+[[package]]
+name = "typing-extensions"
+version = "4.12.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/df/db/f35a00659bc03fec321ba8bce9420de607a1d37f8342eee1863174c69557/typing_extensions-4.12.2.tar.gz", hash = "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8", size = 85321 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/26/9f/ad63fc0248c5379346306f8668cda6e2e2e9c95e01216d2b8ffd9ff037d0/typing_extensions-4.12.2-py3-none-any.whl", hash = "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d", size = 37438 },
 ]
 
 [[package]]
@@ -403,6 +424,7 @@ dependencies = [
     { name = "scipy" },
     { name = "sounddevice" },
     { name = "spidev" },
+    { name = "thread" },
     { name = "vosk" },
 ]
 
@@ -424,6 +446,7 @@ requires-dist = [
     { name = "scipy" },
     { name = "sounddevice" },
     { name = "spidev", specifier = ">=3.6" },
+    { name = "thread", specifier = ">=2.0.5" },
     { name = "vosk" },
 ]
 
