@@ -1,6 +1,7 @@
 import time
 import re
 
+
 class Decision:
     def __init__(self, simulation_mode=True):
         self.responses = {
