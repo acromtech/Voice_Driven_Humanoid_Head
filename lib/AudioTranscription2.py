@@ -7,7 +7,6 @@ import os
 # Réduire les détails de chargement
 SetLogLevel(-1)
 
-
 class AudioTranscription:
     def __init__(self, recording_device_name, target_sample_rate=44100):
         self.RECORDING_DEVICE_NAME = recording_device_name

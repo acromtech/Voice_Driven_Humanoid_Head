@@ -13,10 +13,12 @@ dependencies = [
     "scipy",
     "can",
     "vosk",
-    "opencv-python-headless",
+    "opencv-python",
     "spidev",
     "rpi-gpio",
-    "thread>=2.0.5",
+    "thread",
+    "flask",
+    "mediapipe-rpi4>=0.8.8",
 ]
 
 [dependency-groups]

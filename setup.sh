@@ -19,6 +19,9 @@ sudo apt install -y ffmpeg
 sudo apt install -y python3-dev
 sudo apt install -y libsndfile1
 
+
+echo "MediaPipe-rpi dependencies installation"
+sudo apt install libxcb-shm0 libcdio-paranoia-dev libsdl2-2.0-0 libxv1  libtheora0 libva-drm2 libva-x11-2 libvdpau1 libharfbuzz0b libbluray2 libatlas-base-dev libhdf5-103 libgtk-3-0 libopenexr25
 echo "Download & Install Vosk (fr) models..."
 cd ./lib
 wget https://alphacephei.com/vosk/models/vosk-model-fr-0.22.zip
@@ -28,16 +31,16 @@ mv vosk-model-fr-0.22 vosk_model
 
 # Configurer le SPI
 echo "Activate SPI modules..."
-if ! grep -q "^dtparam=spi=on" /boot/config.txt; then
-    echo "dtparam=spi=on" | sudo tee -a /boot/config.txt
+if ! grep -q "^dtparam=spi=on" /boot/firmware/config.txt; then
+    echo "dtparam=spi=on" | sudo tee -a /boot/firmware/config.txt
 fi
 
-if ! grep -q "^dtoverlay=spi0-2cs" /boot/config.txt; then
-    echo "dtoverlay=spi0-2cs" | sudo tee -a /boot/config.txt
+if ! grep -q "^dtoverlay=spi0-2cs" /boot/firmware/config.txt; then
+    echo "dtoverlay=spi0-2cs" | sudo tee -a /boot/firmware/config.txt
 fi
 
-if ! grep -q "^dtoverlay=spi1-2cs" /boot/config.txt; then
-    echo "dtoverlay=spi1-2cs" | sudo tee -a /boot/config.txt
+if ! grep -q "^dtoverlay=spi1-2cs" /boot/firmware/config.txt; then
+    echo "dtoverlay=spi1-2cs" | sudo tee -a /boot/firmware/config.txt
 fi
 
 echo "SSH activation..."
